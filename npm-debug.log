@@ -1,0 +1,1202 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'cnpm',
+1 verbose cli   '-g',
+1 verbose cli   '--registry=https://registry.npm.taobao.org' ]
+2 info using npm@1.2.12
+3 info using node@v0.9.10
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 verbose read json C:\Users\wangxt\AppData\Roaming\npm\package.json
+6 verbose read json C:\Users\wangxt\AppData\Roaming\npm\package.json
+7 verbose cache add [ 'cnpm', null ]
+8 verbose cache add name=undefined spec="cnpm" args=["cnpm",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'cnpm',
+9 verbose parsed url   path: 'cnpm',
+9 verbose parsed url   href: 'cnpm' }
+10 silly lockFile 5c1695da-cnpm cnpm
+11 verbose lock cnpm C:\Users\wangxt\AppData\Roaming\npm-cache\5c1695da-cnpm.lock
+12 silly lockFile 5c1695da-cnpm cnpm
+13 silly lockFile 5c1695da-cnpm cnpm
+14 verbose addNamed [ 'cnpm', '' ]
+15 verbose addNamed [ null, '' ]
+16 silly lockFile c7bab240-cnpm cnpm@
+17 verbose lock cnpm@ C:\Users\wangxt\AppData\Roaming\npm-cache\c7bab240-cnpm.lock
+18 silly addNameRange { name: 'cnpm', range: '', hasData: false }
+19 verbose url raw cnpm
+20 verbose url resolving [ 'https://registry.npm.taobao.org/', './cnpm' ]
+21 verbose url resolved https://registry.npm.taobao.org/cnpm
+22 info trying registry request attempt 1 at 11:11:51
+23 verbose etag W/"634fe6844ce775bd1400c8eb778c87b7"
+24 http GET https://registry.npm.taobao.org/cnpm
+25 http 304 https://registry.npm.taobao.org/cnpm
+26 silly registry.get cb [ 304,
+26 silly registry.get   { server: 'Tengine',
+26 silly registry.get     'content-type': 'application/json; charset=utf-8',
+26 silly registry.get     connection: 'keep-alive',
+26 silly registry.get     date: 'Sat, 16 May 2020 03:11:53 GMT',
+26 silly registry.get     'x-current-requests': '1',
+26 silly registry.get     vary: 'accept, accept-encoding',
+26 silly registry.get     etag: 'W/"634fe6844ce775bd1400c8eb778c87b7"',
+26 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+26 silly registry.get     'x-readtime': '41',
+26 silly registry.get     via: 'cn544.l1, cache6.cn544, l2cn1824.l2, cache38.l2cn1824, izbp11dsagbzylz6yon5vtz, cache38.l2cn1824[53,304-0,H], cache3.l2cn1824[55,0], cache6.cn544[77,304-0,H], cache1.cn544[97,0]',
+26 silly registry.get     'ali-swift-global-savetime': '1580707719',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:1:74397708',
+26 silly registry.get     'timing-allow-origin': '*',
+26 silly registry.get     eagleid: '7ce8aa4115895987132485375e' } ]
+27 verbose etag cnpm from cache
+28 silly addNameRange number 2 { name: 'cnpm', range: '', hasData: true }
+29 silly addNameRange versions [ 'cnpm',
+29 silly addNameRange   [ '6.1.1',
+29 silly addNameRange     '3.5.0',
+29 silly addNameRange     '4.6.0',
+29 silly addNameRange     '5.4.0',
+29 silly addNameRange     '6.1.0',
+29 silly addNameRange     '6.0.0',
+29 silly addNameRange     '5.3.0',
+29 silly addNameRange     '5.2.0',
+29 silly addNameRange     '4.5.1',
+29 silly addNameRange     '5.1.1',
+29 silly addNameRange     '5.1.0',
+29 silly addNameRange     '5.0.0',
+29 silly addNameRange     '5.0.0-beta.3',
+29 silly addNameRange     '5.0.0-beta.2',
+29 silly addNameRange     '5.0.0-beta.1',
+29 silly addNameRange     '4.5.0',
+29 silly addNameRange     '4.4.2',
+29 silly addNameRange     '4.4.1',
+29 silly addNameRange     '4.4.0',
+29 silly addNameRange     '4.4.0-beta',
+29 silly addNameRange     '4.3.2',
+29 silly addNameRange     '4.3.1',
+29 silly addNameRange     '4.3.0',
+29 silly addNameRange     '4.2.0',
+29 silly addNameRange     '4.2.0-beta.5',
+29 silly addNameRange     '4.2.0-beta.4',
+29 silly addNameRange     '4.2.0-beta.3',
+29 silly addNameRange     '4.2.0-beta.2',
+29 silly addNameRange     '4.2.0-beta.1',
+29 silly addNameRange     '3.4.1',
+29 silly addNameRange     '3.4.0',
+29 silly addNameRange     '3.3.1',
+29 silly addNameRange     '4.1.0',
+29 silly addNameRange     '3.3.0',
+29 silly addNameRange     '4.0.0',
+29 silly addNameRange     '3.2.3',
+29 silly addNameRange     '3.2.2',
+29 silly addNameRange     '3.2.1',
+29 silly addNameRange     '3.2.0',
+29 silly addNameRange     '3.1.0',
+29 silly addNameRange     '3.0.2',
+29 silly addNameRange     '3.0.1',
+29 silly addNameRange     '3.0.0',
+29 silly addNameRange     '2.0.1',
+29 silly addNameRange     '2.0.0',
+29 silly addNameRange     '1.2.0',
+29 silly addNameRange     '1.1.0',
+29 silly addNameRange     '1.0.0',
+29 silly addNameRange     '0.5.2',
+29 silly addNameRange     '0.5.0',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.3.0',
+29 silly addNameRange     '0.2.2',
+29 silly addNameRange     '0.2.1',
+29 silly addNameRange     '0.2.0',
+29 silly addNameRange     '0.1.3',
+29 silly addNameRange     '0.1.2',
+29 silly addNameRange     '0.1.1',
+29 silly addNameRange     '0.1.0',
+29 silly addNameRange     '0.0.35',
+29 silly addNameRange     '0.0.34',
+29 silly addNameRange     '0.0.33',
+29 silly addNameRange     '0.0.32',
+29 silly addNameRange     '0.0.31',
+29 silly addNameRange     '0.0.30',
+29 silly addNameRange     '0.0.29',
+29 silly addNameRange     '0.0.28',
+29 silly addNameRange     '0.0.27',
+29 silly addNameRange     '0.0.26',
+29 silly addNameRange     '0.0.25',
+29 silly addNameRange     '0.0.24',
+29 silly addNameRange     '0.0.23',
+29 silly addNameRange     '0.0.22',
+29 silly addNameRange     '0.0.21',
+29 silly addNameRange     '0.0.20',
+29 silly addNameRange     '0.0.19',
+29 silly addNameRange     '0.0.18',
+29 silly addNameRange     '0.0.17',
+29 silly addNameRange     '0.0.16',
+29 silly addNameRange     '0.0.15',
+29 silly addNameRange     '0.0.14',
+29 silly addNameRange     '0.0.13',
+29 silly addNameRange     '0.0.12',
+29 silly addNameRange     '0.0.11',
+29 silly addNameRange     '0.0.10',
+29 silly addNameRange     '0.0.9',
+29 silly addNameRange     '0.0.8',
+29 silly addNameRange     '0.0.7',
+29 silly addNameRange     '0.0.6',
+29 silly addNameRange     '0.0.5',
+29 silly addNameRange     '0.0.4',
+29 silly addNameRange     '0.0.3',
+29 silly addNameRange     '0.0.2',
+29 silly addNameRange     '0.0.1',
+29 silly addNameRange     '0.0.0' ] ]
+30 verbose addNamed [ 'cnpm', '6.1.1' ]
+31 verbose addNamed [ '6.1.1', '6.1.1' ]
+32 silly lockFile 0ea7e247-cnpm-6-1-1 cnpm@6.1.1
+33 verbose lock cnpm@6.1.1 C:\Users\wangxt\AppData\Roaming\npm-cache\0ea7e247-cnpm-6-1-1.lock
+34 verbose read json C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package\package.json
+35 silly lockFile 0ea7e247-cnpm-6-1-1 cnpm@6.1.1
+36 silly lockFile 0ea7e247-cnpm-6-1-1 cnpm@6.1.1
+37 silly lockFile c7bab240-cnpm cnpm@
+38 silly lockFile c7bab240-cnpm cnpm@
+39 silly resolved [ { name: 'cnpm',
+39 silly resolved     version: '6.1.1',
+39 silly resolved     description: 'cnpm: npm client for cnpmjs.org',
+39 silly resolved     main: 'bin/cnpm',
+39 silly resolved     files: [ 'bin', 'lib' ],
+39 silly resolved     scripts:
+39 silly resolved      { test: 'npm run lint -- --fix && npm run test-local',
+39 silly resolved        'test-local': 'egg-bin test',
+39 silly resolved        lint: 'eslint bin lib test/*.js',
+39 silly resolved        ci: 'npm run lint && npm run test',
+39 silly resolved        autod: 'autod' },
+39 silly resolved     preferGlobal: true,
+39 silly resolved     bin: { cnpm: 'bin/cnpm' },
+39 silly resolved     dependencies:
+39 silly resolved      { 'auto-correct': '^1.0.0',
+39 silly resolved        bagpipe: '^0.3.5',
+39 silly resolved        colors: '^1.1.2',
+39 silly resolved        commander: '~2.10.0',
+39 silly resolved        'cross-spawn': '~0.2.8',
+39 silly resolved        debug: '^2.2.0',
+39 silly resolved        giturl: '^1.0.0',
+39 silly resolved        ini: '^1.3.4',
+39 silly resolved        npm: '^6.13.4',
+39 silly resolved        'npm-request': '^1.0.0',
+39 silly resolved        npminstall: '^3.25.2',
+39 silly resolved        open: '^0.0.5',
+39 silly resolved        urllib: '^2.17.0' },
+39 silly resolved     devDependencies:
+39 silly resolved      { autod: '^2.7.1',
+39 silly resolved        coffee: '^3.3.0',
+39 silly resolved        'egg-bin': '^4.7.0',
+39 silly resolved        'egg-ci': '^1.1.0',
+39 silly resolved        eslint: '^4.19.1',
+39 silly resolved        'eslint-config-egg': '^7.0.0',
+39 silly resolved        'fs-extra': '0',
+39 silly resolved        rimraf: '^2.5.4' },
+39 silly resolved     homepage: 'https://github.com/cnpm/cnpm',
+39 silly resolved     repository: { type: 'git', url: 'git://github.com/cnpm/cnpm.git' },
+39 silly resolved     bugs: { url: 'https://github.com/cnpm/cnpm/issues' },
+39 silly resolved     keywords: [ 'cnpm', 'npm', 'npminstall' ],
+39 silly resolved     publishConfig: { tag: 'latest-6' },
+39 silly resolved     engines: { node: '>= 6.0.0' },
+39 silly resolved     ci: { version: '6, 8, 10, 12', command: [Object] },
+39 silly resolved     author:
+39 silly resolved      { name: 'fengmk2',
+39 silly resolved        email: 'fengmk2@gmail.com',
+39 silly resolved        url: 'https://fengmk2.com' },
+39 silly resolved     license: 'MIT',
+39 silly resolved     readme: 'cnpm\n=======\n\n[![NPM version][npm-image]][npm-url]\n[![build status][travis-image]][travis-url]\n[![appveyor build status][appveyor-image]][appveyor-url]\n[![David deps][david-image]][david-url]\n\n[npm-image]: https://img.shields.io/npm/v/cnpm.svg?style=flat\n[npm-url]: https://npmjs.org/package/cnpm\n[travis-image]: https://img.shields.io/travis/cnpm/cnpm.svg?style=flat\n[travis-url]: https://travis-ci.org/cnpm/cnpm\n[appveyor-image]: https://ci.appveyor.com/api/projects/status/17kfr8eitdi7rljr?svg=true\n[appveyor-url]: https://ci.appveyor.com/project/fengmk2/urllib\n[david-image]: https://img.shields.io/david/cnpm/cnpm.svg?style=flat\n[david-url]: https://david-dm.org/cnpm/cnpm\n\n![logo](https://raw.github.com/cnpm/cnpmjs.org/master/logo.png)\n\ncnpm: npm client for [cnpmjs.org](https://cnpmjs.org)\n\n\n## Requirements\n\n|        | Minimum | Recommended |\n|--------|---------|-------------|\n| NodeJS | 4.0.0   | stable      |\n\n## Install\n\n```bash\n$ npm install cnpm -g\n```\n\nIf you\'re in China, maybe you should install it from our [China mirror](https://npm.taobao.org):\n\n```bash\n$ npm install cnpm -g --registry=https://r.npm.taobao.org\n```\n\n## Usage\n\nSupport all commands just like `npm`.\n\n### Sync packages from `npm`\n\n```bash\n$ cnpm sync [moduleName]\n```\n\n### Open package document or git web url\n\n```bash\n$ cnpm doc [name]\n$ cnpm doc -g [name] # open git web url directly\n```\n\n## Build your own private registry npm cli\n\n```bash\n$ npm install cnpm -g\n\n# then alias it\n$ alias mynpm=\'cnpm --registry=http://registry.npm.example.com \\\n  --registryweb=http://npm.example.com \\\n  --userconfig=$HOME/.mynpmrc\'\n```\n\n## Install with original npm cli\n\ncnpm using [npminstall](https://github.com/cnpm/npminstall) by default.\nIf you don\'t like symlink mode for `node_modules`, you can change the installer to original npm.\nBut you will lose the fastest install speed.\n\n```bash\n$ cnpm i --by=npm react-native\n```\n\n## License\n\n[MIT](LICENSE.txt)\n',
+39 silly resolved     readmeFilename: 'README.md',
+39 silly resolved     _id: 'cnpm@6.1.1',
+39 silly resolved     _from: 'cnpm@' } ]
+40 info install cnpm@6.1.1 into C:\Users\wangxt\AppData\Roaming\npm
+41 info installOne cnpm@6.1.1
+42 warn engine cnpm@6.1.1: wanted: {"node":">= 6.0.0"} (current: {"node":"v0.9.10","npm":"1.2.12"})
+43 verbose from cache C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package\package.json
+44 info C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm unbuild
+45 verbose read json C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm\package.json
+46 verbose tar unpack C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package.tgz
+47 silly lockFile 6f597fe8-ta-Roaming-npm-node-modules-cnpm C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm
+48 verbose lock C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm C:\Users\wangxt\AppData\Roaming\npm-cache\6f597fe8-ta-Roaming-npm-node-modules-cnpm.lock
+49 silly lockFile 58134fb3-npm-cache-cnpm-6-1-1-package-tgz C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package.tgz
+50 verbose lock C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package.tgz C:\Users\wangxt\AppData\Roaming\npm-cache\58134fb3-npm-cache-cnpm-6-1-1-package-tgz.lock
+51 silly gunzTarPerm modes [ '755', '644' ]
+52 silly gunzTarPerm extractEntry package.json
+53 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+54 silly gunzTarPerm extractEntry README.md
+55 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+56 silly gunzTarPerm extractEntry bin/cnpm
+57 silly gunzTarPerm modified mode [ 'bin/cnpm', 438, 420 ]
+58 silly gunzTarPerm extractEntry bin/cnpm-check
+59 silly gunzTarPerm modified mode [ 'bin/cnpm-check', 438, 420 ]
+60 silly gunzTarPerm extractEntry bin/cnpm-doc
+61 silly gunzTarPerm modified mode [ 'bin/cnpm-doc', 438, 420 ]
+62 silly gunzTarPerm extractEntry bin/cnpm-search
+63 silly gunzTarPerm modified mode [ 'bin/cnpm-search', 438, 420 ]
+64 silly gunzTarPerm extractEntry bin/cnpm-sync
+65 silly gunzTarPerm modified mode [ 'bin/cnpm-sync', 438, 420 ]
+66 silly gunzTarPerm extractEntry bin/cnpm-user
+67 silly gunzTarPerm modified mode [ 'bin/cnpm-user', 438, 420 ]
+68 silly gunzTarPerm extractEntry bin/cnpm-web
+69 silly gunzTarPerm modified mode [ 'bin/cnpm-web', 438, 420 ]
+70 silly gunzTarPerm extractEntry lib/config.js
+71 silly gunzTarPerm modified mode [ 'lib/config.js', 438, 420 ]
+72 silly gunzTarPerm extractEntry lib/help.js
+73 silly gunzTarPerm modified mode [ 'lib/help.js', 438, 420 ]
+74 silly gunzTarPerm extractEntry lib/origin_npm.js
+75 silly gunzTarPerm modified mode [ 'lib/origin_npm.js', 438, 420 ]
+76 silly gunzTarPerm extractEntry lib/parse_argv.js
+77 silly gunzTarPerm modified mode [ 'lib/parse_argv.js', 438, 420 ]
+78 silly gunzTarPerm extractEntry lib/utils.js
+79 silly gunzTarPerm modified mode [ 'lib/utils.js', 438, 420 ]
+80 verbose read json C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm\package.json
+81 silly lockFile 6f597fe8-ta-Roaming-npm-node-modules-cnpm C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm
+82 silly lockFile 6f597fe8-ta-Roaming-npm-node-modules-cnpm C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm
+83 silly lockFile 58134fb3-npm-cache-cnpm-6-1-1-package-tgz C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package.tgz
+84 silly lockFile 58134fb3-npm-cache-cnpm-6-1-1-package-tgz C:\Users\wangxt\AppData\Roaming\npm-cache\cnpm\6.1.1\package.tgz
+85 info preinstall cnpm@6.1.1
+86 verbose from cache C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm\package.json
+87 verbose readDependencies using package.json deps
+88 verbose from cache C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm\package.json
+89 verbose readDependencies using package.json deps
+90 verbose cache add [ 'auto-correct@^1.0.0', null ]
+91 verbose cache add name=undefined spec="auto-correct@^1.0.0" args=["auto-correct@^1.0.0",null]
+92 verbose parsed url { protocol: null,
+92 verbose parsed url   slashes: null,
+92 verbose parsed url   auth: null,
+92 verbose parsed url   host: null,
+92 verbose parsed url   port: null,
+92 verbose parsed url   hostname: null,
+92 verbose parsed url   hash: null,
+92 verbose parsed url   search: null,
+92 verbose parsed url   query: null,
+92 verbose parsed url   pathname: 'auto-correct@^1.0.0',
+92 verbose parsed url   path: 'auto-correct@^1.0.0',
+92 verbose parsed url   href: 'auto-correct@^1.0.0' }
+93 verbose cache add name="auto-correct" spec="^1.0.0" args=["auto-correct","^1.0.0"]
+94 verbose parsed url { protocol: null,
+94 verbose parsed url   slashes: null,
+94 verbose parsed url   auth: null,
+94 verbose parsed url   host: null,
+94 verbose parsed url   port: null,
+94 verbose parsed url   hostname: null,
+94 verbose parsed url   hash: null,
+94 verbose parsed url   search: null,
+94 verbose parsed url   query: null,
+94 verbose parsed url   pathname: '^1.0.0',
+94 verbose parsed url   path: '^1.0.0',
+94 verbose parsed url   href: '^1.0.0' }
+95 verbose addNamed [ 'auto-correct', '^1.0.0' ]
+96 verbose addNamed [ null, null ]
+97 silly lockFile bc9208c7-auto-correct-1-0-0 auto-correct@^1.0.0
+98 verbose lock auto-correct@^1.0.0 C:\Users\wangxt\AppData\Roaming\npm-cache\bc9208c7-auto-correct-1-0-0.lock
+99 verbose cache add [ 'bagpipe@^0.3.5', null ]
+100 verbose cache add name=undefined spec="bagpipe@^0.3.5" args=["bagpipe@^0.3.5",null]
+101 verbose parsed url { protocol: null,
+101 verbose parsed url   slashes: null,
+101 verbose parsed url   auth: null,
+101 verbose parsed url   host: null,
+101 verbose parsed url   port: null,
+101 verbose parsed url   hostname: null,
+101 verbose parsed url   hash: null,
+101 verbose parsed url   search: null,
+101 verbose parsed url   query: null,
+101 verbose parsed url   pathname: 'bagpipe@^0.3.5',
+101 verbose parsed url   path: 'bagpipe@^0.3.5',
+101 verbose parsed url   href: 'bagpipe@^0.3.5' }
+102 verbose cache add name="bagpipe" spec="^0.3.5" args=["bagpipe","^0.3.5"]
+103 verbose parsed url { protocol: null,
+103 verbose parsed url   slashes: null,
+103 verbose parsed url   auth: null,
+103 verbose parsed url   host: null,
+103 verbose parsed url   port: null,
+103 verbose parsed url   hostname: null,
+103 verbose parsed url   hash: null,
+103 verbose parsed url   search: null,
+103 verbose parsed url   query: null,
+103 verbose parsed url   pathname: '^0.3.5',
+103 verbose parsed url   path: '^0.3.5',
+103 verbose parsed url   href: '^0.3.5' }
+104 verbose addNamed [ 'bagpipe', '^0.3.5' ]
+105 verbose addNamed [ null, null ]
+106 silly lockFile 9836e233-bagpipe-0-3-5 bagpipe@^0.3.5
+107 verbose lock bagpipe@^0.3.5 C:\Users\wangxt\AppData\Roaming\npm-cache\9836e233-bagpipe-0-3-5.lock
+108 verbose cache add [ 'colors@^1.1.2', null ]
+109 verbose cache add name=undefined spec="colors@^1.1.2" args=["colors@^1.1.2",null]
+110 verbose parsed url { protocol: null,
+110 verbose parsed url   slashes: null,
+110 verbose parsed url   auth: null,
+110 verbose parsed url   host: null,
+110 verbose parsed url   port: null,
+110 verbose parsed url   hostname: null,
+110 verbose parsed url   hash: null,
+110 verbose parsed url   search: null,
+110 verbose parsed url   query: null,
+110 verbose parsed url   pathname: 'colors@^1.1.2',
+110 verbose parsed url   path: 'colors@^1.1.2',
+110 verbose parsed url   href: 'colors@^1.1.2' }
+111 verbose cache add name="colors" spec="^1.1.2" args=["colors","^1.1.2"]
+112 verbose parsed url { protocol: null,
+112 verbose parsed url   slashes: null,
+112 verbose parsed url   auth: null,
+112 verbose parsed url   host: null,
+112 verbose parsed url   port: null,
+112 verbose parsed url   hostname: null,
+112 verbose parsed url   hash: null,
+112 verbose parsed url   search: null,
+112 verbose parsed url   query: null,
+112 verbose parsed url   pathname: '^1.1.2',
+112 verbose parsed url   path: '^1.1.2',
+112 verbose parsed url   href: '^1.1.2' }
+113 verbose addNamed [ 'colors', '^1.1.2' ]
+114 verbose addNamed [ null, null ]
+115 silly lockFile 8d2a5ca0-colors-1-1-2 colors@^1.1.2
+116 verbose lock colors@^1.1.2 C:\Users\wangxt\AppData\Roaming\npm-cache\8d2a5ca0-colors-1-1-2.lock
+117 verbose cache add [ 'commander@~2.10.0', null ]
+118 verbose cache add name=undefined spec="commander@~2.10.0" args=["commander@~2.10.0",null]
+119 verbose parsed url { protocol: null,
+119 verbose parsed url   slashes: null,
+119 verbose parsed url   auth: null,
+119 verbose parsed url   host: null,
+119 verbose parsed url   port: null,
+119 verbose parsed url   hostname: null,
+119 verbose parsed url   hash: null,
+119 verbose parsed url   search: null,
+119 verbose parsed url   query: null,
+119 verbose parsed url   pathname: 'commander@~2.10.0',
+119 verbose parsed url   path: 'commander@~2.10.0',
+119 verbose parsed url   href: 'commander@~2.10.0' }
+120 verbose cache add name="commander" spec="~2.10.0" args=["commander","~2.10.0"]
+121 verbose parsed url { protocol: null,
+121 verbose parsed url   slashes: null,
+121 verbose parsed url   auth: null,
+121 verbose parsed url   host: null,
+121 verbose parsed url   port: null,
+121 verbose parsed url   hostname: null,
+121 verbose parsed url   hash: null,
+121 verbose parsed url   search: null,
+121 verbose parsed url   query: null,
+121 verbose parsed url   pathname: '~2.10.0',
+121 verbose parsed url   path: '~2.10.0',
+121 verbose parsed url   href: '~2.10.0' }
+122 verbose addNamed [ 'commander', '~2.10.0' ]
+123 verbose addNamed [ null, '>=2.10.0- <2.11.0-' ]
+124 silly lockFile 33ad55f5-commander-2-10-0 commander@~2.10.0
+125 verbose lock commander@~2.10.0 C:\Users\wangxt\AppData\Roaming\npm-cache\33ad55f5-commander-2-10-0.lock
+126 verbose cache add [ 'cross-spawn@~0.2.8', null ]
+127 verbose cache add name=undefined spec="cross-spawn@~0.2.8" args=["cross-spawn@~0.2.8",null]
+128 verbose parsed url { protocol: null,
+128 verbose parsed url   slashes: null,
+128 verbose parsed url   auth: null,
+128 verbose parsed url   host: null,
+128 verbose parsed url   port: null,
+128 verbose parsed url   hostname: null,
+128 verbose parsed url   hash: null,
+128 verbose parsed url   search: null,
+128 verbose parsed url   query: null,
+128 verbose parsed url   pathname: 'cross-spawn@~0.2.8',
+128 verbose parsed url   path: 'cross-spawn@~0.2.8',
+128 verbose parsed url   href: 'cross-spawn@~0.2.8' }
+129 verbose cache add name="cross-spawn" spec="~0.2.8" args=["cross-spawn","~0.2.8"]
+130 verbose parsed url { protocol: null,
+130 verbose parsed url   slashes: null,
+130 verbose parsed url   auth: null,
+130 verbose parsed url   host: null,
+130 verbose parsed url   port: null,
+130 verbose parsed url   hostname: null,
+130 verbose parsed url   hash: null,
+130 verbose parsed url   search: null,
+130 verbose parsed url   query: null,
+130 verbose parsed url   pathname: '~0.2.8',
+130 verbose parsed url   path: '~0.2.8',
+130 verbose parsed url   href: '~0.2.8' }
+131 verbose addNamed [ 'cross-spawn', '~0.2.8' ]
+132 verbose addNamed [ null, '>=0.2.8- <0.3.0-' ]
+133 silly lockFile 73eacd0a-cross-spawn-0-2-8 cross-spawn@~0.2.8
+134 verbose lock cross-spawn@~0.2.8 C:\Users\wangxt\AppData\Roaming\npm-cache\73eacd0a-cross-spawn-0-2-8.lock
+135 verbose cache add [ 'debug@^2.2.0', null ]
+136 verbose cache add name=undefined spec="debug@^2.2.0" args=["debug@^2.2.0",null]
+137 verbose parsed url { protocol: null,
+137 verbose parsed url   slashes: null,
+137 verbose parsed url   auth: null,
+137 verbose parsed url   host: null,
+137 verbose parsed url   port: null,
+137 verbose parsed url   hostname: null,
+137 verbose parsed url   hash: null,
+137 verbose parsed url   search: null,
+137 verbose parsed url   query: null,
+137 verbose parsed url   pathname: 'debug@^2.2.0',
+137 verbose parsed url   path: 'debug@^2.2.0',
+137 verbose parsed url   href: 'debug@^2.2.0' }
+138 verbose cache add name="debug" spec="^2.2.0" args=["debug","^2.2.0"]
+139 verbose parsed url { protocol: null,
+139 verbose parsed url   slashes: null,
+139 verbose parsed url   auth: null,
+139 verbose parsed url   host: null,
+139 verbose parsed url   port: null,
+139 verbose parsed url   hostname: null,
+139 verbose parsed url   hash: null,
+139 verbose parsed url   search: null,
+139 verbose parsed url   query: null,
+139 verbose parsed url   pathname: '^2.2.0',
+139 verbose parsed url   path: '^2.2.0',
+139 verbose parsed url   href: '^2.2.0' }
+140 verbose addNamed [ 'debug', '^2.2.0' ]
+141 verbose addNamed [ null, null ]
+142 silly lockFile 862c00aa-debug-2-2-0 debug@^2.2.0
+143 verbose lock debug@^2.2.0 C:\Users\wangxt\AppData\Roaming\npm-cache\862c00aa-debug-2-2-0.lock
+144 verbose cache add [ 'giturl@^1.0.0', null ]
+145 verbose cache add name=undefined spec="giturl@^1.0.0" args=["giturl@^1.0.0",null]
+146 verbose parsed url { protocol: null,
+146 verbose parsed url   slashes: null,
+146 verbose parsed url   auth: null,
+146 verbose parsed url   host: null,
+146 verbose parsed url   port: null,
+146 verbose parsed url   hostname: null,
+146 verbose parsed url   hash: null,
+146 verbose parsed url   search: null,
+146 verbose parsed url   query: null,
+146 verbose parsed url   pathname: 'giturl@^1.0.0',
+146 verbose parsed url   path: 'giturl@^1.0.0',
+146 verbose parsed url   href: 'giturl@^1.0.0' }
+147 verbose cache add name="giturl" spec="^1.0.0" args=["giturl","^1.0.0"]
+148 verbose parsed url { protocol: null,
+148 verbose parsed url   slashes: null,
+148 verbose parsed url   auth: null,
+148 verbose parsed url   host: null,
+148 verbose parsed url   port: null,
+148 verbose parsed url   hostname: null,
+148 verbose parsed url   hash: null,
+148 verbose parsed url   search: null,
+148 verbose parsed url   query: null,
+148 verbose parsed url   pathname: '^1.0.0',
+148 verbose parsed url   path: '^1.0.0',
+148 verbose parsed url   href: '^1.0.0' }
+149 verbose addNamed [ 'giturl', '^1.0.0' ]
+150 verbose addNamed [ null, null ]
+151 silly lockFile 600d2005-giturl-1-0-0 giturl@^1.0.0
+152 verbose lock giturl@^1.0.0 C:\Users\wangxt\AppData\Roaming\npm-cache\600d2005-giturl-1-0-0.lock
+153 verbose cache add [ 'ini@^1.3.4', null ]
+154 verbose cache add name=undefined spec="ini@^1.3.4" args=["ini@^1.3.4",null]
+155 verbose parsed url { protocol: null,
+155 verbose parsed url   slashes: null,
+155 verbose parsed url   auth: null,
+155 verbose parsed url   host: null,
+155 verbose parsed url   port: null,
+155 verbose parsed url   hostname: null,
+155 verbose parsed url   hash: null,
+155 verbose parsed url   search: null,
+155 verbose parsed url   query: null,
+155 verbose parsed url   pathname: 'ini@^1.3.4',
+155 verbose parsed url   path: 'ini@^1.3.4',
+155 verbose parsed url   href: 'ini@^1.3.4' }
+156 verbose cache add name="ini" spec="^1.3.4" args=["ini","^1.3.4"]
+157 verbose parsed url { protocol: null,
+157 verbose parsed url   slashes: null,
+157 verbose parsed url   auth: null,
+157 verbose parsed url   host: null,
+157 verbose parsed url   port: null,
+157 verbose parsed url   hostname: null,
+157 verbose parsed url   hash: null,
+157 verbose parsed url   search: null,
+157 verbose parsed url   query: null,
+157 verbose parsed url   pathname: '^1.3.4',
+157 verbose parsed url   path: '^1.3.4',
+157 verbose parsed url   href: '^1.3.4' }
+158 verbose addNamed [ 'ini', '^1.3.4' ]
+159 verbose addNamed [ null, null ]
+160 silly lockFile 02265092-ini-1-3-4 ini@^1.3.4
+161 verbose lock ini@^1.3.4 C:\Users\wangxt\AppData\Roaming\npm-cache\02265092-ini-1-3-4.lock
+162 verbose cache add [ 'npm@^6.13.4', null ]
+163 verbose cache add name=undefined spec="npm@^6.13.4" args=["npm@^6.13.4",null]
+164 verbose parsed url { protocol: null,
+164 verbose parsed url   slashes: null,
+164 verbose parsed url   auth: null,
+164 verbose parsed url   host: null,
+164 verbose parsed url   port: null,
+164 verbose parsed url   hostname: null,
+164 verbose parsed url   hash: null,
+164 verbose parsed url   search: null,
+164 verbose parsed url   query: null,
+164 verbose parsed url   pathname: 'npm@^6.13.4',
+164 verbose parsed url   path: 'npm@^6.13.4',
+164 verbose parsed url   href: 'npm@^6.13.4' }
+165 verbose cache add name="npm" spec="^6.13.4" args=["npm","^6.13.4"]
+166 verbose parsed url { protocol: null,
+166 verbose parsed url   slashes: null,
+166 verbose parsed url   auth: null,
+166 verbose parsed url   host: null,
+166 verbose parsed url   port: null,
+166 verbose parsed url   hostname: null,
+166 verbose parsed url   hash: null,
+166 verbose parsed url   search: null,
+166 verbose parsed url   query: null,
+166 verbose parsed url   pathname: '^6.13.4',
+166 verbose parsed url   path: '^6.13.4',
+166 verbose parsed url   href: '^6.13.4' }
+167 verbose addNamed [ 'npm', '^6.13.4' ]
+168 verbose addNamed [ null, null ]
+169 silly lockFile 9c21f46e-npm-6-13-4 npm@^6.13.4
+170 verbose lock npm@^6.13.4 C:\Users\wangxt\AppData\Roaming\npm-cache\9c21f46e-npm-6-13-4.lock
+171 verbose cache add [ 'npm-request@^1.0.0', null ]
+172 verbose cache add name=undefined spec="npm-request@^1.0.0" args=["npm-request@^1.0.0",null]
+173 verbose parsed url { protocol: null,
+173 verbose parsed url   slashes: null,
+173 verbose parsed url   auth: null,
+173 verbose parsed url   host: null,
+173 verbose parsed url   port: null,
+173 verbose parsed url   hostname: null,
+173 verbose parsed url   hash: null,
+173 verbose parsed url   search: null,
+173 verbose parsed url   query: null,
+173 verbose parsed url   pathname: 'npm-request@^1.0.0',
+173 verbose parsed url   path: 'npm-request@^1.0.0',
+173 verbose parsed url   href: 'npm-request@^1.0.0' }
+174 verbose cache add name="npm-request" spec="^1.0.0" args=["npm-request","^1.0.0"]
+175 verbose parsed url { protocol: null,
+175 verbose parsed url   slashes: null,
+175 verbose parsed url   auth: null,
+175 verbose parsed url   host: null,
+175 verbose parsed url   port: null,
+175 verbose parsed url   hostname: null,
+175 verbose parsed url   hash: null,
+175 verbose parsed url   search: null,
+175 verbose parsed url   query: null,
+175 verbose parsed url   pathname: '^1.0.0',
+175 verbose parsed url   path: '^1.0.0',
+175 verbose parsed url   href: '^1.0.0' }
+176 verbose addNamed [ 'npm-request', '^1.0.0' ]
+177 verbose addNamed [ null, null ]
+178 silly lockFile cf4b1b9c-npm-request-1-0-0 npm-request@^1.0.0
+179 verbose lock npm-request@^1.0.0 C:\Users\wangxt\AppData\Roaming\npm-cache\cf4b1b9c-npm-request-1-0-0.lock
+180 verbose cache add [ 'npminstall@^3.25.2', null ]
+181 verbose cache add name=undefined spec="npminstall@^3.25.2" args=["npminstall@^3.25.2",null]
+182 verbose parsed url { protocol: null,
+182 verbose parsed url   slashes: null,
+182 verbose parsed url   auth: null,
+182 verbose parsed url   host: null,
+182 verbose parsed url   port: null,
+182 verbose parsed url   hostname: null,
+182 verbose parsed url   hash: null,
+182 verbose parsed url   search: null,
+182 verbose parsed url   query: null,
+182 verbose parsed url   pathname: 'npminstall@^3.25.2',
+182 verbose parsed url   path: 'npminstall@^3.25.2',
+182 verbose parsed url   href: 'npminstall@^3.25.2' }
+183 verbose cache add name="npminstall" spec="^3.25.2" args=["npminstall","^3.25.2"]
+184 verbose parsed url { protocol: null,
+184 verbose parsed url   slashes: null,
+184 verbose parsed url   auth: null,
+184 verbose parsed url   host: null,
+184 verbose parsed url   port: null,
+184 verbose parsed url   hostname: null,
+184 verbose parsed url   hash: null,
+184 verbose parsed url   search: null,
+184 verbose parsed url   query: null,
+184 verbose parsed url   pathname: '^3.25.2',
+184 verbose parsed url   path: '^3.25.2',
+184 verbose parsed url   href: '^3.25.2' }
+185 verbose addNamed [ 'npminstall', '^3.25.2' ]
+186 verbose addNamed [ null, null ]
+187 silly lockFile d905a145-npminstall-3-25-2 npminstall@^3.25.2
+188 verbose lock npminstall@^3.25.2 C:\Users\wangxt\AppData\Roaming\npm-cache\d905a145-npminstall-3-25-2.lock
+189 verbose cache add [ 'open@^0.0.5', null ]
+190 verbose cache add name=undefined spec="open@^0.0.5" args=["open@^0.0.5",null]
+191 verbose parsed url { protocol: null,
+191 verbose parsed url   slashes: null,
+191 verbose parsed url   auth: null,
+191 verbose parsed url   host: null,
+191 verbose parsed url   port: null,
+191 verbose parsed url   hostname: null,
+191 verbose parsed url   hash: null,
+191 verbose parsed url   search: null,
+191 verbose parsed url   query: null,
+191 verbose parsed url   pathname: 'open@^0.0.5',
+191 verbose parsed url   path: 'open@^0.0.5',
+191 verbose parsed url   href: 'open@^0.0.5' }
+192 verbose cache add name="open" spec="^0.0.5" args=["open","^0.0.5"]
+193 verbose parsed url { protocol: null,
+193 verbose parsed url   slashes: null,
+193 verbose parsed url   auth: null,
+193 verbose parsed url   host: null,
+193 verbose parsed url   port: null,
+193 verbose parsed url   hostname: null,
+193 verbose parsed url   hash: null,
+193 verbose parsed url   search: null,
+193 verbose parsed url   query: null,
+193 verbose parsed url   pathname: '^0.0.5',
+193 verbose parsed url   path: '^0.0.5',
+193 verbose parsed url   href: '^0.0.5' }
+194 verbose addNamed [ 'open', '^0.0.5' ]
+195 verbose addNamed [ null, null ]
+196 silly lockFile b07b8caa-open-0-0-5 open@^0.0.5
+197 verbose lock open@^0.0.5 C:\Users\wangxt\AppData\Roaming\npm-cache\b07b8caa-open-0-0-5.lock
+198 verbose cache add [ 'urllib@^2.17.0', null ]
+199 verbose cache add name=undefined spec="urllib@^2.17.0" args=["urllib@^2.17.0",null]
+200 verbose parsed url { protocol: null,
+200 verbose parsed url   slashes: null,
+200 verbose parsed url   auth: null,
+200 verbose parsed url   host: null,
+200 verbose parsed url   port: null,
+200 verbose parsed url   hostname: null,
+200 verbose parsed url   hash: null,
+200 verbose parsed url   search: null,
+200 verbose parsed url   query: null,
+200 verbose parsed url   pathname: 'urllib@^2.17.0',
+200 verbose parsed url   path: 'urllib@^2.17.0',
+200 verbose parsed url   href: 'urllib@^2.17.0' }
+201 verbose cache add name="urllib" spec="^2.17.0" args=["urllib","^2.17.0"]
+202 verbose parsed url { protocol: null,
+202 verbose parsed url   slashes: null,
+202 verbose parsed url   auth: null,
+202 verbose parsed url   host: null,
+202 verbose parsed url   port: null,
+202 verbose parsed url   hostname: null,
+202 verbose parsed url   hash: null,
+202 verbose parsed url   search: null,
+202 verbose parsed url   query: null,
+202 verbose parsed url   pathname: '^2.17.0',
+202 verbose parsed url   path: '^2.17.0',
+202 verbose parsed url   href: '^2.17.0' }
+203 verbose addNamed [ 'urllib', '^2.17.0' ]
+204 verbose addNamed [ null, null ]
+205 silly lockFile 4a94582f-urllib-2-17-0 urllib@^2.17.0
+206 verbose lock urllib@^2.17.0 C:\Users\wangxt\AppData\Roaming\npm-cache\4a94582f-urllib-2-17-0.lock
+207 info addNameTag [ 'bagpipe', '^0.3.5' ]
+208 info addNameTag [ 'auto-correct', '^1.0.0' ]
+209 silly addNameRange { name: 'commander',
+209 silly addNameRange   range: '>=2.10.0- <2.11.0-',
+209 silly addNameRange   hasData: false }
+210 silly addNameRange { name: 'cross-spawn',
+210 silly addNameRange   range: '>=0.2.8- <0.3.0-',
+210 silly addNameRange   hasData: false }
+211 info addNameTag [ 'debug', '^2.2.0' ]
+212 info addNameTag [ 'colors', '^1.1.2' ]
+213 info addNameTag [ 'giturl', '^1.0.0' ]
+214 info addNameTag [ 'ini', '^1.3.4' ]
+215 info addNameTag [ 'npminstall', '^3.25.2' ]
+216 info addNameTag [ 'open', '^0.0.5' ]
+217 info addNameTag [ 'npm-request', '^1.0.0' ]
+218 info addNameTag [ 'urllib', '^2.17.0' ]
+219 info addNameTag [ 'npm', '^6.13.4' ]
+220 verbose url raw bagpipe
+221 verbose url resolving [ 'https://registry.npm.taobao.org/', './bagpipe' ]
+222 verbose url resolved https://registry.npm.taobao.org/bagpipe
+223 info trying registry request attempt 1 at 11:11:58
+224 verbose etag W/"4b7dbb78e7d3dcef5e0a351b67a0ad59"
+225 http GET https://registry.npm.taobao.org/bagpipe
+226 verbose url raw commander
+227 verbose url resolving [ 'https://registry.npm.taobao.org/', './commander' ]
+228 verbose url resolved https://registry.npm.taobao.org/commander
+229 info trying registry request attempt 1 at 11:11:59
+230 verbose etag W/"eabe11a3c231297334ab6add0522885c"
+231 http GET https://registry.npm.taobao.org/commander
+232 verbose url raw auto-correct
+233 verbose url resolving [ 'https://registry.npm.taobao.org/', './auto-correct' ]
+234 verbose url resolved https://registry.npm.taobao.org/auto-correct
+235 info trying registry request attempt 1 at 11:11:59
+236 verbose etag W/"9a3e72c94565f0196dff208c32bdc2d3"
+237 http GET https://registry.npm.taobao.org/auto-correct
+238 verbose url raw cross-spawn
+239 verbose url resolving [ 'https://registry.npm.taobao.org/', './cross-spawn' ]
+240 verbose url resolved https://registry.npm.taobao.org/cross-spawn
+241 info trying registry request attempt 1 at 11:12:00
+242 verbose etag W/"ba9cd5ef44658954cf82f823c299a16d"
+243 http GET https://registry.npm.taobao.org/cross-spawn
+244 verbose url raw debug
+245 verbose url resolving [ 'https://registry.npm.taobao.org/', './debug' ]
+246 verbose url resolved https://registry.npm.taobao.org/debug
+247 info trying registry request attempt 1 at 11:12:01
+248 verbose etag W/"a80b2b4bf1229d8c980931243919d3e4"
+249 http GET https://registry.npm.taobao.org/debug
+250 verbose url raw colors
+251 verbose url resolving [ 'https://registry.npm.taobao.org/', './colors' ]
+252 verbose url resolved https://registry.npm.taobao.org/colors
+253 info trying registry request attempt 1 at 11:12:02
+254 verbose etag W/"1acefe1e970dcdf33d7ebfc99e221f3d"
+255 http GET https://registry.npm.taobao.org/colors
+256 verbose url raw giturl
+257 verbose url resolving [ 'https://registry.npm.taobao.org/', './giturl' ]
+258 verbose url resolved https://registry.npm.taobao.org/giturl
+259 info trying registry request attempt 1 at 11:12:02
+260 verbose etag W/"2ab5cea2776a0bb5c769c1523f37f269"
+261 http GET https://registry.npm.taobao.org/giturl
+262 verbose url raw ini
+263 verbose url resolving [ 'https://registry.npm.taobao.org/', './ini' ]
+264 verbose url resolved https://registry.npm.taobao.org/ini
+265 info trying registry request attempt 1 at 11:12:02
+266 verbose etag W/"3b6db918043e11929c97eb48271459ca"
+267 http GET https://registry.npm.taobao.org/ini
+268 verbose url raw npminstall
+269 verbose url resolving [ 'https://registry.npm.taobao.org/', './npminstall' ]
+270 verbose url resolved https://registry.npm.taobao.org/npminstall
+271 info trying registry request attempt 1 at 11:12:02
+272 verbose etag W/"81c33bd211641b36e37cb9872df0eac0"
+273 http GET https://registry.npm.taobao.org/npminstall
+274 verbose url raw open
+275 verbose url resolving [ 'https://registry.npm.taobao.org/', './open' ]
+276 verbose url resolved https://registry.npm.taobao.org/open
+277 info trying registry request attempt 1 at 11:12:04
+278 verbose etag W/"b81066f0b3b7bc054c7a4c49878232d8"
+279 http GET https://registry.npm.taobao.org/open
+280 verbose url raw npm-request
+281 verbose url resolving [ 'https://registry.npm.taobao.org/', './npm-request' ]
+282 verbose url resolved https://registry.npm.taobao.org/npm-request
+283 info trying registry request attempt 1 at 11:12:04
+284 verbose etag W/"bab9e3d43e1841519b07d85a7112b789"
+285 http GET https://registry.npm.taobao.org/npm-request
+286 verbose url raw urllib
+287 verbose url resolving [ 'https://registry.npm.taobao.org/', './urllib' ]
+288 verbose url resolved https://registry.npm.taobao.org/urllib
+289 info trying registry request attempt 1 at 11:12:04
+290 verbose etag W/"dbe4dfcc199c8bdf05cdf6ad6b49cf72"
+291 http GET https://registry.npm.taobao.org/urllib
+292 verbose url raw npm
+293 verbose url resolving [ 'https://registry.npm.taobao.org/', './npm' ]
+294 verbose url resolved https://registry.npm.taobao.org/npm
+295 info trying registry request attempt 1 at 11:12:06
+296 verbose etag W/"b3b4d41c2b8ecfaefffa13647d2a0fa9"
+297 http GET https://registry.npm.taobao.org/npm
+298 http 304 https://registry.npm.taobao.org/bagpipe
+299 silly registry.get cb [ 304,
+299 silly registry.get   { server: 'Tengine',
+299 silly registry.get     'content-type': 'application/json; charset=utf-8',
+299 silly registry.get     connection: 'keep-alive',
+299 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+299 silly registry.get     'x-current-requests': '1',
+299 silly registry.get     vary: 'accept, accept-encoding',
+299 silly registry.get     etag: 'W/"4b7dbb78e7d3dcef5e0a351b67a0ad59"',
+299 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+299 silly registry.get     'x-readtime': '16',
+299 silly registry.get     via: 'cn544.l1, cache6.cn544, l2cn1824.l2, cache10.l2cn1824, izbp11dsagbzylz6yon5vvz, cache10.l2cn1824[30,304-0,H], cache19.l2cn1824[31,0], cache6.cn544[53,304-0,H], cache1.cn544[61,0]',
+299 silly registry.get     'ali-swift-global-savetime': '1571736543',
+299 silly registry.get     age: '0',
+299 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:6:465618970',
+299 silly registry.get     'timing-allow-origin': '*',
+299 silly registry.get     eagleid: '7ce8aa4115895987267738821e' } ]
+300 verbose etag bagpipe from cache
+301 http 304 https://registry.npm.taobao.org/debug
+302 silly registry.get cb [ 304,
+302 silly registry.get   { server: 'Tengine',
+302 silly registry.get     'content-type': 'application/json; charset=utf-8',
+302 silly registry.get     connection: 'keep-alive',
+302 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+302 silly registry.get     'x-current-requests': '1',
+302 silly registry.get     vary: 'accept, accept-encoding',
+302 silly registry.get     etag: 'W/"a80b2b4bf1229d8c980931243919d3e4"',
+302 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+302 silly registry.get     'x-readtime': '23',
+302 silly registry.get     via: 'cn544.l1, cache8.cn544, l2cn1824.l2, cache50.l2cn1824, izbp17djxs02ot6ppjbt2jz, cache50.l2cn1824[36,304-0,H], cache30.l2cn1824[38,0], cache8.cn544[59,304-0,H], cache5.cn544[61,0]',
+302 silly registry.get     'ali-swift-global-savetime': '1584795290',
+302 silly registry.get     age: '0',
+302 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:1:204464944',
+302 silly registry.get     'timing-allow-origin': '*',
+302 silly registry.get     eagleid: '7ce8aa4515895987267825909e' } ]
+303 verbose etag debug from cache
+304 http 304 https://registry.npm.taobao.org/auto-correct
+305 silly registry.get cb [ 304,
+305 silly registry.get   { server: 'Tengine',
+305 silly registry.get     'content-type': 'application/json; charset=utf-8',
+305 silly registry.get     connection: 'keep-alive',
+305 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+305 silly registry.get     'x-current-requests': '1',
+305 silly registry.get     vary: 'accept, accept-encoding',
+305 silly registry.get     etag: 'W/"9a3e72c94565f0196dff208c32bdc2d3"',
+305 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+305 silly registry.get     'x-readtime': '16',
+305 silly registry.get     via: 'cn544.l1, cache1.cn544, l2cn1824.l2, cache13.l2cn1824, izbp11dsagbzylz6yon5vtz, cache13.l2cn1824[36,304-0,H], cache30.l2cn1824[40,0], cache1.cn544[63,304-0,H], cache8.cn544[66,0]',
+305 silly registry.get     'x-alicdn-da-ups-status': 'endInner,0,304',
+305 silly registry.get     'ali-swift-global-savetime': '1558850568',
+305 silly registry.get     age: '0',
+305 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:0:144986256',
+305 silly registry.get     'timing-allow-origin': '*',
+305 silly registry.get     eagleid: '7ce8aa4815895987267893732e' } ]
+306 verbose etag auto-correct from cache
+307 http 304 https://registry.npm.taobao.org/commander
+308 silly registry.get cb [ 304,
+308 silly registry.get   { server: 'Tengine',
+308 silly registry.get     'content-type': 'application/json; charset=utf-8',
+308 silly registry.get     connection: 'keep-alive',
+308 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+308 silly registry.get     'x-current-requests': '1',
+308 silly registry.get     vary: 'accept, accept-encoding',
+308 silly registry.get     etag: 'W/"eabe11a3c231297334ab6add0522885c"',
+308 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+308 silly registry.get     'x-readtime': '26',
+308 silly registry.get     via: 'cn544.l1, cache3.cn544, l2cn1824.l2, cache6.l2cn1824, izbp17djxs02ot6ppjbt2jz, cache6.l2cn1824[36,304-0,H], cache41.l2cn1824[71,0], cache3.cn544[92,304-0,H], cache2.cn544[94,0]',
+308 silly registry.get     'ali-swift-global-savetime': '1587971247',
+308 silly registry.get     age: '0',
+308 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:5:297968978',
+308 silly registry.get     'timing-allow-origin': '*',
+308 silly registry.get     eagleid: '7ce8aa4215895987267713591e' } ]
+309 verbose etag commander from cache
+310 http 304 https://registry.npm.taobao.org/cross-spawn
+311 silly registry.get cb [ 304,
+311 silly registry.get   { server: 'Tengine',
+311 silly registry.get     'content-type': 'application/json; charset=utf-8',
+311 silly registry.get     connection: 'keep-alive',
+311 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+311 silly registry.get     'x-current-requests': '1',
+311 silly registry.get     vary: 'accept, accept-encoding',
+311 silly registry.get     etag: 'W/"ba9cd5ef44658954cf82f823c299a16d"',
+311 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+311 silly registry.get     'x-readtime': '43',
+311 silly registry.get     via: 'cn544.l1, cache4.cn544, l2cn1824.l2, cache23.l2cn1824, izbp11dsagbzylz6yon5vvz, cache23.l2cn1824[57,304-0,H], cache32.l2cn1824[59,0], cache4.cn544[78,304-0,H], cache7.cn544[80,0]',
+311 silly registry.get     'ali-swift-global-savetime': '1586325907',
+311 silly registry.get     age: '0',
+311 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:7:300262756',
+311 silly registry.get     'timing-allow-origin': '*',
+311 silly registry.get     eagleid: '7ce8aa4715895987268024223e' } ]
+312 verbose etag cross-spawn from cache
+313 http 304 https://registry.npm.taobao.org/colors
+314 silly registry.get cb [ 304,
+314 silly registry.get   { server: 'Tengine',
+314 silly registry.get     'content-type': 'application/json; charset=utf-8',
+314 silly registry.get     connection: 'keep-alive',
+314 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+314 silly registry.get     'x-current-requests': '1',
+314 silly registry.get     vary: 'accept, accept-encoding',
+314 silly registry.get     etag: 'W/"1acefe1e970dcdf33d7ebfc99e221f3d"',
+314 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+314 silly registry.get     'x-readtime': '13',
+314 silly registry.get     via: 'cn544.l1, cache7.cn544, l2cn1824.l2, cache36.l2cn1824, izbp17djxs02ot6ppjbt2jz, cache36.l2cn1824[25,304-0,H], cache8.l2cn1824[26,0], cache7.cn544[47,304-0,H], cache1.cn544[50,0]',
+314 silly registry.get     'ali-swift-global-savetime': '1584416156',
+314 silly registry.get     age: '0',
+314 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:3:5192304',
+314 silly registry.get     'timing-allow-origin': '*',
+314 silly registry.get     eagleid: '7ce8aa4115895987269301466e' } ]
+315 verbose etag colors from cache
+316 http 304 https://registry.npm.taobao.org/giturl
+317 silly registry.get cb [ 304,
+317 silly registry.get   { server: 'Tengine',
+317 silly registry.get     'content-type': 'application/json; charset=utf-8',
+317 silly registry.get     connection: 'keep-alive',
+317 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+317 silly registry.get     'x-current-requests': '1',
+317 silly registry.get     vary: 'accept, accept-encoding',
+317 silly registry.get     etag: 'W/"2ab5cea2776a0bb5c769c1523f37f269"',
+317 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+317 silly registry.get     'x-readtime': '14',
+317 silly registry.get     via: 'cn544.l1, cache4.cn544, l2cn1824.l2, cache6.l2cn1824, izbp11dsagbzylz6yon5vvz, cache6.l2cn1824[27,304-0,H], cache21.l2cn1824[29,0], cache4.cn544[47,304-0,H], cache5.cn544[52,0]',
+317 silly registry.get     'ali-swift-global-savetime': '1587608524',
+317 silly registry.get     age: '0',
+317 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:6:307081231',
+317 silly registry.get     'timing-allow-origin': '*',
+317 silly registry.get     eagleid: '7ce8aa4515895987269366626e' } ]
+318 verbose etag giturl from cache
+319 http 304 https://registry.npm.taobao.org/ini
+320 silly registry.get cb [ 304,
+320 silly registry.get   { server: 'Tengine',
+320 silly registry.get     'content-type': 'application/json; charset=utf-8',
+320 silly registry.get     connection: 'keep-alive',
+320 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+320 silly registry.get     'x-current-requests': '1',
+320 silly registry.get     vary: 'accept, accept-encoding',
+320 silly registry.get     etag: 'W/"3b6db918043e11929c97eb48271459ca"',
+320 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+320 silly registry.get     'x-readtime': '13',
+320 silly registry.get     via: 'cn544.l1, cache7.cn544, l2cn1824.l2, cache38.l2cn1824, izbp11dsagbzylz6yon5vtz, cache38.l2cn1824[27,304-0,H], cache7.l2cn1824[27,0], cache7.cn544[48,304-0,H], cache8.cn544[49,0]',
+320 silly registry.get     'ali-swift-global-savetime': '1566195136',
+320 silly registry.get     age: '0',
+320 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:2:221739992',
+320 silly registry.get     'timing-allow-origin': '*',
+320 silly registry.get     eagleid: '7ce8aa4815895987269404500e' } ]
+321 verbose etag ini from cache
+322 http 304 https://registry.npm.taobao.org/open
+323 silly registry.get cb [ 304,
+323 silly registry.get   { server: 'Tengine',
+323 silly registry.get     'content-type': 'application/json; charset=utf-8',
+323 silly registry.get     connection: 'keep-alive',
+323 silly registry.get     date: 'Sat, 16 May 2020 03:12:06 GMT',
+323 silly registry.get     'x-current-requests': '1',
+323 silly registry.get     vary: 'accept, accept-encoding',
+323 silly registry.get     etag: 'W/"b81066f0b3b7bc054c7a4c49878232d8"',
+323 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+323 silly registry.get     'x-readtime': '25',
+323 silly registry.get     via: 'cn544.l1, cache5.cn544, l2cn1824.l2, cache17.l2cn1824, npmtaobao22, cache17.l2cn1824[42,304-0,H], cache13.l2cn1824[44,0], cache5.cn544[66,304-0,H], cache7.cn544[68,0]',
+323 silly registry.get     'ali-swift-global-savetime': '1584416156',
+323 silly registry.get     age: '1',
+323 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:1:188647491',
+323 silly registry.get     'timing-allow-origin': '*',
+323 silly registry.get     eagleid: '7ce8aa4715895987269474890e' } ]
+324 verbose etag open from cache
+325 http 304 https://registry.npm.taobao.org/npminstall
+326 silly registry.get cb [ 304,
+326 silly registry.get   { server: 'Tengine',
+326 silly registry.get     'content-type': 'application/json; charset=utf-8',
+326 silly registry.get     connection: 'keep-alive',
+326 silly registry.get     date: 'Sat, 16 May 2020 03:12:07 GMT',
+326 silly registry.get     'x-current-requests': '1',
+326 silly registry.get     vary: 'accept, accept-encoding',
+326 silly registry.get     etag: 'W/"81c33bd211641b36e37cb9872df0eac0"',
+326 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+326 silly registry.get     'x-readtime': '55',
+326 silly registry.get     via: 'cn544.l1, cache8.cn544, l2cn1824.l2, cache49.l2cn1824, npmtaobao22, cache49.l2cn1824[81,304-0,H], cache48.l2cn1824[100,0], cache8.cn544[120,304-0,H], cache2.cn544[124,0]',
+326 silly registry.get     'ali-swift-global-savetime': '1588637995',
+326 silly registry.get     age: '0',
+326 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:5:227595901',
+326 silly registry.get     'timing-allow-origin': '*',
+326 silly registry.get     eagleid: '7ce8aa4215895987269394338e' } ]
+327 verbose etag npminstall from cache
+328 http 304 https://registry.npm.taobao.org/npm-request
+329 silly registry.get cb [ 304,
+329 silly registry.get   { server: 'Tengine',
+329 silly registry.get     'content-type': 'application/json; charset=utf-8',
+329 silly registry.get     connection: 'keep-alive',
+329 silly registry.get     date: 'Sat, 16 May 2020 03:12:07 GMT',
+329 silly registry.get     'x-current-requests': '1',
+329 silly registry.get     vary: 'accept, accept-encoding',
+329 silly registry.get     etag: 'W/"bab9e3d43e1841519b07d85a7112b789"',
+329 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+329 silly registry.get     'x-readtime': '23',
+329 silly registry.get     via: 'cn544.l1, cache1.cn544, l2cn1824.l2, cache35.l2cn1824, npmtaobao22, cache35.l2cn1824[36,304-0,H], cache30.l2cn1824[37,0], cache1.cn544[60,304-0,H], cache1.cn544[79,0]',
+329 silly registry.get     'ali-swift-global-savetime': '1584416156',
+329 silly registry.get     age: '0',
+329 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:5:386382282',
+329 silly registry.get     'timing-allow-origin': '*',
+329 silly registry.get     eagleid: '7ce8aa4115895987271302475e' } ]
+330 verbose etag npm-request from cache
+331 http 304 https://registry.npm.taobao.org/urllib
+332 silly registry.get cb [ 304,
+332 silly registry.get   { server: 'Tengine',
+332 silly registry.get     'content-type': 'application/json; charset=utf-8',
+332 silly registry.get     connection: 'keep-alive',
+332 silly registry.get     date: 'Sat, 16 May 2020 03:12:07 GMT',
+332 silly registry.get     'x-current-requests': '1',
+332 silly registry.get     vary: 'accept, accept-encoding',
+332 silly registry.get     etag: 'W/"dbe4dfcc199c8bdf05cdf6ad6b49cf72"',
+332 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+332 silly registry.get     'x-readtime': '48',
+332 silly registry.get     via: 'cn544.l1, cache6.cn544, l2cn1824.l2, cache47.l2cn1824, izbp11dsagbzylz6yon5vvz, cache47.l2cn1824[58,304-0,H], cache40.l2cn1824[79,0], cache6.cn544[100,304-0,H], cache5.cn544[104,0]',
+332 silly registry.get     'ali-swift-global-savetime': '1589545494',
+332 silly registry.get     age: '0',
+332 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:1:385439001',
+332 silly registry.get     'timing-allow-origin': '*',
+332 silly registry.get     eagleid: '7ce8aa4515895987275361258e' } ]
+333 verbose etag urllib from cache
+334 silly lockFile 9836e233-bagpipe-0-3-5 bagpipe@^0.3.5
+335 silly lockFile 9836e233-bagpipe-0-3-5 bagpipe@^0.3.5
+336 silly lockFile 862c00aa-debug-2-2-0 debug@^2.2.0
+337 silly lockFile 862c00aa-debug-2-2-0 debug@^2.2.0
+338 silly addNameRange number 2 { name: 'cross-spawn', range: '>=0.2.8- <0.3.0-', hasData: true }
+339 silly addNameRange versions [ 'cross-spawn',
+339 silly addNameRange   [ '7.0.2',
+339 silly addNameRange     '7.0.1',
+339 silly addNameRange     '7.0.0',
+339 silly addNameRange     '6.0.5',
+339 silly addNameRange     '6.0.4',
+339 silly addNameRange     '6.0.3',
+339 silly addNameRange     '6.0.2',
+339 silly addNameRange     '6.0.1',
+339 silly addNameRange     '6.0.0',
+339 silly addNameRange     '5.1.0',
+339 silly addNameRange     '5.0.1',
+339 silly addNameRange     '5.0.0',
+339 silly addNameRange     '4.0.2',
+339 silly addNameRange     '4.0.0',
+339 silly addNameRange     '3.0.1',
+339 silly addNameRange     '3.0.0',
+339 silly addNameRange     '2.2.3',
+339 silly addNameRange     '2.2.2',
+339 silly addNameRange     '2.2.0',
+339 silly addNameRange     '2.1.5',
+339 silly addNameRange     '2.1.4',
+339 silly addNameRange     '2.1.3',
+339 silly addNameRange     '2.1.2',
+339 silly addNameRange     '2.1.1',
+339 silly addNameRange     '2.1.0',
+339 silly addNameRange     '2.0.1',
+339 silly addNameRange     '2.0.0',
+339 silly addNameRange     '1.0.4',
+339 silly addNameRange     '1.0.3',
+339 silly addNameRange     '1.0.2',
+339 silly addNameRange     '1.0.1',
+339 silly addNameRange     '1.0.0',
+339 silly addNameRange     '0.4.1',
+339 silly addNameRange     '0.4.0',
+339 silly addNameRange     '0.3.0',
+339 silly addNameRange     '0.2.9',
+339 silly addNameRange     '0.2.8',
+339 silly addNameRange     '0.2.7',
+339 silly addNameRange     '0.2.6',
+339 silly addNameRange     '0.2.5',
+339 silly addNameRange     '0.2.4',
+339 silly addNameRange     '0.2.3',
+339 silly addNameRange     '0.2.2',
+339 silly addNameRange     '0.2.1',
+339 silly addNameRange     '0.2.0',
+339 silly addNameRange     '0.1.7',
+339 silly addNameRange     '0.1.6',
+339 silly addNameRange     '0.1.5',
+339 silly addNameRange     '0.1.4',
+339 silly addNameRange     '0.1.3',
+339 silly addNameRange     '0.1.2',
+339 silly addNameRange     '0.1.1',
+339 silly addNameRange     '0.1.0' ] ]
+340 verbose addNamed [ 'cross-spawn', '0.2.9' ]
+341 verbose addNamed [ '0.2.9', '0.2.9' ]
+342 silly lockFile 97bb709b-cross-spawn-0-2-9 cross-spawn@0.2.9
+343 verbose lock cross-spawn@0.2.9 C:\Users\wangxt\AppData\Roaming\npm-cache\97bb709b-cross-spawn-0-2-9.lock
+344 silly addNameRange number 2 { name: 'commander', range: '>=2.10.0- <2.11.0-', hasData: true }
+345 silly addNameRange versions [ 'commander',
+345 silly addNameRange   [ '5.1.0',
+345 silly addNameRange     '5.0.0',
+345 silly addNameRange     '5.0.0-4',
+345 silly addNameRange     '5.0.0-3',
+345 silly addNameRange     '5.0.0-2',
+345 silly addNameRange     '5.0.0-1',
+345 silly addNameRange     '4.1.1',
+345 silly addNameRange     '5.0.0-0',
+345 silly addNameRange     '4.1.0',
+345 silly addNameRange     '4.0.1',
+345 silly addNameRange     '4.0.0',
+345 silly addNameRange     '2.20.3',
+345 silly addNameRange     '4.0.0-1',
+345 silly addNameRange     '4.0.0-0',
+345 silly addNameRange     '2.20.1',
+345 silly addNameRange     '3.0.2',
+345 silly addNameRange     '3.0.1',
+345 silly addNameRange     '3.0.0',
+345 silly addNameRange     '3.0.0-0',
+345 silly addNameRange     '2.20.0',
+345 silly addNameRange     '2.19.0',
+345 silly addNameRange     '2.18.0',
+345 silly addNameRange     '2.17.1',
+345 silly addNameRange     '2.17.0',
+345 silly addNameRange     '2.16.0',
+345 silly addNameRange     '2.15.1',
+345 silly addNameRange     '2.15.0',
+345 silly addNameRange     '2.14.1',
+345 silly addNameRange     '2.14.0',
+345 silly addNameRange     '2.13.0',
+345 silly addNameRange     '2.12.2',
+345 silly addNameRange     '2.12.1',
+345 silly addNameRange     '2.12.0',
+345 silly addNameRange     '2.11.0',
+345 silly addNameRange     '2.10.0',
+345 silly addNameRange     '2.9.0',
+345 silly addNameRange     '2.8.1',
+345 silly addNameRange     '2.8.0',
+345 silly addNameRange     '2.7.1',
+345 silly addNameRange     '2.7.0',
+345 silly addNameRange     '2.6.0',
+345 silly addNameRange     '2.5.1',
+345 silly addNameRange     '2.5.0',
+345 silly addNameRange     '2.4.0',
+345 silly addNameRange     '2.3.0',
+345 silly addNameRange     '2.2.0',
+345 silly addNameRange     '2.1.0',
+345 silly addNameRange     '2.0.0',
+345 silly addNameRange     '1.3.2',
+345 silly addNameRange     '1.3.1',
+345 silly addNameRange     '1.3.0',
+345 silly addNameRange     '1.2.0',
+345 silly addNameRange     '1.1.1',
+345 silly addNameRange     '1.1.0',
+345 silly addNameRange     '1.0.5',
+345 silly addNameRange     '1.0.4',
+345 silly addNameRange     '1.0.3',
+345 silly addNameRange     '1.0.2',
+345 silly addNameRange     '1.0.1',
+345 silly addNameRange     '1.0.0',
+345 silly addNameRange     '0.5.2',
+345 silly addNameRange     '0.6.1',
+345 silly addNameRange     '0.6.0',
+345 silly addNameRange     '0.5.1',
+345 silly addNameRange     '0.5.0',
+345 silly addNameRange     '0.4.3',
+345 silly addNameRange     '0.4.2',
+345 silly addNameRange     '0.4.1',
+345 silly addNameRange     '0.4.0',
+345 silly addNameRange     '0.3.3',
+345 silly addNameRange     '0.3.2',
+345 silly addNameRange     '0.3.1',
+345 silly addNameRange     '0.3.0',
+345 silly addNameRange     '0.2.1',
+345 silly addNameRange     '0.2.0',
+345 silly addNameRange     '0.1.0',
+345 silly addNameRange     '0.0.5',
+345 silly addNameRange     '0.0.4',
+345 silly addNameRange     '0.0.3',
+345 silly addNameRange     '0.0.1' ] ]
+346 verbose addNamed [ 'commander', '2.10.0' ]
+347 verbose addNamed [ '2.10.0', '2.10.0' ]
+348 silly lockFile f062dce1-commander-2-10-0 commander@2.10.0
+349 verbose lock commander@2.10.0 C:\Users\wangxt\AppData\Roaming\npm-cache\f062dce1-commander-2-10-0.lock
+350 silly lockFile bc9208c7-auto-correct-1-0-0 auto-correct@^1.0.0
+351 silly lockFile bc9208c7-auto-correct-1-0-0 auto-correct@^1.0.0
+352 silly lockFile 600d2005-giturl-1-0-0 giturl@^1.0.0
+353 silly lockFile 600d2005-giturl-1-0-0 giturl@^1.0.0
+354 silly lockFile 02265092-ini-1-3-4 ini@^1.3.4
+355 silly lockFile 02265092-ini-1-3-4 ini@^1.3.4
+356 verbose about to build C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm
+357 info C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm unbuild
+358 verbose from cache C:\Users\wangxt\AppData\Roaming\npm\node_modules\cnpm\package.json
+359 info preuninstall cnpm@6.1.1
+360 verbose read json C:\Users\wangxt\AppData\Roaming\npm-cache\commander\2.10.0\package\package.json
+361 silly lockFile b07b8caa-open-0-0-5 open@^0.0.5
+362 silly lockFile b07b8caa-open-0-0-5 open@^0.0.5
+363 silly lockFile d905a145-npminstall-3-25-2 npminstall@^3.25.2
+364 silly lockFile d905a145-npminstall-3-25-2 npminstall@^3.25.2
+365 silly lockFile cf4b1b9c-npm-request-1-0-0 npm-request@^1.0.0
+366 silly lockFile cf4b1b9c-npm-request-1-0-0 npm-request@^1.0.0
+367 verbose read json C:\Users\wangxt\AppData\Roaming\npm-cache\cross-spawn\0.2.9\package\package.json
+368 silly lockFile 8d2a5ca0-colors-1-1-2 colors@^1.1.2
+369 silly lockFile 8d2a5ca0-colors-1-1-2 colors@^1.1.2
+370 info uninstall cnpm@6.1.1
+371 silly lockFile 4a94582f-urllib-2-17-0 urllib@^2.17.0
+372 silly lockFile 4a94582f-urllib-2-17-0 urllib@^2.17.0
+373 http 304 https://registry.npm.taobao.org/npm
+374 silly registry.get cb [ 304,
+374 silly registry.get   { server: 'Tengine',
+374 silly registry.get     'content-type': 'application/json; charset=utf-8',
+374 silly registry.get     connection: 'keep-alive',
+374 silly registry.get     date: 'Sat, 16 May 2020 03:12:08 GMT',
+374 silly registry.get     'x-current-requests': '1',
+374 silly registry.get     vary: 'accept, accept-encoding',
+374 silly registry.get     etag: 'W/"b3b4d41c2b8ecfaefffa13647d2a0fa9"',
+374 silly registry.get     'cache-control': 'max-age=0, s-maxage=120, must-revalidate',
+374 silly registry.get     'x-readtime': '460',
+374 silly registry.get     via: 'cn544.l1, cache6.cn544, l2cn1824.l2, cache19.l2cn1824, izbp17djxs02ot6ppjbt2jz, cache19.l2cn1824[472,304-0,H], cache3.l2cn1824[487,0], cache6.cn544[509,304-0,H], cache8.cn544[571,0]',
+374 silly registry.get     'ali-swift-global-savetime': '1588637996',
+374 silly registry.get     age: '0',
+374 silly registry.get     'x-cache': 'HIT TCP_IMS_HIT dirn:6:339819958',
+374 silly registry.get     'timing-allow-origin': '*',
+374 silly registry.get     eagleid: '7ce8aa4815895987282482073e' } ]
+375 verbose etag npm from cache
+376 verbose true,C:\Users\wangxt\AppData\Roaming\npm\node_modules,C:\Users\wangxt\AppData\Roaming\npm\node_modules unbuild cnpm@6.1.1
+377 verbose C:\Users\wangxt\AppData\Roaming\npm,[object Object] binRoot
+378 info postuninstall cnpm@6.1.1
+379 silly lockFile f062dce1-commander-2-10-0 commander@2.10.0
+380 silly lockFile f062dce1-commander-2-10-0 commander@2.10.0
+381 silly lockFile 97bb709b-cross-spawn-0-2-9 cross-spawn@0.2.9
+382 silly lockFile 97bb709b-cross-spawn-0-2-9 cross-spawn@0.2.9
+383 silly lockFile 33ad55f5-commander-2-10-0 commander@~2.10.0
+384 silly lockFile 33ad55f5-commander-2-10-0 commander@~2.10.0
+385 silly lockFile 9c21f46e-npm-6-13-4 npm@^6.13.4
+386 silly lockFile 9c21f46e-npm-6-13-4 npm@^6.13.4
+387 silly lockFile 73eacd0a-cross-spawn-0-2-8 cross-spawn@~0.2.8
+388 silly lockFile 73eacd0a-cross-spawn-0-2-8 cross-spawn@~0.2.8
+389 error Error: No compatible version found: bagpipe@'^0.3.5'
+389 error Valid install targets:
+389 error ["0.3.5","0.3.4","0.3.3","0.3.2","0.3.1","0.3.0","0.2.0","0.0.1"]
+389 error     at installTargetsError (C:\Program Files (x86)\nodejs\node_modules\npm\lib\cache.js:679:10)
+389 error     at C:\Program Files (x86)\nodejs\node_modules\npm\lib\cache.js:594:10
+389 error     at saved (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:138:7)
+389 error     at Object.oncomplete (fs.js:93:15)
+390 error If you need help, you may report this log at:
+390 error     <http://github.com/isaacs/npm/issues>
+390 error or email it to:
+390 error     <npm-@googlegroups.com>
+391 error System Windows_NT 6.2.9200
+392 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "cnpm" "-g" "--registry=https://registry.npm.taobao.org"
+393 error cwd F:\workSpace\kangma-admin-webapp
+394 error node -v v0.9.10
+395 error npm -v 1.2.12
+396 verbose exit [ 1, true ]

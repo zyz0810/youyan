@@ -1,0 +1,86 @@
+{
+  "id": "2653530",
+  "name": "滨江",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "智慧城市",
+  "glyphs": [
+    {
+      "icon_id": "707621",
+      "name": "报表",
+      "font_class": "baobiao-copy",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "7177224",
+      "name": "工单",
+      "font_class": "gongdan",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "7223832",
+      "name": "监测",
+      "font_class": "jiance",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "17885374",
+      "name": "系统管理",
+      "font_class": "guanli4",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "20562263",
+      "name": "记录",
+      "font_class": "jilu",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "20621339",
+      "name": "温湿度管理",
+      "font_class": "wenshidu1",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "1735892",
+      "name": "风机",
+      "font_class": "fengji",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "7375207",
+      "name": "风速",
+      "font_class": "fengsu",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    },
+    {
+      "icon_id": "13961791",
+      "name": "温度",
+      "font_class": "wendu",
+      "unicode": "e7a1",
+      "unicode_decimal": 59297
+    },
+    {
+      "icon_id": "16113090",
+      "name": "超标异常",
+      "font_class": "chaobiaoyichang",
+      "unicode": "e70d",
+      "unicode_decimal": 59149
+    },
+    {
+      "icon_id": "19229410",
+      "name": "噪声",
+      "font_class": "zaosheng",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    }
+  ]
+}
