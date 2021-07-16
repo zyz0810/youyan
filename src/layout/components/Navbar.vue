@@ -258,6 +258,7 @@ export default {
     }
   }
 .navbar {
+  width: 100%;
   height: 80px;
   overflow: hidden;
   position: relative;

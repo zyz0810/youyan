@@ -33,7 +33,7 @@
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
         </el-form-item>
       </el-form>
-      <div class="flex">
+      <div>
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
 
@@ -42,35 +42,14 @@
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
               element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
-      <el-table-column label="监测时间" align="center" width="140">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="风机状态" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="净化器" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="监测状态" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.status | filtersStatus}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="ID" align="center" prop="name"></el-table-column>
+      <el-table-column label="用户名" align="center" prop="name"></el-table-column>
+      <el-table-column label="所属分组" align="center" prop="address"></el-table-column>
+      <el-table-column label="密码" align="center" prop="num"></el-table-column>
       <el-table-column label="操作" align="center" min-width="160">
         <template slot-scope="scope">
-          <el-button class="filter-item" type="primary" @click="handleCreate">详情</el-button>
-          <el-button class="filter-item" type="primary" @click="handleCreate">历史</el-button>
+          <el-button class="filter-item btn_yellow" type="primary" @click="handleCreate">删除</el-button>
+          <el-button class="filter-item btn_purple" type="primary" @click="handleCreate">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -115,7 +94,7 @@
 </template>
 
 <script>
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
+  import {userList} from '@/api/user'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -165,9 +144,9 @@
         listLoading: false,
         listQuery: {
           name: '',
-          status: undefined,
+          mobile: '',
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         updateId: undefined,
         dialogFormVisible: false,
@@ -227,7 +206,7 @@
           }
         };
       });
-      // this.getList();
+      this.getList();
     },
     methods: {
       handleValue(val){
@@ -260,7 +239,7 @@
         this.getList()
       },
       getList() {
-        paraList(this.listQuery).then(res => {
+        userList(this.listQuery).then(res => {
           this.list = res.data.data
           this.total = res.data.count
         });
@@ -269,9 +248,9 @@
       resetList() {
         this.listQuery = {
           name: '',
-          status: undefined,
+          mobile: '',
           page: 1,
-          limit: 10
+          pageSize: 10
         }
         this.getList();
       },

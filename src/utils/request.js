@@ -44,11 +44,12 @@ axios.defaults.headers.post['Content-Type'] =
 service.interceptors.request.use(
   config => {
     config.baseURL = requestUrl
-    config.headers['client_id'] = 'webApp'
-    config.headers['client_secret'] = 'webApp'
+    // config.headers['client_id'] = 'webApp'
+    // config.headers['client_secret'] = 'webApp'
     if (store.getters.token) {
       // config.headers['Authorization'] = store.getters.token
-      config.headers.Authorization = 'Bearer ' + store.getters.token
+      // config.headers.Authorization = store.getters.token
+      config.headers.token = store.getters.token
     }
     return config
   },

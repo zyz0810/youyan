@@ -27,12 +27,12 @@ export function logout(data) {
 //     method: 'get'
 //   })
 // }
-export function getInfo() {
-  return request({
-    url:'api-user/users/current',
-    method: 'get'
-  })
-}
+// export function getInfo() {
+//   return request({
+//     url:'api-user/users/current',
+//     method: 'get'
+//   })
+// }
 
 /* 忘记密码
  * confirmPassword  确认密码
@@ -40,13 +40,13 @@ export function getInfo() {
  * password 密码
  * verifyCode 验证码
  */
-export function updatePassword(data) {
-  return request({
-    url:'api-user/users/forgetPassword',
-    method: 'post',
-    data: Qs.stringify(data)
-  })
-}
+// export function updatePassword(data) {
+//   return request({
+//     url:'api-user/users/forgetPassword',
+//     method: 'post',
+//     data: Qs.stringify(data)
+//   })
+// }
 /* 用户查询列表
  * limit 分页结束位置
  * page  分页起始位置
@@ -54,11 +54,11 @@ export function updatePassword(data) {
  * mobile  手机号
  * username  用户username
  */
-export function getUsers(query) {
+export function userList(data) {
   return request({
-    url:'api-user/users/getUsers',
-    method: 'get',
-    params: query
+    url:'api/user/userList',
+    method: 'post',
+    data: Qs.stringify(data)
   })
 }
 /* 获取单个用户信息
