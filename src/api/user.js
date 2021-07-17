@@ -82,9 +82,9 @@ export function findSysUserById(query) {
  * headImgUrl 头像地址
  * roleId  角色多个用,隔开
  */
-export function saveOrUpdateSysUser(data) {
+export function addUser(data) {
   return request({
-    url:'api-user/users/saveOrUpdateSysUser',
+    url:'api/user/addUser',
     method: 'post',
     data: Qs.stringify(data)
   })

@@ -1,121 +1,37 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-form :inline="true" :model="listQuery" class="search_form">
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择辖区" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择规模" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择菜系" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择检测状态" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.name" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
-        </el-form-item>
-        <el-form-item>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-        </el-form-item>
-      </el-form>
       <div class="flex">
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
-
+        <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
       </div>
     </div>
-    <el-table v-loading="listLoading" :data="list" :height="tableHeight"
-              element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
-      <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
-      <el-table-column label="监测时间" align="center" width="140">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="风机状态" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="净化器" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="监测状态" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.status | filtersStatus}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" min-width="160">
-        <template slot-scope="scope">
-          <el-button class="filter-item" type="primary" @click="handleCreate">详情</el-button>
-          <el-button class="filter-item" type="primary" @click="handleCreate">历史</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-                @pagination="getList" class="text-right"/>
-    <myDialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="margin-left:50px;"
-               class="dialog_form">
-        <el-form-item label="参数名称" prop="name">
-          <el-input v-model.trim="temp.name" placeholder="请输入参数名称" autocomplete="off" clearable/>
-          <el-checkbox v-model="temp.isRequired" :true-label="1" :false-label="0">是否必填</el-checkbox>
-        </el-form-item>
-        <el-form-item label="排序值" prop="orders">
-          <el-input v-model.trim="temp.orders" type="number" placeholder="请输入排序值" autocomplete="off" clearable/>
-        </el-form-item>
-        <el-form-item label="操作方式" prop="orders">
-          <el-select v-model="temp.operatingMode" placeholder="请选择操作方式" @change="handleOperating">
-            <el-option v-for="item in operationOption" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <p v-show="temp.operatingMode != 2">
-          <el-button type="primary" @click="addSpecifications">添加参数值</el-button>
-        </p>
-        <el-form-item label="参数值" prop="parameterValueList" class="drag" v-if="parameterValueList.length>0 && temp.operatingMode != 2">
-          <draggable>
-            <div v-for="(item,i) of parameterValueList" :key="i">
-              <el-input v-model.trim="parameterValueList[i].name" placeholder="请输入规格值" autocomplete="off" @change="handleValue" clearable/>
-              <i class="el-icon-close red01 bold" @click="deleteParam(i)"></i>
-            </div>
-          </draggable>
-        </el-form-item>
-      </el-form>
+    <div class="flex">
+      <ul style="width: 200px;" class="dic_parent baseColor">
+        <li v-for="item in list" @click="getChilden(item.id)" class="p20 f16 bold">{{item.name}}</li>
+      </ul>
+      <el-table v-loading="listLoading" :data="childenList" :height="tableHeight"
+                element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
+        <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
+        <el-table-column label="系统" align="center" prop="name"></el-table-column>
+        <el-table-column label="名称" align="center" prop="name"></el-table-column>
+        <el-table-column label="排序" align="center" prop="address"></el-table-column>
+        <el-table-column label="风机状态" align="center" prop="num">
+          <template slot-scope="scope">
+            <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+                  @pagination="getList" class="text-right"/>
+    </div>
 
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData(updateId)" :loading="paraLoading">确 定</el-button>
-      </div>
-    </myDialog>
     <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertProduct="getList"></paraView>
 
   </div>
 </template>
 
 <script>
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
+  import {dicList} from '@/api/dictionary'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -149,6 +65,7 @@
         disableBtn: true,
         total: 0,
         parameterValueList: [{name: ''}],
+        childenList:[],
         list: [{
           name:'列表1',
           address:'杭州市',
@@ -164,10 +81,9 @@
         }],
         listLoading: false,
         listQuery: {
-          name: '',
-          status: undefined,
+          parent_id: '',
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         updateId: undefined,
         dialogFormVisible: false,
@@ -227,7 +143,7 @@
           }
         };
       });
-      // this.getList();
+      this.getList();
     },
     methods: {
       handleValue(val){
@@ -260,18 +176,23 @@
         this.getList()
       },
       getList() {
-        paraList(this.listQuery).then(res => {
+        dicList().then(res => {
           this.list = res.data.data
           this.total = res.data.count
         });
       },
-
+      getChilden(id){
+        this.listQuery.parent_id = id;
+        dicList(this.listQuery).then(res => {
+          this.childenList = res.data.data
+          this.total = res.data.count
+        });
+      },
       resetList() {
         this.listQuery = {
-          name: '',
-          status: undefined,
+          parent_id: '',
           page: 1,
-          limit: 10
+          pageSize: 10
         }
         this.getList();
       },
@@ -593,3 +514,13 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+  .dic_parent{
+    border: 1px solid #fff;
+    height: 100%;
+    line-height: 3;
+    li{
+      border-bottom: 1px solid #fff;
+    }
+  }
+</style>

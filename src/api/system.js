@@ -1,15 +1,13 @@
 import request from '@/utils/request'
 import Qs from 'qs'
-/* 获取所有系统设置树
- * createEndTime 创建时间-结束
- * createStartTime 创建时间-开始
- * limit
+/* 字典列表
+ * parent_id
+ * pageSize
  * page
- * title
  */
-export function sysTree(data) {
+export function dicList(data) {
   return request({
-    url: `api-user/setting/getSysSettingTree`,
+    url: `api/dictionary/dicList`,
     method: 'get',
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
