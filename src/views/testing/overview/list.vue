@@ -34,7 +34,7 @@
         </el-form-item>
       </el-form>
       <div>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
+        <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
 
       </div>
@@ -54,12 +54,13 @@
       <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
       <el-table-column label="风机状态" align="center" prop="num">
         <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+<!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->
+          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="净化器" align="center" prop="num">
         <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="监测状态" align="center">
@@ -70,45 +71,12 @@
       <el-table-column label="操作" align="center" min-width="160">
         <template slot-scope="scope">
           <el-button class="filter-item" type="primary" @click="handleView">详情</el-button>
-          <el-button class="filter-item" type="primary" @click="handleHistory">历史</el-button>
+          <el-button class="filter-item btn_purple" type="primary" @click="handleHistory">历史</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList" class="text-right"/>
-    <myDialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="margin-left:50px;"
-               class="dialog_form">
-        <el-form-item label="参数名称" prop="name">
-          <el-input v-model.trim="temp.name" placeholder="请输入参数名称" autocomplete="off" clearable/>
-          <el-checkbox v-model="temp.isRequired" :true-label="1" :false-label="0">是否必填</el-checkbox>
-        </el-form-item>
-        <el-form-item label="排序值" prop="orders">
-          <el-input v-model.trim="temp.orders" type="number" placeholder="请输入排序值" autocomplete="off" clearable/>
-        </el-form-item>
-        <el-form-item label="操作方式" prop="orders">
-          <el-select v-model="temp.operatingMode" placeholder="请选择操作方式" @change="handleOperating">
-            <el-option v-for="item in operationOption" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <p v-show="temp.operatingMode != 2">
-          <el-button type="primary" @click="addSpecifications">添加参数值</el-button>
-        </p>
-        <el-form-item label="参数值" prop="parameterValueList" class="drag" v-if="parameterValueList.length>0 && temp.operatingMode != 2">
-          <draggable>
-            <div v-for="(item,i) of parameterValueList" :key="i">
-              <el-input v-model.trim="parameterValueList[i].name" placeholder="请输入规格值" autocomplete="off" @change="handleValue" clearable/>
-              <i class="el-icon-close red01 bold" @click="deleteParam(i)"></i>
-            </div>
-          </draggable>
-        </el-form-item>
-      </el-form>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData(updateId)" :loading="paraLoading">确 定</el-button>
-      </div>
-    </myDialog>
     <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertProduct="getList"></paraView>
     <history :showDialog.sync="showHistoryDialog" :historyData="historyData"></history>
   </div>
@@ -165,7 +133,7 @@
           address:'杭州市',
           time:1298963414,
           num:1,
-          status:1
+          status:2
         }],
         listLoading: false,
         listQuery: {

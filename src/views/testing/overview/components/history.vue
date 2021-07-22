@@ -35,9 +35,22 @@
       </el-table-column>
       <el-table-column label="油烟浓度（mg/m3）" align="center" prop="updateUserName"></el-table-column>
       <el-table-column label="TVOC（mg/m3）" align="center" prop="updateUserName"></el-table-column>
-      <el-table-column label="风机状态" align="center" prop="updateUserName"></el-table-column>
-      <el-table-column label="净化器" align="center" prop="updateUserName"></el-table-column>
-      <el-table-column label="监测状态" align="center" prop="updateUserName"></el-table-column>
+      <el-table-column label="风机状态" align="center" prop="num">
+        <template slot-scope="scope">
+          <!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->
+          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+        </template>
+      </el-table-column>
+      <el-table-column label="净化器" align="center" prop="num">
+        <template slot-scope="scope">
+          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+        </template>
+      </el-table-column>
+      <el-table-column label="监测状态" align="center">
+        <template slot-scope="scope">
+          <span>{{scope.row.status | filtersStatus}}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList" class="text-right"/>
@@ -77,7 +90,19 @@
         tableHeight:200,
         paraLoading:false,
         total:0,
-        list: [],
+        list: [{
+          name:'列表1',
+          address:'杭州市',
+          time:1298963414,
+          num:1,
+          status:1
+        },{
+          name:'列表2',
+          address:'杭州市',
+          time:1298963414,
+          num:1,
+          status:2
+        }],
         listLoading: false,
         listQuery:{
           parameterId:'',

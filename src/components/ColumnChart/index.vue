@@ -23,105 +23,13 @@ export default {
     return {
       // echarts 初始值
       charts: "",
-      title: {
-        text: '',
-        x: 'center',
-        y: 'center',
-        textStyle: {
-          color: '#fff',
-          fontWeight: 'normal',
-          fontSize: 16
-        }
-      },
-      grid: {
-        left: '20',
-        right: '10',
-        bottom: '20',
-        containLabel: true
-      },
-      // legend: {
-      //   top: "2%", //图例的位置
-      //   icon: "circle", //图例的形状
-      //   right: '2%',
-      //   // x: 'right',     //图例在右侧
-      //   orient: "horizontal", //图例 vertical纵向排布  horizontal为横向排布
-      //   textStyle: {//图例字体的颜色
-      //     color: "#fff",
-      //   },
-      //   data: ["aa目标金额", "成交金额"],
-      // },
-      color: ["#00B1FD"],
-      xAxis: {
-        boundaryGap: false,
-        type: "category",
-        axisLabel: {//底部文字倾斜
-          interval: 0,
-          rotate: 25,
-          textStyle: {
-            color: '#fff'   //这里用参数代替了
-          }
-        },
-        axisLine:{
-          lineStyle:{color:'#54fefe'}    // x轴坐标轴颜色
-        },
-        axisTick:{
-          lineStyle:{color:'#54fefe'}    // x轴刻度的颜色
-        },
 
-        data: [],
-      },
-      yAxis: [{
-        type: "value",
-        // axisLabel: {
-        //   show: true,
-        //   textStyle: {
-        //     color:'#fff'  //这里用参数代替了
-        //   }
-        // },
-
-
-
-        axisLabel : {color:'#fff',
-            textStyle: {
-              color:'#fff'  //这里用参数代替了
-            }},    //y轴字体颜色
-
-        splitArea : {show : false},  //去除网格区域
-
-        splitLine:{show: false},   //去除网格线
-
-        axisLine:{
-          lineStyle:{color:'#54fefe'}  //y轴坐标轴颜色
-        },
-
-        axisTick:{
-          lineStyle:{color:'#54fefe' }  //y轴坐标刻度颜色
-        },
-
-
-      }],
-      series: [
-        {
-          name: "目标金额",
-          type: "bar",
-          barWidth: 20,
-          barGap: 0,
-          data: [],
-        },
-        {
-          name: "成交金额",
-          barWidth: 20,
-          type: "bar",
-          barGap: 0,
-          data: [],
-        },
-      ],
     };
   },
   watch: {
     echartData () {
       this.drawLine(this.name);
-      this.setData();
+      // this.setData();
     },
   },
   methods: {
@@ -143,29 +51,7 @@ export default {
           bottom: '1%',
           containLabel: true
         },
-        tooltip: {
-          trigger: "axis",
-          formatter: (params) => {
-            var res = "<div><p><span>" + "</span></p></div>";
-            res += "<p>" + "</p>";
-            res += "<p>" + this.echartData.name[params[0].dataIndex] + "</p>";
-            res +=
-              "<p>" +
-              '<span style="display: inline-block;width: 10px;height: 10px;background: #1890ff;border-radius: 50%; margin:0px 6px 0px 0px;">' +
-              "</span > " +
-              "目标金额：" +
-              this.echartData.target[params[0].dataIndex] +
-              "</p>";
-            res +=
-              "<p>" +
-              '<span style="display: inline-block;width: 10px;height: 10px;background: #32CD32;border-radius: 50%; margin:0px 6px 0px 0px;">' +
-              "</span > " +
-              "成交金额：" +
-              this.echartData.conut[params[0].dataIndex] +
-              "</p>";
-            return res;
-          },
-        },
+
         legend: this.legend,
         color: this.color,
         xAxis: {
@@ -174,25 +60,25 @@ export default {
           data: this.echartData.name,
           axisLabel: {//底部文字倾斜
             interval: 0,
-            rotate: 25
+            rotate: 25,
+            textStyle: {
+              color: '#fff',
+              fontSize:26
+            },
+            axisLine:{
+              lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+            },
           },
         },
         yAxis: this.yAxis,
         series: [
           {
-            name: "目标金额",
+            name: "次数",
             type: "bar",
             barWidth: 20,
             barGap: 0,
-            data: this.echartData.target,
-          },
-          {
-            name: "成交金额",
-            barWidth: 20,
-            type: "bar",
-            barGap: 0,
-            data: this.echartData.conut,
-          },
+            data: this.echartData.count,
+          }
         ],
       });
     },
@@ -202,60 +88,56 @@ export default {
       // 绘制图表
       this.charts.setOption({
         grid: {
-          left: '2%',
-          right: '10',
-          bottom: '1%',
+          top:'10',
+          left: '0',
+          right: '0',
+          bottom: '0',
           containLabel: true
         },
-        tooltip: {
-          trigger: "axis",
-          formatter: (params) => {
-            var res = "<div><p><span>" + "</span></p></div>";
-            res += "<p>" + "</p>";
-            res += "<p>" + this.xAxis.data[params[0].dataIndex] + "</p>";
-            res +=
-              "<p>" +
-              '<span style="display: inline-block;width: 10px;height: 10px;background: #1890ff;border-radius: 50%; margin:0px 6px 0px 0px;">' +
-              "</span > " +
-              "目标金额：" +
-              this.series[0].data[params[0].dataIndex] +
-              "</p>";
-            res +=
-              "<p>" +
-              '<span style="display: inline-block;width: 10px;height: 10px;background: #32CD32;border-radius: 50%; margin:0px 6px 0px 0px;">' +
-              "</span > " +
-              "成交金额：" +
-              this.series[1].data[params[0].dataIndex] +
-              "</p>";
-            return res;
-          },
-        },
-        legend: this.legend,
-        color: this.color,
+        color:  ["#00B1FD"],
         xAxis: {
           boundaryGap: true,
           type: "category",
           data: this.echartData.name,
           axisLabel: {    //底部文字倾斜
             interval: 0,
-            rotate: 25
+            rotate: 25,
+            textStyle: {
+              color: '#fff',
+              fontSize:15
+            },
+          },
+          axisLine:{
+            lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+          },
+          axisTick:{
+            lineStyle:{color:'#1A407A' }  //y轴坐标刻度颜色
           },
         },
-        yAxis: this.yAxis,
+        yAxis: [{
+          type: "value",
+          axisLabel : {
+            color:'#fff',
+            textStyle: {
+              color:'#fff'  //这里用参数代替了
+            }
+          },    //y轴字体颜色
+          splitArea : {show : false},  //去除网格区域
+          splitLine:{show: false},   //去除网格线
+          axisLine:{
+            lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+          },
+          axisTick:{
+            lineStyle:{color:'#1A407A' }  //y轴坐标刻度颜色
+          },
+        }],
         series: [
           {
             name: "目标金额",
             type: "bar",
             barWidth: 20,
             barGap: 0,
-            data: this.echartData.target,
-          },
-          {
-            name: "成交金额",
-            barWidth: 20,
-            type: "bar",
-            barGap: 0,
-            data: this.echartData.conut,
+            data: this.echartData.count,
           },
         ],
       });

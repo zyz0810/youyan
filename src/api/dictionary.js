@@ -13,3 +13,24 @@ export function dicList(data) {
   })
 }
 
+/* 修改字典状态
+ * id 分页结束位置
+ */
+export function mofidyStatusDic(data) {
+  return request({
+    url:'api/dictionary/mofidyStatus',
+    method: 'post',
+    data: Qs.stringify(data)
+  })
+}
+/* 添加字典
+ * id 分页结束位置
+ */
+export function addDictionary(data) {
+  return request({
+    url:'api/dictionary/addDictionary',
+    method: 'post',
+    data: Qs.stringify(data)
+  })
+}
+

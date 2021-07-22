@@ -120,6 +120,9 @@ div:focus {
 .baseColor{
   color: $baseColor;
 }
+.txtColor{
+  color: $txtColor;
+}
 .gray01{
   color: #ccc;
 }
@@ -706,4 +709,29 @@ input[type="number"] {
   border-color:  #8958A2 !important;
   background: #8958A2 !important;
 }
-
+.btn_gray{
+  border-color:  #AAAAAA !important;
+  background: #AAAAAA !important;
+}
+.el-table tbody tr:hover>td {
+  background-color: #0a275f!important
+}
+.mr_5{
+  margin-right: 5px;
+}
+.f16{
+  font-size: 16px;
+}
+.bg_shadow{
+  background: rgba(2,51,91,0.8);
+  box-shadow: $menuText 0 0 18px inset;
+}
+.mb_10{
+  margin-bottom: 10px;
+}
+.clr_yellow{
+  color: #D8E118;
+}
+.ml_20{
+  margin-left: 20px;
+}

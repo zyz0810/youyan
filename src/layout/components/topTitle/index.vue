@@ -36,7 +36,7 @@
             <i class="el-icon-caret-bottom" />
           </div>
 
-          <div class="m_r30" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>
+          <div class="m_r30 ml_20" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>
 <!--          <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">-->
 <!--            <div class="avatar-wrapper">-->
 <!--              &lt;!&ndash;<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">&ndash;&gt;-->
@@ -52,7 +52,7 @@
 <!--              </el-dropdown-item>-->
 <!--            </el-dropdown-menu>-->
 <!--          </el-dropdown>-->
-          <div class="f16 bold" @click="logout"><i class="el-icon-switch-button"></i>退 出</div>
+          <div class="f16 bold ml_20" @click="logout">退 出<i class="el-icon-switch-button bold" style="margin-left: 5px"></i></div>
         </div>
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
           <ul class="street">
@@ -274,13 +274,13 @@ export default {
   }
   .logo{
     img{
-      width: 50%;
+      width: 40%;
       margin-top: 20px;
     }
 
   }
   .top_right {
-    height: 50px;
+    height: 60px;
     overflow: hidden;
     position: relative;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
@@ -319,10 +319,10 @@ export default {
     .right-menu {
       /*float: right;*/
       display: flex;
-      justify-content: right;
+      justify-content: flex-end;
       align-items: center;
       height: 100%;
-      line-height: 50px;
+      line-height: 60px;
       color: $txtColor !important;
       &:focus {
         outline: none;

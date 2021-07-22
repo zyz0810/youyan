@@ -3,19 +3,19 @@
     <div class="filter-container">
       <el-form :inline="true" :model="listQuery" class="search_form">
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择辖区" @change="handleFilter">
+          <el-select v-model="listQuery.street" placeholder="选择辖区" @change="handleFilter">
             <el-option label="启用" value="1"></el-option>
             <el-option label="禁用" value="0"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择规模" @change="handleFilter">
+          <el-select v-model="listQuery.scale_type" placeholder="选择规模" @change="handleFilter">
             <el-option label="启用" value="1"></el-option>
             <el-option label="禁用" value="0"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择菜系" @change="handleFilter">
+          <el-select v-model="listQuery.cook_type" placeholder="选择菜系" @change="handleFilter">
             <el-option label="启用" value="1"></el-option>
             <el-option label="禁用" value="0"></el-option>
           </el-select>
@@ -27,81 +27,69 @@
           </el-select>
         </el-form-item>
         <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.name" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
+          <el-input v-model.trim="listQuery.key_word" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
         </el-form-item>
         <el-form-item>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
         </el-form-item>
       </el-form>
-      <div class="flex">
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
+      <div>
+        <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleView('create',{})">新增信息</el-button>
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
-
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
-              element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
+              element-loading-text="拼命加载中" fit ref="tableList">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="餐企简称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
+      <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
+      <el-table-column label="餐企简称" align="center" prop="simple_name"></el-table-column>
+      <el-table-column label="所属辖区" align="center" prop="street"></el-table-column>
 
-      <el-table-column label="餐企规模" align="center" prop="address"></el-table-column>
+      <el-table-column label="餐企规模" align="center" prop="scale_type"></el-table-column>
       <el-table-column label="餐企类型" align="center" prop="num">
         <template slot-scope="scope">
           <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="营业状态" align="center" prop="num">
+      <el-table-column label="营业状态" align="center" prop="status">
         <template slot-scope="scope">
           <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="160">
         <template slot-scope="scope">
-          <el-button class="filter-item" type="primary" @click="handleView">查看</el-button>
-          <el-button class="filter-item" type="primary" @click="handleCreate">修改</el-button>
+          <el-button class="filter-item" type="primary" @click="handleView('view',scope.row)">查看</el-button>
+          <el-button class="filter-item btn_purple" type="primary" @click="handleView('update',scope.row)">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList" class="text-right"/>
-    <paraView :showDialog.sync="showViewDialog" :viewData="viewData" @insertProduct="getList"></paraView>
+    <companyDetail :showDialog.sync="showViewDialog" :viewData="viewData" @insertProduct="getList"></companyDetail>
 
   </div>
 </template>
 
 <script>
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
+  import {companyList} from '@/api/catering'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
-  import paraView from "./components/view";
+  import companyDetail from "./components/view";
   export default {
-    name: 'parameterList',
+    name: 'companyList',
     directives: {waves},
     components: {
       draggable,
       Pagination,
-      paraView
+      companyDetail
     },
     data() {
       return {
         showViewDialog:false,
         viewData:{},
         paraLoading:false,
-        operationOption: [{
-          id: 0,
-          name: '下拉框'
-        }, {
-          id: 1,
-          name: '复选框'
-        }, {
-          id: 2,
-          name: '输入框'
-        }],
-        updateBtn: true,
         enableBtn: true,
         disableBtn: true,
         total: 0,
@@ -121,10 +109,13 @@
         }],
         listLoading: false,
         listQuery: {
-          name: '',
-          status: undefined,
+          key_word: '',
+          street: '',
+          scale_type:'',
+          cook_type:'',
+          status:'',
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         updateId: undefined,
         dialogFormVisible: false,
@@ -184,7 +175,7 @@
           }
         };
       });
-      // this.getList();
+      this.getList();
     },
     methods: {
       handleValue(val){
@@ -217,9 +208,9 @@
         this.getList()
       },
       getList() {
-        paraList(this.listQuery).then(res => {
+        companyList(this.listQuery).then(res => {
           this.list = res.data.data
-          this.total = res.data.count
+          this.total = res.data.total
         });
       },
 
@@ -232,45 +223,7 @@
         }
         this.getList();
       },
-      clickRow(row){
-        this.$refs.tableList.toggleRowSelection(row)
-      },
-      handleSelectionChange(val) {
-        console.log(val)
-        this.rowInfo = val;
-        if (val.length == 1) {
-          this.updateBtn = false
-          this.deleteBtn = false
-          if(val[0].status == 0){
-            this.enableBtn = false
-            this.disableBtn = true
-          }else{
-            this.enableBtn = true
-            this.disableBtn = false
-          }
-        } else {
-          this.updateBtn = true
-          this.deleteBtn = true
-          this.enableBtn = true
-          this.disableBtn = true
-        }
-      },
-      addSpecifications() {
-        this.parameterValueList.push({name: ''})
-      },
-      goView() {
-        // this.$router.push('/product/view')
-        // this.$router.push({path: "/product/paramView", query: {id: this.rowInfo[0].id, name: this.rowInfo[0].name,operatingMode: this.rowInfo[0].operatingMode}})
-        this.showViewDialog = true
-        this.paraData = {
-          option: {
-            name: this.rowInfo[0].name,
-            operatingMode: this.rowInfo[0].operatingMode
-          },
-          operatorType: 'view',
-          id: this.rowInfo[0].id
-        }
-      },
+
 
       resetTemp() {
         this.temp = {
@@ -283,10 +236,12 @@
           parameterValueList: [],
         }
       },
-      handleView(row){
+      handleView(type,row){
         this.showViewDialog = true
         this.viewData = {
-          id:row.id
+          operatorType:type,
+          id:row.id,
+          option:{}
         }
       },
       handleCreate() {

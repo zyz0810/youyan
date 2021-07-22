@@ -2,58 +2,29 @@
   <myDialog
     :visible.sync="showViewDialog"
     :close-on-click-modal="false"
-    width="80%"
+    width="50%"
     @close="close"
     top="10vh"
-    title="查看明细"
+    title="修改"
     class="dialogContainer"
     @open="open"
   >
-    <div class="filter-container">
-      <div class="flex" v-if="operatingMode!=2">
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="success" icon="el-icon-edit" :disabled="updateBtn" @click="handleUpdate">编辑</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="danger" :disabled="updateBtn" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-      </div>
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="width: 400px; margin-left:50px;">
+
+      <el-form-item label="报警名称" prop="name">
+        <el-input v-model.trim="name" placeholder="请输入报警名称" autocomplete="off" clearable/>
+      </el-form-item>
+      <el-form-item label="油烟浓度阈值" prop="name">
+        >=<el-input v-model.trim="temp.name" placeholder="请输入值" autocomplete="off" clearable/>mg/m3
+      </el-form-item>
+      <el-form-item label="TVOC阈值" prop="name">
+        >=<el-input v-model.trim="temp.name" placeholder="请输入值" autocomplete="off" clearable/>mg/m3
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()" :loading="paraLoading">确 定</el-button>
+      <el-button class="btn_gray" @click="dialogFormVisible = false">取 消</el-button>
     </div>
-    <div class="f14">参数名：{{name}}</div>
-    <div class="f14" v-if="operatingMode!=2">参数值：</div>
-
-    <el-table v-loading="listLoading" :data="list" :header-cell-style="{background:'#f5f7fa'}" element-loading-text="拼命加载中" border fit highlight-current-row ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange" v-if="operatingMode!=2">
-      <el-table-column type="selection" width="40" align="center" ></el-table-column>
-      <el-table-column label="名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="创建人" align="center" prop="createUserName"></el-table-column>
-      <el-table-column label="创建时间" align="center">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="最后修改人" align="center" prop="updateUserName"></el-table-column>
-      <el-table-column label="最后修改时间" align="center">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-                @pagination="getList" class="text-right" v-if="operatingMode!=2"/>
-    <myDialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :append-to-body="true">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="width: 400px; margin-left:50px;">
-
-        <el-form-item label="参数名称" prop="name">
-          <el-input v-model.trim="name" placeholder="请输入规格名称" autocomplete="off" :disabled="true" clearable/>
-        </el-form-item>
-        <el-form-item label="参数值" prop="name">
-          <el-input v-model.trim="temp.name" placeholder="请输入规格值" autocomplete="off" clearable/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
-        <!--<el-button type="primary" @click="handleAdd()">确 定</el-button>-->
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData(updateId)" :loading="paraLoading">确 定</el-button>
-      </div>
-    </myDialog>
 
 
   </myDialog>
@@ -90,27 +61,13 @@
     data() {
       return {
         paraLoading:false,
-        operatingMode:'',
         updateBtn:true,
-        total:0,
-        specificationsItem:[''],
-        list: null,
-        listLoading: false,
-        listQuery:{
-          parameterId:'',
-          page:1,
-          limit:10
-        },
-        updateId:undefined,
+
         dialogFormVisible: false,
         temp: {
           name:'',
           parameterId:undefined,
           deleted:0
-        },
-        textMap: {
-          update: '编辑规格信息',
-          create: '新增规格信息'
         },
         dialogStatus: '',
         rules: {
@@ -135,38 +92,17 @@
         return StatusArr[value]
       }
     },
-    mounted() {
 
-    },
     methods: {
       open(){
-        this.listQuery.parameterId = this.paraData.id
-        this.operatingMode = this.paraData.option.operatingMode
-        this.getList();
-        this.name = this.paraData.option.name
+        // this.getList();
       },
       close(){},
       getList(){
         paraValueList(this.listQuery).then(res=>{
           this.list = res.data.data;
-          this.total = res.data.count
+
         });
-      },
-      clickRow(row){
-        this.$refs.tableList.toggleRowSelection(row)
-      },
-      handleSelectionChange(val) {
-        this.rowInfo = val;
-        if(val.length > 1){
-          this.updateBtn = true
-          this.deleteBtn = true
-        }else if(val.length == 1){
-          this.updateBtn = false
-          this.deleteBtn = false
-        }else{
-          this.updateBtn = true
-          this.deleteBtn = true
-        }
       },
 
       resetTemp() {

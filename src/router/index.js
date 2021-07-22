@@ -179,43 +179,43 @@ export const asyncRoutes = [
       },
     ]
   },
-  {
-    path: '/devOps',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: '运维记录',
-    meta: {
-      title: '运维记录',
-      icon: 'iconfont icon-jilu',
-      roles: [
-        'admin',
-      ]
-    },
-    children: [
-      {
-        path: 'verify',
-        component: () => import('@/views/devOps/verify/list'),
-        name: 'verifyList',
-        meta: {
-          title: '故障核实',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-      {
-        path: 'repair',
-        component: () => import('@/views/devOps/repair/list'),
-        name: 'repairList',
-        meta: {
-          title: '故障维修',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-    ]
-  },
+  // {
+  //   path: '/devOps',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: '运维记录',
+  //   meta: {
+  //     title: '运维记录',
+  //     icon: 'iconfont icon-jilu',
+  //     roles: [
+  //       'admin',
+  //     ]
+  //   },
+  //   children: [
+  //     {
+  //       path: 'verify',
+  //       component: () => import('@/views/devOps/verify/list'),
+  //       name: 'verifyList',
+  //       meta: {
+  //         title: '故障核实',
+  //         roles: [
+  //           'admin',
+  //         ]
+  //       }
+  //     },
+  //     {
+  //       path: 'repair',
+  //       component: () => import('@/views/devOps/repair/list'),
+  //       name: 'repairList',
+  //       meta: {
+  //         title: '故障维修',
+  //         roles: [
+  //           'admin',
+  //         ]
+  //       }
+  //     },
+  //   ]
+  // },
   {
     path: '/system',
     component: Layout,

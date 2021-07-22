@@ -1,6 +1,6 @@
 <template>
-  <div class="" style="padding: 20px 0;margin-bottom: 40px;background: #fff;">
-    <div :class="className" ref="ringCharts" :style="{height:height,width:width,background:'#fff'}" />
+  <div class="" style="padding: 20px 0 0;">
+    <div :class="className" ref="ringCharts" :style="{height:height,width:width,}" />
     <div class="legend_span legend_inline text-center" style="margin-top: -30px" v-if="PieChartLegend.length>0">
       <div v-for="(item,index) in PieChartLegend" @click="editLegend">
         <label :for="'ring'+index">

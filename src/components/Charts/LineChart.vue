@@ -1,6 +1,6 @@
 <template>
 
-  <div class="clearfix" style=" padding: 20px;">
+  <div class="clearfix">
     <div class="fl" :style="{width: divWidth}">
       <div :class="className" ref="pieChart" :style="{height:height,width:width}" />
     </div>

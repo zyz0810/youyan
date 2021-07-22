@@ -6,6 +6,13 @@
   "description": "智慧城市",
   "glyphs": [
     {
+      "icon_id": "10460755",
+      "name": "手机",
+      "font_class": "shouji",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "707621",
       "name": "报表",
       "font_class": "baobiao-copy",
