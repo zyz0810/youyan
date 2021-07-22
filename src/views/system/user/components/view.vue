@@ -11,9 +11,9 @@
   >
     <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="width: 400px; margin-left:50px;">
 
-      <el-form-item label="所属分组" prop="name">
+      <el-form-item label="所属分组" prop="city_id">
 <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
-        <el-select v-model="temp.area" placeholder="选择区">
+        <el-select v-model="temp.city_id" placeholder="选择区">
           <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id"></el-option>
         </el-select>
       </el-form-item>
@@ -70,6 +70,7 @@
         cityList:[],
         paraLoading:false,
         temp: {
+          city_id:'',
           name:'',
           password:'',
         },
