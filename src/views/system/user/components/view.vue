@@ -2,9 +2,9 @@
   <myDialog
     :visible.sync="showViewDialog"
     :close-on-click-modal="false"
-    width="60%"
+    width="50%"
     @close="close"
-    top="10vh"
+    top="20vh"
     title="用户信息"
     class="dialogContainer"
     @open="open"
@@ -13,7 +13,7 @@
 
       <el-form-item label="所属分组" prop="city_id">
 <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
-        <el-select v-model="temp.city_id" placeholder="选择区">
+        <el-select v-model="temp.city_id" multiple  placeholder="选择区">
           <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id"></el-option>
         </el-select>
       </el-form-item>
@@ -26,10 +26,13 @@
       <el-form-item label="密码" prop="password">
         <el-input v-model.trim="temp.password" placeholder="请输入密码" autocomplete="off" clearable/>
       </el-form-item>
+      <el-form-item label="手机号码" prop="mobile">
+        <el-input v-model.trim="temp.mobile" placeholder="请输入手机号码" autocomplete="off" clearable/>
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="showViewDialog = false">取 消</el-button>
       <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()" :loading="paraLoading">确 定</el-button>
+      <el-button type="primary" class="btn_gray" @click="showViewDialog = false">取 消</el-button>
     </div>
 
 
@@ -73,10 +76,13 @@
           city_id:'',
           name:'',
           password:'',
+          mobile:''
         },
         rules: {
+          city_id: [{ required: true, message: '请选择所属分组', trigger: 'change' }],
           name: [{ required: true, message: '请输入用户名', trigger: 'change' }],
           password: [{ required: true, message: '请输入密码', trigger: 'change' }],
+          mobile: [{ required: true, message: '请输入手机号码', trigger: 'change' }],
         },
       }
     },
@@ -92,14 +98,28 @@
     },
     methods: {
       open(){
-        this.getView();
+        this.dialogStatus = this.paraData.operatorType
+        if(this.paraData.operatorType != 'create'){
+          this.getView();
+        }
         this.getCity();
       },
-      close(){},
+      close(){
+        this.cityList=[];
+        this.paraLoading=false;
+        this.temp= {
+          city_id:'',
+          name:'',
+          password:'',
+          mobile:''
+        };
+      },
       getView(){
         addUser(this.listQuery).then(res=>{
-          this.list = res.data.data;
-          this.total = res.data.count
+          const { id, city_id, name, password,} = res.data
+          this.temp = { id, city_id, name, password,}
+          // this.list = res.data.data;
+          // this.total = res.data.count
         });
       },
       getCity(){
@@ -108,28 +128,22 @@
         });
       },
 
-      resetTemp() {
-        this.temp = {
-          name:'',
-          password:'',
-        }
-      },
-
 
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            this.paraLoading = true
-            addUser(this.temp).then((res) => {
+            this.paraLoading = true;
+            let temp = JSON.parse(JSON.stringify(this.temp));
+            temp.city_id = temp.city_id.join(',')
+            addUser(temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
               },1000)
-              if(res.resp_code == 1) {
-                this.getList();
+              if(res.code == 1) {
                 this.showViewDialog = false;
                 this.$emit('insertUser');
                 this.$message({
-                  message: '增加成功',
+                  message: res.message,
                   type: 'success'
                 });
               }
@@ -143,20 +157,15 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.paraLoading = true
-            const tempData = Object.assign({}, this.temp);
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            paraValueUpdate(tempData).then((res) => {
+            addUser(this.temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
               },1000)
-              if(res.resp_code == 0) {
-                // const index = this.list.findIndex(v => v.id === this.temp.id);
-                // this.list.splice(index, 1, res.data);
-                this.getList();
+              if(res.code == 1) {
                 this.showViewDialog = false;
+                this.$emit('insertUser');
                 this.$message({
-                  message: '修改成功',
+                  message: res.message,
                   type: 'success'
                 });
               }

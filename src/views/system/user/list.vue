@@ -18,14 +18,15 @@
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
               element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange" class="titleBg_table">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="ID" align="center" prop="id"></el-table-column>
+      <!--<el-table-column label="ID" align="center" prop="id"></el-table-column>-->
       <el-table-column label="用户名" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属分组" align="center" prop="address"></el-table-column>
-      <el-table-column label="密码" align="center" prop="password"></el-table-column>
+      <el-table-column label="所属分组" align="center" prop="city_name"></el-table-column>
+      <el-table-column label="手机号" align="center" prop="mobile"></el-table-column>
+      <!--<el-table-column label="密码" align="center" prop="password"></el-table-column>-->
       <el-table-column label="操作" align="center" min-width="160">
         <template slot-scope="scope">
-          <el-button class="filter-item btn_yellow" type="primary" @click="handleDelete">删除</el-button>
-          <el-button class="filter-item btn_purple" type="primary" @click="handleUpdate('update',scpoe.row)">修改</el-button>
+          <!--<el-button class="filter-item btn_yellow" type="primary" @click="handleDelete">删除</el-button>-->
+          <el-button class="filter-item btn_purple" type="primary" @click="handleUpdate('update',scope.row)">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -150,6 +151,7 @@
       this.getList();
     },
     methods: {
+      handleExport(){},
       handleValue(val){
         // this.temp.parameterValueList.map(item=>{
         //   if(item.name == val.srcElement.value){
@@ -182,7 +184,7 @@
       getList() {
         userList(this.listQuery).then(res => {
           this.list = res.data.data
-          this.total = res.data.count
+          this.total = res.data.total
         });
       },
 

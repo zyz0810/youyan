@@ -2,7 +2,7 @@
   <myDialog
     :visible.sync="showViewDialog"
     :close-on-click-modal="false"
-    width="80%"
+    width="60%"
     @close="close"
     top="6vh"
     title="查看明细"

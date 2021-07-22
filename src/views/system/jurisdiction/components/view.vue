@@ -4094,7 +4094,11 @@
         },
         dialogStatus: '',
         rules: {
-          name: [{ required: true, message: '请输入名称', trigger: 'change' }],
+          province: [{ required: true, message: '请选择省', trigger: 'change' }],
+          city: [{ required: true, message: '请选择市', trigger: 'change' }],
+          area: [{ required: true, message: '请选择区', trigger: 'change' }],
+          principal: [{ required: true, message: '请输入负责人', trigger: 'change' }],
+          mobile: [{ required: true, message: '请输入手机号', trigger: 'change' }],
         },
       }
     },
