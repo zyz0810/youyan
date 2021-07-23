@@ -12,11 +12,11 @@
 <!--  </div>-->
   <el-header>
     <el-row>
-      <el-col :span="5" class="f18">集 据 物 连 </el-col>
-      <el-col :span="14" class="logo text-center">
+      <el-col :span="6" class="f18">集 据 物 连 </el-col>
+      <el-col :span="12" class="logo text-center">
         <img src="./../../../assets/image/logo.png"/>
       </el-col>
-      <el-col :span="5" class="top_right">
+      <el-col :span="6" class="top_right">
         <div class="right-menu">
           <!--<template v-if="device!=='mobile'">-->
           <!--<search id="header-search" class="right-menu-item" />-->

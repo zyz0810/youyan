@@ -3,22 +3,13 @@
     <div class="filter-container">
       <el-form :inline="true" :model="listQuery" class="search_form">
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择辖区">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
+          <el-input v-model.trim="listQuery.facility_no" placeholder="设备编号" clearable/>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model.trim="listQuery.name" placeholder="设备编号" clearable/>
+          <el-input v-model.trim="listQuery.imei" placeholder="设备IMEI" clearable/>
         </el-form-item>
-        <el-form-item label="">
-          <el-input v-model.trim="listQuery.name" placeholder="设备IMEI" clearable/>
-        </el-form-item>
-        <el-form-item label="">
-          <el-input v-model.trim="listQuery.name" placeholder="设备名称" clearable/>
-        </el-form-item>
-        <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.name" placeholder="输入餐企名称或简称" clearable/>
+        <el-form-item label="" prop="key_word">
+          <el-input v-model.trim="listQuery.key_word" placeholder="输入设备名称或简称" clearable/>
         </el-form-item>
         <el-form-item>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -34,21 +25,21 @@
               element-loading-text="拼命加载中" fit ref="tableList">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
 <!--      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>-->
-      <el-table-column label="设备名称" align="center" prop=""></el-table-column>
+      <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
       <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
       <el-table-column label="设备编号" align="center" prop="facility_no"></el-table-column>
       <el-table-column label="设备IMEI" align="center" prop="imei"></el-table-column>
       <el-table-column label="安装日期" align="center" width="140" prop="start_time"></el-table-column>
       <el-table-column label="操作" align="center" min-width="160">
         <template slot-scope="scope">
-          <el-button class="filter-item" type="primary" @click="handleView('view','')">查看</el-button>
+          <el-button class="filter-item" type="primary" @click="handleView('view',scope.row)">查看</el-button>
           <el-button class="filter-item btn_purple" type="primary" @click="handleView('update',scope.row)">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
-    <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertProduct="getList"></paraView>
+    <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertList="getList"></paraView>
 
   </div>
 </template>
@@ -78,10 +69,11 @@
         list: [],
         listLoading: false,
         listQuery: {
-          // name: '',
-          // status: undefined,
+          facility_no: '',
+          imei: '',
+          key_word:'',
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         dialogFormVisible: false,
 
@@ -143,7 +135,12 @@
       handleView(type,row){
         this.showViewDialog = true;
         this.paraData={
-          id:row.id
+          option: {
+            // name: this.rowInfo[0].name,
+            // operatingMode: this.rowInfo[0].operatingMode
+          },
+          operatorType: type,
+          id: type == 'create'?'':row.id
         }
       },
 

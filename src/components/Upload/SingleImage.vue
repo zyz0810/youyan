@@ -123,7 +123,7 @@ export default {
       // uploadImg(file,config)
       uploadImg(file)
         .then((res) => {
-          this.emitInput(res.picUrl);
+          this.emitInput(res.url);
           // this.tempUrl = res.picUrl;
         })
         .catch((e) => {

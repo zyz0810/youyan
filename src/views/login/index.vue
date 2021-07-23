@@ -29,7 +29,11 @@
           </span>
             </el-form-item>
           </el-tooltip>
-          <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" class="login_btn" @click.native.prevent="handleLogin">登录</el-button>
+        <div class="clearfix" style="margin-top: -8px;margin-bottom: 30px;">
+          <el-checkbox v-model="checked" class="fl">记住密码</el-checkbox>
+          <span class="f14 fr baseColor">忘记密码？</span>
+        </div>
+          <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; padding: 15px" class="login_btn f18" @click.native.prevent="handleLogin">登 录</el-button>
         </el-form>
     </div>
 
@@ -63,6 +67,7 @@ export default {
       }
     }
     return {
+      checked:false,
       loginForm: {
         mobile: '',
         password: ''
@@ -236,7 +241,7 @@ $cursor: #fff;
   .el-form-item {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: #fff;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     color: #fff;
   }
 }
@@ -270,13 +275,13 @@ $txt:#3f35cf;
     /*width: 90%;*/
     /*margin: 0 auto;*/
     /*height: 100vh;*/
-    width: 600px;
+    width: 650px;
   }
 
 
 .login_txt{
-  width: 400px;
-  margin: 0 auto 20px;
+  width: 600px;
+  margin: 0 auto 5vh;
   display: block;
 }
 
@@ -286,15 +291,39 @@ $txt:#3f35cf;
     /*position: fixed;*/
     /*left: 66%;*/
     /*top: 45%;*/
-    width: 600px;
-    padding: 50px 100px 10px;
-    margin: 0 auto 50px;
+    width: 650px;
+    padding: 50px 150px 10px;
+    margin: 0 auto 150px;
     overflow: hidden;
-    background: #2f549a7a;
+    background: rgba(0,0,0,0.2);
     border:1px solid #337fd5;
-
+/deep/.el-checkbox__label{
+  color: #fff !important;
+}
     .form-item__content{
       background: #fff;
+    }
+    /deep/.el-input__inner{
+      font-size: 14px;
+      color: #333 !important;
+      border:none !important;
+      background: #fff !important;
+      &::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #ccc !important;
+      }
+      &:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #ccc !important;
+      }
+      &::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #ccc !important;
+      }
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #ccc !important;
+      }
     }
   }
 
@@ -312,7 +341,7 @@ $txt:#3f35cf;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    color: rgba(12,131,250,1);
     vertical-align: middle;
     width: 30px;
     display: inline-block;

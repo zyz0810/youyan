@@ -203,12 +203,12 @@
           <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
           <el-table-column label="风机状态" align="center" prop="num">
             <template slot-scope="scope">
-              <span>{{scope.row.status == 1?'开':'关'}}</span>
+              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
             </template>
           </el-table-column>
           <el-table-column label="净化器状态" align="center" prop="num">
             <template slot-scope="scope">
-              <span>{{scope.row.status == 1?'开':'关'}}</span>
+              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
             </template>
           </el-table-column>
           <el-table-column label="监测状态" align="center">

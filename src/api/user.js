@@ -61,14 +61,14 @@ export function userList(data) {
     data: Qs.stringify(data)
   })
 }
-/* 获取单个用户信息
+/* 用户详情
  * id 用户id
  */
-export function findSysUserById(query) {
+export function userDetail(data) {
   return request({
-    url:'api-user/users/findSysUserById',
-    method: 'get',
-    params: query
+    url:'api/user/userDetail',
+    method: 'post',
+    data: Qs.stringify(data)
   })
 }
 
@@ -94,9 +94,9 @@ export function addUser(data) {
  * enabled 是否启用
  * id  用户id
  */
-export function updateEnabled(data) {
+export function editUser(data) {
   return request({
-    url:'api-user/users/updateEnabled',
+    url:'api/user/editUser',
     method: 'post',
     data: Qs.stringify(data)
   })

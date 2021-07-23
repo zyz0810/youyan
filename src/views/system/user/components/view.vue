@@ -13,8 +13,8 @@
 
       <el-form-item label="所属分组" prop="city_id">
 <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
-        <el-select v-model="temp.city_id" multiple  placeholder="选择区">
-          <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id"></el-option>
+        <el-select v-model="temp.city_id" multiple  placeholder="选择区" @change="$forceUpdate()">
+          <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id" :key="option.id"></el-option>
         </el-select>
       </el-form-item>
 <!--      <el-form-item label="分组ID" prop="name">-->
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {addUser} from '@/api/user'
+  import {addUser,editUser,userDetail} from '@/api/user'
   import {cityList} from '@/api/jurisdiction'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
@@ -115,11 +115,10 @@
         };
       },
       getView(){
-        addUser(this.listQuery).then(res=>{
-          const { id, city_id, name, password,} = res.data
-          this.temp = { id, city_id, name, password,}
-          // this.list = res.data.data;
-          // this.total = res.data.count
+        userDetail({id:this.paraData.id}).then(res=>{
+          const { id, name, password,mobile} = res.data
+          let city_id = res.data.city_id.split(',')
+          this.temp = { id, city_id, name, password,mobile}
         });
       },
       getCity(){
@@ -157,7 +156,9 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.paraLoading = true
-            addUser(this.temp).then((res) => {
+            let temp = JSON.parse(JSON.stringify(this.temp));
+            temp.city_id = temp.city_id.join(',')
+            editUser(temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
               },1000)

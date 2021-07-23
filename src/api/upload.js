@@ -63,7 +63,7 @@ export function uploadImg(file, type = "license") {
   data.append('file', file)
   data.append('type', type)
   return request({
-    url: `api-user/file/uploadSingleImage`,
+    url: `api/tools/upload`,
     method: 'POST',
     data: data,
   }).then(res => {

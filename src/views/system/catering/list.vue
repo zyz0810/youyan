@@ -65,7 +65,7 @@
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList" class="text-right"/>
-    <companyDetail :showDialog.sync="showViewDialog" :viewData="viewData" @insertProduct="getList"></companyDetail>
+    <companyDetail :showDialog.sync="showViewDialog" :viewData="viewData" @insertList="getList"></companyDetail>
 
   </div>
 </template>
