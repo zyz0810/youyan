@@ -19,7 +19,7 @@
             <el-input ref="mobile" v-model="loginForm.mobile" placeholder="请输入用户名" name="mobile" type="text" tabindex="1" autocomplete="on"/>
           </el-form-item>
           <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-            <el-form-item prop="password">
+            <el-form-item prop="password" style="margin-bottom: 50px;">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
@@ -29,10 +29,10 @@
           </span>
             </el-form-item>
           </el-tooltip>
-        <div class="clearfix" style="margin-top: -8px;margin-bottom: 30px;">
-          <el-checkbox v-model="checked" class="fl">记住密码</el-checkbox>
-          <span class="f14 fr baseColor">忘记密码？</span>
-        </div>
+<!--        <div class="clearfix" style="margin-top: -8px;margin-bottom: 30px;">-->
+<!--          <el-checkbox v-model="checked" class="fl">记住密码</el-checkbox>-->
+<!--          <span class="f14 fr baseColor">忘记密码？</span>-->
+<!--        </div>-->
           <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px; padding: 15px" class="login_btn f18" @click.native.prevent="handleLogin">登 录</el-button>
         </el-form>
     </div>
