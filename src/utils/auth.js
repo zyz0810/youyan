@@ -62,3 +62,31 @@ export function setMobile(mobile) {
 export function removeMobile() {
   return Cookies.remove(adminMobile)
 }
+
+const city = 'city';
+export function setCity(cityList) {
+  return localStorage.setItem('city',JSON.stringify(cityList))
+  // return Cookies.set(city, cityList)
+}
+export function getCity() {
+  return JSON.parse(localStorage.getItem('city'))
+  // return Cookies.get(city)
+}
+export function removeCity() {
+  return localStorage.removeItem('city')
+  // return Cookies.remove(city)
+}
+
+const CitySelected = 'citySelected';
+export function setCitySelected(cityCurrent) {
+  // return localStorage.setItem('citySelected',cityCurrent))
+  return Cookies.set(CitySelected, cityCurrent)
+}
+export function getCitySelected() {
+  // return JSON.parse(localStorage.getItem('city'))
+  return Cookies.get(CitySelected)
+}
+export function removeCitySelected() {
+  // return localStorage.removeItem('city')
+  return Cookies.remove(CitySelected)
+}

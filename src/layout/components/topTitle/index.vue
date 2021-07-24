@@ -31,27 +31,37 @@
 
           <!--</template>-->
 <!--          <span class="date">{{$moment().format('YYYY-MM-DD')}}</span>-->
-          <div class="m_r30">
-            <span class="bold" style="margin: 0 5px; font-size: 18px">{{name}}</span>
-            <i class="el-icon-caret-bottom" />
-          </div>
+          <!--<div class="m_r30">-->
+            <!--<span class="bold" style="margin: 0 5px; font-size: 18px">{{name}}</span>-->
+            <!--<i class="el-icon-caret-bottom" />-->
+          <!--</div>-->
+          <el-select v-model="citySelected" placeholder="请选择" @change="chooseCity">
+            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id">
+            </el-option>
+            <!--<el-option v-for="item in cityList" :label="item.mobile" :value="item.id" :key="item.id">-->
+            <!--</el-option>-->
+          </el-select>
 
-          <div class="m_r30 ml_20" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>
-<!--          <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">-->
-<!--            <div class="avatar-wrapper">-->
-<!--              &lt;!&ndash;<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">&ndash;&gt;-->
-<!--&lt;!&ndash;              <img :src="headImg" class="user-avatar">&ndash;&gt;-->
-<!--              <i class="el-icon-menu"></i>-->
-<!--            </div>-->
-<!--            <el-dropdown-menu slot="dropdown" class="text-center">-->
-<!--              <el-dropdown-item divided @click.native="updatePassword">-->
-<!--                <span style="display:block;">修改密码</span>-->
-<!--              </el-dropdown-item>-->
-<!--              <el-dropdown-item divided @click.native="logout">-->
-<!--                <span style="display:block;">退 出</span>-->
-<!--              </el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
+                    <!--<el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">-->
+                      <!--<div class="avatar-wrapper">-->
+                        <!--&lt;!&ndash;<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">&ndash;&gt;-->
+          <!--&lt;!&ndash;              <img :src="headImg" class="user-avatar">&ndash;&gt;-->
+                        <!--<span class="bold" style="margin: 0 5px; font-size: 18px">{{cityList[0].province+cityList[0].city+cityList[0].area}}</span>-->
+                        <!--<i class="el-icon-caret-bottom" />-->
+                      <!--</div>-->
+                      <!--<el-dropdown-menu slot="dropdown" class="text-center">-->
+                        <!--<el-dropdown-item divided @click.native="updateCity" v-for="item in cityList" :key="item.id">-->
+                          <!--<span style="display:block;">{{item.province+item.city+item.area}}</span>-->
+                        <!--</el-dropdown-item>-->
+                        <!--&lt;!&ndash;<el-dropdown-item divided @click.native="logout">&ndash;&gt;-->
+                          <!--&lt;!&ndash;<span style="display:block;">退 出</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</el-dropdown-item>&ndash;&gt;-->
+                      <!--</el-dropdown-menu>-->
+                    <!--</el-dropdown>-->
+
+
+          <!--<div class="m_r30 ml_20" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>-->
+
           <div class="f16 bold ml_20" @click="logout">退 出<i class="el-icon-switch-button bold" style="margin-left: 5px"></i></div>
         </div>
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
@@ -85,15 +95,15 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import headImg from '@/assets/headImg/img.png'
-import { getToken, setToken, removeToken,getId,setId,removeId,getName,setName,removeName,getMobile } from '@/utils/auth'
+import { getToken, setToken, removeToken,getId,setId,removeId,getName,setName,removeName,getMobile,getCity,setCitySelected,getCitySelected } from '@/utils/auth'
 import { validUsername, validatePhone,isPassword } from "@/utils/validate";
 import {updatePassword} from '@/api/user'
 import {getSmsCode} from "@/api/code";
-
 export default {
   name: 'topTitle',
   data() {
     return {
+      citySelected:Number(getCitySelected()),
       headImg: headImg,
       systemDate:'',
       // name:getName()!='null'?getName():'',
@@ -107,6 +117,7 @@ export default {
       temp:{
         oldPassword:''
       },
+      cityList:getCity(),
       rules:{
         password: [
           { required: true, message: "请输入密码", trigger: "change" },{validator: isPassword}
@@ -145,9 +156,17 @@ export default {
       'sidebar',
       'avatar',
       'device',
+      'city'
     ])
   },
   methods: {
+    chooseCity(val){
+      this.citySelected = val;
+      setCitySelected(val);
+      console.log( getCity())
+     console.log( getCitySelected())
+    },
+    updateCity(){},
     resetPasswordTemp(){
       this. passwordTemp={
         confirmPassword:'',
@@ -250,7 +269,6 @@ export default {
     // }
   },
   mounted() {
-    // this.addDate();
   },
 }
 </script>
@@ -347,7 +365,26 @@ export default {
           }
         }
       }
+      /deep/.el-input__inner{
+        font-size: 16px;
+        font-weight: bold;
+        background: transparent!important;
+        border: none!important;
+      }
+      /deep/.el-select .el-input .el-select__caret{
+        color: $txtColor !important;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      /deep/.el-input__suffix{
+        top: -2px;
+      }
 
+      /deep/.el-icon-arrow-up{
+        &:before{
+          content: "\e790";
+        }
+      }
       .avatar-container {
         margin-right: 30px;
 

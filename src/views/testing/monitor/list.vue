@@ -181,11 +181,11 @@
         </tr>
       </table>
     </div>
-    <ul class="company_leibie f14 clr_white bold" @click="showCompanyDialog = true">
-      <li>正常 <span class="f18 clr_yellow bold">39</span></li>
-      <li>超标 <span class="f18 clr_yellow bold">39</span></li>
-      <li>故障 <span class="f18 clr_yellow bold">39</span></li>
-      <li>离线 <span class="f18 clr_yellow bold">39</span></li>
+    <ul class="company_leibie f14 baseColor">
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon01.png" class="fl"/><div class="">正常 <span class="f18 clr_yellow bold">39</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon02.png" class="fl"/><div class="">超标 <span class="f18 clr_yellow bold">5</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon03.png" class="fl"/><div class="">故障 <span class="f18 clr_yellow bold">3</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon04.png" class="fl"/><div class="">离线 <span class="f18 clr_yellow bold">9</span></div></li>
     </ul>
     <div class="company_list" v-if="showCompanyDialog">
       <div class="company_tit p20 clearfix">
@@ -221,6 +221,9 @@
                     @pagination="getList" class="text-right"/>
       </div>
     </div>
+    <div class="bottom_arrow text-center" @click="showCompanyDialog = true">
+      <span :class="['triangle',showCompanyDialog == true ?'isTop':'isBottom']"></span>
+    </div>
   </div>
 </template>
 
@@ -233,6 +236,9 @@
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point02.png' // 引入刚才的map.js 注意路径
+  import point03 from '@/assets/image/point03.png' // 引入刚才的map.js 注意路径
+  import point04 from '@/assets/image/point04.png' // 引入刚才的map.js 注意路径
   import LineChart from '@/components/Charts/LineChart'
   import map from '@/components/Map/map' // 引入刚才的map.js 注意路径
   export default {
@@ -464,16 +470,87 @@
         ]
         // this.markerPoint(site)
         //创建图片对象
-        var icon = new T.Icon({
+        var icon01 = new T.Icon({
           iconUrl: point01,
-          iconSize: new T.Point(50, 46),
-          iconAnchor: new T.Point(10, 25)
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        var icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        var icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        var icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
         });
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(120.21194, 30.20835), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
-        this.map.setStyle('indigo')
+        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
+        // this.map.addOverLay(marker);
+        var infoWin1 = new T.InfoWindow();
+        let sContent =
+          '<div class="f14 baseColor text-center">' +
+          '<p ref="enterpriseName" class="bold">新时器烤肉</p>' +
+          '<p ref="enterpriseName">监测状态：<span class="red01">超标</span></p>' +
+          '</div>';
+        infoWin1.setContent(sContent);
+        // 随机向地图添加25个标注
+        let bounds = this.map.getBounds();
+        let sw = bounds.getSouthWest();
+        let ne = bounds.getNorthEast();
+        let lngSpan = Math.abs(sw.lng - ne.lng);
+        let latSpan = Math.abs(ne.lat - sw.lat);
+        var markers = []
+        for (let i = 0; i < 12; i++) {
+          // var marker
+          if(i < 3){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            console.log(point)
+            markers[i]  = drawTMaker(point, icon01,this);
+            // marker = new T.Marker(point, {icon: icon01});// 创建标注
+            // this.map.addOverLay(marker);
+          }else if(i < 6){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            markers[i]  = drawTMaker(point, icon02,this);
+            //  marker = new T.Marker(point, {icon: icon02});// 创建标注
+            // this.map.addOverLay(marker);
+          }else if(i < 9){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            markers[i]  = drawTMaker(point, icon03,this);
+            //  marker = new T.Marker(point, {icon: icon03});// 创建标注
+            // this.map.addOverLay(marker);
+          }else {
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            markers[i]  = drawTMaker(point,  icon04,this);
+            //  marker = new T.Marker(point, {icon: icon04});// 创建标注
+            // this.map.addOverLay(marker);
+          }
+        }
+
+//往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that){
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            marker.openInfoWindow(infoWin1);
+            that.showSearchDialog = true;
+          });// 将标注添加到地图中
+          return marker;
+        }
+
+
+
+
+
+        this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
@@ -486,11 +563,45 @@
 </script>
 <style lang="scss" scoped>
   @import './../../../styles/variables.scss';
+  /deep/.tdt-infowindow-content-wrapper, /deep/.tdt-infowindow-tip{
+    background: rgba(21,45,107,1);
+    box-shadow: $menuText 0 0 8px inset;
+  }
+  /deep/.tdt-infowindow-content-wrapper{
+    border-radius: 5px;
+  }
+  /deep/.tdt-infowindow-content p{
+    margin: 5px 0;
+  }
   .app-container{
-    height: calc(100vh - 215px);
+    height: calc(100vh - 135px);
     overflow: auto;
     box-sizing: border-box;
     padding: 0!important;
+  }
+  .bottom_arrow{
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    z-index: 2000;
+    width: 50px;
+    height: 25px;
+    background: rgba(24,46,111,1);
+    .triangle{
+      display: inline-block;
+      margin-top: 5px;
+      width: 0;
+      height: 0;
+
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      &.isTop{
+        border-bottom: 13px solid rgba(75,255,254,1);
+      }
+      &.isBottom{
+        border-top: 13px solid rgba(75,255,254,1);
+      }
+    }
   }
   .mapDiv {
     height: 100%;
@@ -500,7 +611,7 @@
   .map_info{
     width: 260px;
     position: fixed;
-    top: 200px;
+    top: 150px;
     right: 50px;
     z-index: 2000;
     .map_info_tit{
@@ -519,7 +630,7 @@
   .search_result{
     position: fixed;
     left: 300px;
-    top: 200px;
+    top: 150px;
     z-index: 2000;
     width: 800px;
     padding: 20px;
@@ -610,24 +721,35 @@
   }
   .company_leibie{
     position: fixed;
-    bottom: 100px;
+    bottom: 50px;
     right: 50px;
     z-index: 2000;
     background: #0a275f;
-    padding: 20px;
+    padding: 20px 10px;
+    border-radius: 10px;
     li{
-      width: 159px;
-      height: 67px;
-      line-height: 67px;
-      padding-left: 70px;
-      background: url("./../../../assets/image/communityNum_bg.png") left top no-repeat;
-      background-size: 100% 100%;
+      width: 160px;
+      height: 53px;
+      line-height: 53px;
+      /*padding-left: 53px;*/
+      background: url("../../../assets/image/monitor_bg1.png") right center no-repeat;
+      /*background-size: 100% 100%;*/
+      img{
+        width: 53px;
+        height: 53px;
+      }
+      div{
+        padding-left: 66px;
+        span{
+          margin-left: 10px;
+        }
+      }
     }
   }
   .company_list{
     width: 800px;
     position: fixed;
-    bottom: 100px;
+    bottom: 45px;
     right: 300px;
     z-index: 9999999;
 

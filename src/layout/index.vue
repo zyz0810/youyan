@@ -49,7 +49,8 @@ export default {
         hideSidebar: false,
         openSidebar: true,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === 'mobile',
+        navHidden: this.$route.path == '/testing/monitor'
       }
     }
   },
@@ -78,6 +79,11 @@ export default {
     }
   }
 
+  .navHidden{
+    .navbar{
+      display: none;
+    }
+  }
   .drawer-bg {
     background: #000;
     opacity: 0.3;

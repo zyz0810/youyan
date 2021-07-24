@@ -34,7 +34,7 @@
         </el-form-item>
       </el-form>
       <div>
-        <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
+        <!--<el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>-->
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
 
       </div>
