@@ -42,30 +42,30 @@
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
               element-loading-text="拼命加载中" fit ref="tableList" class="titleBg_table">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
+      <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
+      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
       <el-table-column label="监测时间" align="center" width="140">
         <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+<!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->
         </template>
       </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
+      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
+      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
       <el-table-column label="风机状态" align="center" prop="num">
         <template slot-scope="scope">
 <!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->
-          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+          <i :class="['iconfont','icon-fengji',scope.row.fan == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="净化器" align="center" prop="num">
         <template slot-scope="scope">
-          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+          <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="监测状态" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.status | filtersStatus}}</span>
+          <span>{{scope.row.super | filtersStatus}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="160">
@@ -75,7 +75,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
     <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertProduct="getList"></paraView>
     <history :showDialog.sync="showHistoryDialog" :historyData="historyData"></history>
@@ -90,6 +90,7 @@
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
   import history from "./components/history";
+  import {policeList} from '@/api/police'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -140,7 +141,7 @@
           name: '',
           status: undefined,
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         updateId: undefined,
         dialogFormVisible: false,
@@ -167,7 +168,7 @@
     },
     filters: {
       filtersStatus: function (value) {
-        let StatusArr = {0: '禁用', 1: '启用'}
+        let StatusArr = {1: '正常', 2: '关闭'}
         return StatusArr[value]
       },
       filtersMode: function (value) {
@@ -200,7 +201,7 @@
           }
         };
       });
-      // this.getList();
+      this.getList();
     },
     methods: {
       handleValue(val){
@@ -233,9 +234,9 @@
         this.getList()
       },
       getList() {
-        paraList(this.listQuery).then(res => {
+        policeList(this.listQuery).then(res => {
           this.list = res.data.data
-          this.total = res.data.count
+          this.total = res.data.total
         });
       },
 
@@ -244,7 +245,7 @@
           name: '',
           status: undefined,
           page: 1,
-          limit: 10
+          pageSize: 10
         }
         this.getList();
       },

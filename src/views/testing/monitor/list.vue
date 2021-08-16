@@ -229,7 +229,7 @@
 
 <script>
   import echarts from 'echarts'
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
+  import {homeIndex, } from '@/api/monitor'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -240,7 +240,8 @@
   import point03 from '@/assets/image/point03.png' // 引入刚才的map.js 注意路径
   import point04 from '@/assets/image/point04.png' // 引入刚才的map.js 注意路径
   import LineChart from '@/components/Charts/LineChart'
-  import map from '@/components/Map/map' // 引入刚才的map.js 注意路径
+  import map from '@/components/Map/map'
+  import {policeList} from "@/api/police"; // 引入刚才的map.js 注意路径
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -448,10 +449,17 @@
     },
     mounted() {
       this.onLoad()
+      this.getList()
     },
     methods: {
       companyShow(){
 
+      },
+      getList(){
+        homeIndex().then(res => {
+          this.list = res.data.data
+          this.total = res.data.total
+        });
       },
       handleFilter(){
 

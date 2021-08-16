@@ -41,19 +41,19 @@
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
               element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
+      <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="超标时长" align="center" prop="num"></el-table-column>
+      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
+      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
+      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
+      <el-table-column label="超标时长" align="center" prop="times"></el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button class="filter-item" type="primary" @click="handleView">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
     <paraView :showDialog.sync="showViewDialog" :viewData="viewData"></paraView>
 
@@ -67,6 +67,7 @@
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
+  import {policeList} from '@/api/police'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -111,10 +112,10 @@
         }],
         listLoading: false,
         listQuery: {
-          name: '',
-          status: undefined,
+          super_status:2,
+          super: 2,
           page: 1,
-          limit: 10
+          pageSize: 10
         },
         updateId: undefined,
         dialogFormVisible: false,
@@ -174,7 +175,7 @@
           }
         };
       });
-      // this.getList();
+      this.getList();
     },
     methods: {
       handleValue(val){
@@ -207,18 +208,19 @@
         this.getList()
       },
       getList() {
-        paraList(this.listQuery).then(res => {
-          this.list = res.data.data
-          this.total = res.data.count
+        policeList(this.listQuery).then(res => {
+          this.list = res.data.data;
+          this.total = res.data.total;
+          console.log('总页数：'+this.total)
         });
       },
 
       resetList() {
         this.listQuery = {
-          name: '',
-          status: undefined,
+          super_status:2,
+          super: 2,
           page: 1,
-          limit: 10
+          pageSize: 10
         }
         this.getList();
       },

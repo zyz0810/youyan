@@ -48,3 +48,13 @@ export function editFacility(data) {
     data: Qs.stringify(data)
   })
 }
+
+/* 首页
+ */
+export function homeIndex(data) {
+  return request({
+    url:'api/home/index',
+    method: 'post',
+    data: Qs.stringify(data)
+  })
+}
