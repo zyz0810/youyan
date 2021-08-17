@@ -18,20 +18,16 @@
     <div v-show="activeId == 0">
       <div class="flex baseColor">
         <el-form style="flex: 3">
-          <el-form-item label="餐企名称：">新石器烤肉</el-form-item>
-          <el-form-item label="检测状态："><span class="red01">超标</span></el-form-item>
-          <el-form-item label="监测时间：">2021-8-4 12:20:08</el-form-item>
+          <el-form-item label="餐企名称：">{{viewData.companyName}}</el-form-item>
+          <el-form-item label="检测状态："><span class="red01">{{viewData.status}}</span></el-form-item>
+          <el-form-item label="监测时间：">{{realTimeInfo.addtime}}</el-form-item>
         </el-form>
         <div style="flex: 5">
           <div class="table_title text-center">污染物排放情况（mg/m3）</div>
-          <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg">
+          <el-table v-loading="polluteListLoading" :data="polluteList" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg">
             <el-table-column label="污染物类型" align="center" prop="name"></el-table-column>
-            <el-table-column label="实测值" align="center" prop="createUserName"></el-table-column>
-            <el-table-column label="状态" align="center">
-              <template slot-scope="scope">
-                <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-              </template>
-            </el-table-column>
+            <el-table-column label="实测值" align="center" prop="val"></el-table-column>
+            <el-table-column label="状态" align="center" prop="status"></el-table-column>
           </el-table>
         </div>
 
@@ -43,39 +39,35 @@
               <i class="iconfont icon-wendu f26"></i>
               <p>温度</p>
             </div>
-            <p class="num">32℃</p>
+            <p class="num">{{realTimeInfo.temperature}}℃</p>
           </li>
           <li class="flex-item">
             <div class="bg_blue">
               <i class="iconfont icon-wenshidu1 f26"></i>
               <p>湿度</p>
             </div>
-            <p class="num">32rh</p>
+            <p class="num">{{realTimeInfo.wind_speed}}rh</p>
           </li>
           <li class="flex-item">
             <div class="bg_green">
               <i class="iconfont icon-fengsu f26"></i>
               <p>风速</p>
             </div>
-            <p class="num">32m/s</p>
+            <p class="num">{{realTimeInfo.wind_speed}}m/s</p>
           </li>
           <li class="flex-item">
             <div class="bg_purple">
               <i class="iconfont icon-zaosheng f26"></i>
               <p>噪声</p>
             </div>
-            <p class="num">32Hz</p>
+            <p class="num">{{realTimeInfo.noise}}Hz</p>
           </li>
         </ul>
         <div style="flex: 5">
           <div class="table_title text-center">污染物排放情况（mg/m3）</div>
-          <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit border ref="tableList">
+          <el-table v-loading="polluteSListLoading" :data="polluteSList" element-loading-text="拼命加载中" fit border ref="tableList">
             <el-table-column label="设备类型" align="center" prop="name"></el-table-column>
-            <el-table-column label="状态" align="center">
-              <template slot-scope="scope">
-                <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-              </template>
-            </el-table-column>
+            <el-table-column label="状态" align="center" prop="status"></el-table-column>
           </el-table>
         </div>
 
@@ -94,79 +86,73 @@
     <table v-if="activeId == 2" class="company_table f14">
       <tr>
         <td class="baseColor">餐企名称</td>
-        <td class="txtColor">新石器烤肉</td>
+        <td class="txtColor">{{companyInfo.company?companyInfo.company:''}}</td>
         <td class="baseColor">餐企简称</td>
-        <td class="txtColor">新石器</td>
+        <td class="txtColor">{{companyInfo.simple_name?companyInfo.simple_name:''}}</td>
         <td class="baseColor">信用代码</td>
-        <td class="txtColor">986843451215445</td>
+        <td class="txtColor">{{companyInfo.credit_code?companyInfo.credit_code:''}}</td>
       </tr>
       <tr>
         <td class="baseColor">组织机构码</td>
-        <td class="txtColor">组织机构代码</td>
+        <td class="txtColor">{{companyInfo.organization_code?companyInfo.organization_code:''}}</td>
         <td class="baseColor">企业状态</td>
-        <td class="txtColor">正常营业</td>
+        <td class="txtColor">{{companyInfo.status | filtersCompanyStatus}}</td>
         <td class="baseColor">企业编码</td>
-        <td class="txtColor">浦沿街道08</td>
+        <td class="txtColor">{{companyInfo.company_code?companyInfo.company_code:''}}</td>
       </tr>
       <tr>
         <td class="baseColor">负责人</td>
-        <td class="txtColor">负责人</td>
+        <td class="txtColor">{{companyInfo.principal?companyInfo.principal:''}}</td>
         <td class="baseColor">手机号码</td>
-        <td class="txtColor">156332285</td>
+        <td class="txtColor">{{companyInfo.mobile?companyInfo.mobile:''}}</td>
         <td class="baseColor">餐企电话</td>
-        <td class="txtColor">51215445</td>
+        <td class="txtColor">{{companyInfo.tel?companyInfo.tel:''}}</td>
       </tr>
       <tr>
         <td class="baseColor">餐企类型</td>
-        <td class="txtColor">食堂</td>
+        <td class="txtColor">{{filterType(companyType,companyInfo.company_type?Info.company_type:'')}}</td>
         <td class="baseColor">菜系</td>
-        <td class="txtColor">食堂</td>
+        <td class="txtColor">{{filterType(cookList,companyInfo.cook_type?companyInfo.cook_type:'')}}</td>
         <td class="baseColor">营业面积</td>
-        <td class="txtColor">126</td>
+        <td class="txtColor">{{companyInfo.area?companyInfo.area:''}}</td>
       </tr>
       <tr>
         <td class="baseColor">灶头数量</td>
-        <td class="txtColor">1</td>
+        <td class="txtColor">{{companyInfo.kitchen_range_num?companyInfo.kitchen_range_num:''}}</td>
         <td class="baseColor">排口数量</td>
-        <td class="txtColor">1</td>
+        <td class="txtColor">{{companyInfo.outlet_num?companyInfo.outlet_num:''}}</td>
         <td class="baseColor">餐企规模</td>
-        <td class="txtColor">中型</td>
+        <td class="txtColor">{{filterType(scaleList,companyInfo.scale_type?companyInfo.scale_type:'')}}</td>
       </tr>
       <tr>
         <td class="baseColor">所属辖区</td>
-        <td class="txtColor">浦沿街道</td>
+        <td class="txtColor">{{filterType(cityList,companyInfo.city_id?companyInfo.city_id:'')}}</td>
         <td class="baseColor">所属分组</td>
-        <td class="txtColor" colspan="3">浦沿街道</td>
+        <td class="txtColor" colspan="3"></td>
       </tr>
       <tr>
         <td class="baseColor">详细地址</td>
-        <td class="txtColor" colspan="5">浦沿街道853号</td>
+        <td class="txtColor" colspan="5">{{companyInfo.address?companyInfo.address:''}}</td>
       </tr>
     </table>
-    <table v-if="activeId == 3" class="company_table equipment_table f14">
-      <tr>
-        <td class="baseColor">餐企名称</td>
-        <td class="txtColor">新石器烤肉</td>
-        <td class="baseColor">设备类型</td>
-        <td class="txtColor">油烟检测设备</td>
-      </tr>
+    <table v-if="activeId == 3" class="company_table equipment_table f14 mb_20">
       <tr>
         <td class="baseColor">设备名称</td>
-        <td class="txtColor">新石器烤肉</td>
+        <td class="txtColor">{{facilityInfo.name}}</td>
         <td class="baseColor">设备型号</td>
-        <td class="txtColor">jsh-123</td>
+        <td class="txtColor">{{facilityInfo.version}}</td>
       </tr>
       <tr>
         <td class="baseColor">设备编号</td>
-        <td class="txtColor">2313</td>
+        <td class="txtColor">{{facilityInfo.facility_no}}</td>
         <td class="baseColor">设备IMEI</td>
-        <td class="txtColor">156332285</td>
+        <td class="txtColor">{{facilityInfo.imei}}</td>
       </tr>
       <tr>
         <td class="baseColor">生产厂家</td>
-        <td class="txtColor">浙大网新</td>
+        <td class="txtColor">{{facilityInfo.product}}</td>
         <td class="baseColor">安装日期</td>
-        <td class="txtColor">2021-5-21</td>
+        <td class="txtColor">{{facilityInfo.start_time}}</td>
       </tr>
     </table>
 
@@ -177,11 +163,16 @@
 
 <script>
   import echarts from 'echarts'
-  import {paraValueList,paraValueSave,paraValueUpdate,paraValueDelete} from '@/api/parameter'
+  import {realTime} from '@/api/police'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import LineChart from '@/components/Charts/LineChart'
-  import Pagination from "@/components/Pagination/index"; // waves directive
+  import Pagination from "@/components/Pagination/index";
+  import {homeTrend} from "@/api/chart";
+  import {dicList} from "@/api/dictionary";
+  import {facilityDetail} from "@/api/monitor";
+  import {cityList} from "@/api/jurisdiction";
+  import {companyDetail} from "@/api/catering"; // waves directive
   export default {
     name: 'parameterView',
     directives: { waves },
@@ -196,47 +187,42 @@
         type: Boolean,
         default: false
       },
-      paraData: {
+      viewData: {
         required: true,
         type: Object,
         default: {
           option: {},
           operatorType: "view",
-          id: ""
+          facility_id: "",
+          company_id:'',
+          companyName:'',
+          status:''
         }
       }
     },
     data() {
       return {
+        polluteSListLoading:false,
+        polluteSList:[],
+        polluteListLoading:false,
+        polluteList:[{
+          name:'油烟浓度',
+          val:'',
+          status:''
+        }],
         activeId:0,
-        paraLoading:false,
-        operatingMode:'',
-        updateBtn:true,
-        total:0,
-        specificationsItem:[''],
+        companyType:[],
+        facilityInfo:{},
+        cookList:[],
+        scaleList:[],
+        realTimeInfo:{},
         list: null,
         listLoading: false,
         listQuery:{
-          parameterId:'',
+          facility_id:'',
           page:1,
           limit:10
         },
-        updateId:undefined,
-        dialogFormVisible: false,
-        temp: {
-          name:'',
-          parameterId:undefined,
-          deleted:0
-        },
-        textMap: {
-          update: '编辑规格信息',
-          create: '新增规格信息'
-        },
-        dialogStatus: '',
-        rules: {
-          name: [{ required: true, message: '请输入名称', trigger: 'change' }],
-        },
-        name:'',
         lineData:{
           title: {},
           tooltip: {
@@ -288,7 +274,7 @@
             },//去除网格线
             boundaryGap: false, // 不留白，从原点开始
             type: 'category',
-            data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
+            data: []
           },
           yAxis: {
             splitArea : {show :  false }, //保留网格区域
@@ -353,7 +339,7 @@
 
               }
             },//区域颜色渐变
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [],
             type: 'line'
           },{
             name:'油烟浓度',
@@ -384,11 +370,12 @@
 
               }
             },//区域颜色渐变
-            data: [520, 232, 501, 634, 790, 930, 320],
+            data: [],
             type: 'line'
           }]
         },
         PieChartLegend:[],
+        companyInfo:{},
       }
     },
     computed: {
@@ -407,147 +394,272 @@
         return StatusArr[value]
       }
     },
-    mounted() {
 
-    },
     methods: {
+      getCompanyView(companyId){
+        companyDetail({id:this.viewData.company_id}).then(res=>{
+          console.log(res)
+          if(res.code == 1){
+            const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+              kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark} = res.data;
+            this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+              kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark};
+          }
+        });
+      },
+      getChart(id){
+        homeTrend({facility_id:id}).then(res=>{
+          let a = res.data.map(item=>{return item.x_name})
+          this.lineData.xAxis.data = a;
+          this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
+          this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
+        });
+      },
+      getInfo(id){
+        realTime({facility_id:id}).then(res=>{
+          this.realTimeInfo = res.data;
+          this.polluteSList=[{
+            name:'净化器',
+            status:res.data.cleansing == 1?'正常':'关闭',
+          },{
+            name:'风机',
+            status:res.data.fan == 1?'正常':'关闭',
+          }]
+
+          this.polluteList[0].val = res.data.concentration
+        });
+      },
+      filterType(list,id){
+        console.log(list)
+        console.log(id)
+        list.filter(item=> {
+          if(item.id==id){
+            console.log(item.name)
+            return item.name
+          }
+        })
+      },
+      getScaleType(){
+        dicList({ parent_id: 2,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.scaleList = res.data.data
+        });
+      },
+      getCookType(){
+        dicList({ parent_id: 1,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.cookList = res.data.data
+        });
+      },
+      getCompanyType(){
+        dicList({ parent_id: 16,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.companyType = res.data.data
+        });
+      },
+      getFacilityDetail(id){
+        facilityDetail({id:id}).then(res=>{
+          const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
+          this.facilityInfo = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
+        });
+      },
+      getCity() {
+        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+          this.cityList = res.data.data
+        });
+      },
       handleTab(val){
         this.activeId = val;
       },
       open(){
-        this.listQuery.parameterId = this.paraData.id
-        this.operatingMode = this.paraData.option.operatingMode
-        this.getList();
-        this.name = this.paraData.option.name
+        this.listQuery.facility_id = this.viewData.facility_id
+this.getCompanyView();
+        this.getChart(this.viewData.facility_id);
+        this.getInfo(this.viewData.facility_id);
+        this.getScaleType();
+        this.getCompanyType();
+        this.getFacilityDetail(this.viewData.facility_id);
+        this.getCity();
       },
-      close(){},
-      getList(){
-        paraValueList(this.listQuery).then(res=>{
-          this.list = res.data.data;
-          this.total = res.data.count
-        });
-      },
-      clickRow(row){
-        this.$refs.tableList.toggleRowSelection(row)
-      },
-      handleSelectionChange(val) {
-        this.rowInfo = val;
-        if(val.length > 1){
-          this.updateBtn = true
-          this.deleteBtn = true
-        }else if(val.length == 1){
-          this.updateBtn = false
-          this.deleteBtn = false
-        }else{
-          this.updateBtn = true
-          this.deleteBtn = true
-        }
-      },
-
-      resetTemp() {
-        this.temp = {
-          // parameterId:undefined,
-          name:'',
-          parameterId:undefined,
-          deleted:0
-          // orders:'',
-          // isSystem:1,
-        }
-      },
-
-      handleCreate() {
-        this.resetTemp();
-        this.dialogStatus = 'create';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.paraLoading = true
-            this.temp.parameterId = this.paraData.id
-            paraValueSave(this.temp).then((res) => {
-              setTimeout(()=>{
-                this.paraLoading = false
-              },1000)
-              if(res.resp_code == 0) {
-                this.getList();
-                // this.list.unshift(res.data);
-                this.dialogFormVisible = false;
-                // debugger
-                this.getList();
-                this.$message({
-                  message: '增加成功',
-                  type: 'success'
-                });
-              }
-            }).catch(() => {
-              this.paraLoading = false;
-            });
-          }
-        })
-      },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, this.rowInfo[0]); // copy obj
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.paraLoading = true
-            const tempData = Object.assign({}, this.temp);
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            paraValueUpdate(tempData).then((res) => {
-              setTimeout(()=>{
-                this.paraLoading = false
-              },1000)
-              if(res.resp_code == 0) {
-                // const index = this.list.findIndex(v => v.id === this.temp.id);
-                // this.list.splice(index, 1, res.data);
-                this.getList();
-                this.dialogFormVisible = false;
-                this.$message({
-                  message: '修改成功',
-                  type: 'success'
-                });
-              }
-            }).catch(() => {
-              this.paraLoading = false;
-            });
-          }
-        })
-      },
-      handleDelete(row, index) {
-        this.$confirm('确定删除此记录吗?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.listLoading = true;
-          //NProgress.start();
-          let para = {id: this.rowInfo[0].id};
-          paraValueDelete(para).then((res) => {
-            this.listLoading = false;
-            if(res.resp_code == 0) {
-              this.getList();
-              //NProgress.done();
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
+      close(){
+        this.polluteSListLoading=false;
+        this.polluteSList=[];
+        this.polluteListLoading=false;
+        this.polluteList=[{
+          name:'油烟浓度',
+          val:'',
+          status:''
+        }];
+        this.activeId=0;
+        this.companyType=[];
+        this.facilityInfo={};
+        this.cookList=[];
+        this.scaleList=[];
+        this.realTimeInfo={};
+        this.list= null;
+        this.listLoading= false;
+        this.listQuery={
+          facility_id:'',
+          page:1,
+          limit:10
+        };
+        this.lineData={
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
             }
-          });
-        }).catch(() => {
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '5',
+            top: '30',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{
+            textStyle:{
+              fontSize:15,
+              color: '#5EF4F9'
+            },
+            data:['TVOC','油烟浓度']
+          },
+          xAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            // show:false,
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,
+              textStyle: {
+                color: 'rgba(16,54,123,1)',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },//去除网格线
+            boundaryGap: false, // 不留白，从原点开始
+            type: 'category',
+            data: []
+          },
+          yAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,//去除网格线
+              textStyle: {
+                color: '#08245F',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            type: 'value'
+          },
+          series: [{
+            name:'TVOC',
+            symbol:'circle',
+            symbolSize:8,
+            color:'#CC3275',
+            itemStyle : {
+              normal : {
+                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+                //     offset: 0, color: 'purple' // 0% 处的颜色
+                //   }, {
+                //     offset: 0.5, color: 'green' // 100% 处的颜色
+                //   }, {
+                //     offset: 1, color: 'yellow' // 100% 处的颜色
+                //   }]
+                // ),  //背景渐变色
+                lineStyle:{
+                  color:'#CC3275',
+                  borderColor:'#CC3275'
+                }
+              }
+            },
+            areaStyle:{
+              normal:{
+                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: 'rgba(204,50,117,0.5)'
+                }, {
+                  offset: .2,
+                  color: 'rgba(204,50,117,0.5)'
+                },{
+                  offset: 1,
+                  color: 'rgba(204,50,117,0)'
+                }])
 
-        });
+              }
+            },//区域颜色渐变
+            data: [],
+            type: 'line'
+          },{
+            name:'油烟浓度',
+            symbol:'circle',
+            symbolSize:8,
+            color:'#E39915',
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'#E39915',
+                  borderColor:'#E39915'
+                }
+              }
+            },
+            areaStyle:{
+              normal:{
+                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: 'rgba(227,153,21,0.5)'
+                }, {
+                  offset: .2,
+                  color: 'rgba(227,153,21,0.5)'
+                },{
+                  offset: 1,
+                  color: 'rgba(227,153,21,0)'
+                }])
+
+              }
+            },//区域颜色渐变
+            data: [],
+            type: 'line'
+          }]
+        };
+        this.PieChartLegend=[];
+        this.companyInfo={};
       },
-
-
 
     }
   }

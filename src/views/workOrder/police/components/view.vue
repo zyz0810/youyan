@@ -9,46 +9,41 @@
     class="dialogContainer"
     @open="open"
   >
-    <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" class="titleBg_table">
+    <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" :height="tableHeight" class="titleBg_table">
       <el-table-column label="序号" type="index" width="80" align="center" ></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="监测时间" align="center">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
+      <el-table-column label="监测时间" align="center" prop="addtime"></el-table-column>
+      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
+      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
       <el-table-column label="风机状态" align="center">
         <template slot-scope="scope">
-          <i :class="['iconfont','icon-fengji', { red01: scope.row.status==0, green01: scope.row.status==1 }]"></i>
+<!--          <i :class="['iconfont','icon-fengji', { red01: scope.row.fan == 2, green01: scope.row.status==1 }]"></i>-->
+          <i :class="['iconfont','icon-fengji',scope.row.fan == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="净化器" align="center">
         <template slot-scope="scope">
-          <i class="iconfont icon-fengji red01"></i>
+<!--          <i class="iconfont icon-fengji red01"></i>-->
+          <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
-      <el-table-column label="监测状态" align="center">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
+        <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{scope.row.super_status | filtersStatus}}</span>-->
+<!--        </template>-->
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
-
   </myDialog>
 </template>
 
 <script>
-  import {paraValueList,paraValueSave,paraValueUpdate,paraValueDelete} from '@/api/parameter'
+  import {dataList} from '@/api/police'
   import draggable from 'vuedraggable'
-  import waves from '@/directive/waves'
-  import Pagination from "@/components/Pagination/index"; // waves directive
+  import Pagination from "@/components/Pagination/index";
   export default {
-    name: 'parameterView',
-    directives: { waves },
+    name: 'policeView',
     components: {
       draggable,
       Pagination
@@ -65,24 +60,21 @@
         default: {
           option: {},
           operatorType: "view",
-          id: ""
+          facility_id: ""
         }
       }
     },
     data() {
       return {
         total:0,
-        list: [{
-          name:1111,
-          num:1,
-          status:1
-        }],
+        list: [],
         listLoading: false,
         listQuery:{
-          parameterId:'',
+          facility_id:'',
           page:1,
-          limit:10
+          pageSize:10
         },
+        tableHeight:200,
       }
     },
     computed: {
@@ -97,28 +89,68 @@
     },
     filters:{
       filtersStatus: function(value) {
-        let StatusArr = {0:'禁用', 1:'启用'}
+        let StatusArr = {1: '正常', 2: '关闭'}
         return StatusArr[value]
       }
     },
-    mounted() {
 
-    },
     methods: {
+        formatStatus(row, column, cellValue, index) {
+            // item.is_trouble == 1 && item.status == 1   正常设备
+            // item.status == 2   离线设备
+            // item.is_trouble == 2    && item.status == 1故障设备
+            // super_status==2 超标设备
+            return row.is_trouble == 1 && cellValue == 1
+                ? "正常"
+                : cellValue == 2
+                    ? "离线"
+                    : row.is_trouble == 2 && cellValue == 3
+                        ? "故障"
+                        :  row.super_status == 2
+                            ? "超标"
+                            : "";
+        },
       open(){
-        // this.listQuery.parameterId = this.paraData.id
-        // this.operatingMode = this.paraData.option.operatingMode
-        // this.getList();
-        // this.name = this.paraData.option.name
+        this.listQuery.facility_id = this.viewData.facility_id
+        this.$nextTick(function() {
+          // this.$refs.filter-container.offsetHeight
+          let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 260;
+          if(height>100){
+            this.tableHeight = height
+          }else{
+            this.tableHeight = 100
+          }
+          // 监听窗口大小变化
+          const self = this;
+          window.onresize = function() {
+            let height = window.innerHeight - self.$refs.tableList.$el.offsetTop - 260;
+            if(height>100){
+              self.tableHeight = height
+            }else{
+              self.tableHeight = 100
+            }
+          };
+        });
+        this.getList();
+        this.getCity();
       },
-      close(){},
+      close(){
+        this.total=0;
+        this.list= [];
+        this.listLoading= false;
+        this.listQuery={
+          facility_id:'',
+          page:1,
+          pageSize:10
+        };
+        this.tableHeight=200;
+      },
       getList(){
-        paraValueList(this.listQuery).then(res=>{
+        dataList(this.listQuery).then(res=>{
           this.list = res.data.data;
-          this.total = res.data.count
+          this.total = res.data.total
         });
       },
-
     }
   }
 </script>

@@ -3,17 +3,15 @@
     <div id='mapDiv' class="mapDiv" style="width: 100%; "></div>
     <div class="map_info">
       <div class="clr_white f18 map_info_tit text-center p20">信息查询</div>
-      <el-form :model="temp">
+      <el-form :model="temp" label-width="40px">
         <el-form-item label="区域">
-          <el-select v-model="temp.area" placeholder="选择区域" @change="showSearchDialog = true">
-            <el-option label="区域1" value="1"></el-option>
-            <el-option label="区域2" value="0"></el-option>
+          <el-select v-model="temp.street" placeholder="选择区域" @change="getIndex">
+            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="餐企">
-          <el-select v-model="temp.name" placeholder="选择餐企" @change="showSearchDialog = true">
-            <el-option label="餐企1" value="1"></el-option>
-            <el-option label="餐企2" value="0"></el-option>
+          <el-select v-model="temp.company" placeholder="选择餐企" @change="getIndex">
+            <el-option v-for="item in cateringList" :key="item.id" :label="item.company" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -29,20 +27,16 @@
      <div v-show="activeId == 0">
        <div class="flex baseColor">
          <el-form style="flex: 3">
-           <el-form-item label="餐企名称：">新石器烤肉</el-form-item>
-           <el-form-item label="检测状态："><span class="red01">超标</span></el-form-item>
-           <el-form-item label="监测时间：">2021-8-4 12:20:08</el-form-item>
+           <el-form-item label="餐企名称：">{{companyName}}</el-form-item>
+           <el-form-item label="检测状态："><span class="red01">{{companyStatus}}</span></el-form-item>
+           <el-form-item label="监测时间：">{{realTimeInfo?realTimeInfo.addtime:''}}</el-form-item>
          </el-form>
          <div style="flex: 5">
            <div class="table_title text-center">污染物排放情况（mg/m3）</div>
-           <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg">
+           <el-table v-loading="polluteListLoading" :data="polluteList" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg">
              <el-table-column label="污染物类型" align="center" prop="name"></el-table-column>
-             <el-table-column label="实测值" align="center" prop="createUserName"></el-table-column>
-             <el-table-column label="状态" align="center">
-               <template slot-scope="scope">
-                 <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-               </template>
-             </el-table-column>
+             <el-table-column label="实测值" align="center" prop="val"></el-table-column>
+             <el-table-column label="状态" align="center" prop="status"></el-table-column>
            </el-table>
          </div>
 
@@ -54,39 +48,35 @@
                <i class="iconfont icon-wendu f26"></i>
                <p>温度</p>
              </div>
-             <p class="num">32℃</p>
+             <p class="num">{{realTimeInfo?realTimeInfo.temperature:''}}℃</p>
            </li>
            <li class="flex-item">
              <div class="bg_blue">
                <i class="iconfont icon-wenshidu1 f26"></i>
                <p>湿度</p>
              </div>
-             <p class="num">32rh</p>
+             <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}rh</p>
            </li>
            <li class="flex-item">
              <div class="bg_green">
                <i class="iconfont icon-fengsu f26"></i>
                <p>风速</p>
              </div>
-             <p class="num">32m/s</p>
+             <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}m/s</p>
            </li>
            <li class="flex-item">
              <div class="bg_purple">
                <i class="iconfont icon-zaosheng f26"></i>
                <p>噪声</p>
              </div>
-             <p class="num">32Hz</p>
+             <p class="num">{{realTimeInfo?realTimeInfo.noise:''}}Hz</p>
            </li>
          </ul>
          <div style="flex: 5">
            <div class="table_title text-center">污染物排放情况（mg/m3）</div>
-           <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit border ref="tableList">
+           <el-table v-loading="polluteSListLoading" :data="polluteSList" element-loading-text="拼命加载中" fit border ref="tableList">
              <el-table-column label="设备类型" align="center" prop="name"></el-table-column>
-             <el-table-column label="状态" align="center">
-               <template slot-scope="scope">
-                 <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-               </template>
-             </el-table-column>
+             <el-table-column label="状态" align="center" prop="status"></el-table-column>
            </el-table>
          </div>
 
@@ -105,87 +95,81 @@
       <table v-if="activeId == 2" class="company_table f14">
         <tr>
           <td class="baseColor">餐企名称</td>
-          <td class="txtColor">新石器烤肉</td>
+          <td class="txtColor">{{companyInfo.company}}</td>
           <td class="baseColor">餐企简称</td>
-          <td class="txtColor">新石器</td>
+          <td class="txtColor">{{companyInfo.simple_name}}</td>
           <td class="baseColor">信用代码</td>
-          <td class="txtColor">986843451215445</td>
+          <td class="txtColor">{{companyInfo.credit_code}}</td>
         </tr>
         <tr>
           <td class="baseColor">组织机构码</td>
-          <td class="txtColor">组织机构代码</td>
+          <td class="txtColor">{{companyInfo.organization_code}}</td>
           <td class="baseColor">企业状态</td>
-          <td class="txtColor">正常营业</td>
+          <td class="txtColor">{{companyInfo.status | filtersCompanyStatus}}</td>
           <td class="baseColor">企业编码</td>
-          <td class="txtColor">浦沿街道08</td>
+          <td class="txtColor">{{companyInfo.company_code}}</td>
         </tr>
         <tr>
           <td class="baseColor">负责人</td>
-          <td class="txtColor">负责人</td>
+          <td class="txtColor">{{companyInfo.principal}}</td>
           <td class="baseColor">手机号码</td>
-          <td class="txtColor">156332285</td>
+          <td class="txtColor">{{companyInfo.mobile}}</td>
           <td class="baseColor">餐企电话</td>
-          <td class="txtColor">51215445</td>
+          <td class="txtColor">{{companyInfo.tel}}</td>
         </tr>
         <tr>
           <td class="baseColor">餐企类型</td>
-          <td class="txtColor">食堂</td>
+          <td class="txtColor">{{filterType(companyType,companyInfo.company_type)}}</td>
           <td class="baseColor">菜系</td>
-          <td class="txtColor">食堂</td>
+          <td class="txtColor">{{filterType(cookList,companyInfo.cook_type)}}</td>
           <td class="baseColor">营业面积</td>
-          <td class="txtColor">126</td>
+          <td class="txtColor">{{companyInfo.area}}</td>
         </tr>
         <tr>
           <td class="baseColor">灶头数量</td>
-          <td class="txtColor">1</td>
+          <td class="txtColor">{{companyInfo.kitchen_range_num}}</td>
           <td class="baseColor">排口数量</td>
-          <td class="txtColor">1</td>
+          <td class="txtColor">{{companyInfo.outlet_num}}</td>
           <td class="baseColor">餐企规模</td>
-          <td class="txtColor">中型</td>
+          <td class="txtColor">{{filterType(scaleList,companyInfo.scale_type)}}</td>
         </tr>
         <tr>
           <td class="baseColor">所属辖区</td>
-          <td class="txtColor">浦沿街道</td>
+          <td class="txtColor">{{filterType(cityList,companyInfo.city_id)}}</td>
           <td class="baseColor">所属分组</td>
-          <td class="txtColor" colspan="3">浦沿街道</td>
+          <td class="txtColor" colspan="3"></td>
         </tr>
         <tr>
           <td class="baseColor">详细地址</td>
-          <td class="txtColor" colspan="5">浦沿街道853号</td>
+          <td class="txtColor" colspan="5">{{companyInfo.address}}</td>
         </tr>
       </table>
-      <table v-if="activeId == 3" class="company_table equipment_table f14">
-        <tr>
-          <td class="baseColor">餐企名称</td>
-          <td class="txtColor">新石器烤肉</td>
-          <td class="baseColor">设备类型</td>
-          <td class="txtColor">油烟检测设备</td>
-        </tr>
+      <table v-if="activeId == 3" class="company_table equipment_table f14 mb_20">
         <tr>
           <td class="baseColor">设备名称</td>
-          <td class="txtColor">新石器烤肉</td>
+          <td class="txtColor">{{facilityInfo.name}}</td>
           <td class="baseColor">设备型号</td>
-          <td class="txtColor">jsh-123</td>
+          <td class="txtColor">{{facilityInfo.version}}</td>
         </tr>
         <tr>
           <td class="baseColor">设备编号</td>
-          <td class="txtColor">2313</td>
+          <td class="txtColor">{{facilityInfo.facility_no}}</td>
           <td class="baseColor">设备IMEI</td>
-          <td class="txtColor">156332285</td>
+          <td class="txtColor">{{facilityInfo.imei}}</td>
         </tr>
         <tr>
           <td class="baseColor">生产厂家</td>
-          <td class="txtColor">浙大网新</td>
+          <td class="txtColor">{{facilityInfo.product}}</td>
           <td class="baseColor">安装日期</td>
-          <td class="txtColor">2021-5-21</td>
+          <td class="txtColor">{{facilityInfo.start_time}}</td>
         </tr>
       </table>
     </div>
     <ul class="company_leibie f14 baseColor">
-      <li class="clearfix"><img src="./../../../assets/image/monitor_icon01.png" class="fl"/><div class="">正常 <span class="f18 clr_yellow bold">39</span></div></li>
-      <li class="clearfix"><img src="./../../../assets/image/monitor_icon02.png" class="fl"/><div class="">超标 <span class="f18 clr_yellow bold">5</span></div></li>
-      <li class="clearfix"><img src="./../../../assets/image/monitor_icon03.png" class="fl"/><div class="">故障 <span class="f18 clr_yellow bold">3</span></div></li>
-      <li class="clearfix"><img src="./../../../assets/image/monitor_icon04.png" class="fl"/><div class="">离线 <span class="f18 clr_yellow bold">9</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon01.png" class="fl"/><div class="">超标 <span class="f18 clr_yellow bold">{{info.superNum}}</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon02.png" class="fl"/><div class="">故障 <span class="f18 clr_yellow bold">{{info.trouble}}</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon03.png" class="fl"/><div class="">离线 <span class="f18 clr_yellow bold">{{info.off}}</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon04.png" class="fl"/><div class="">正常 <span class="f18 clr_yellow bold">{{info.normal}}</span></div></li>
     </ul>
     <div class="company_list" v-if="showCompanyDialog">
       <div class="company_tit p20 clearfix">
@@ -195,29 +179,31 @@
       <div class="p20">
         <el-table v-loading="companyListLoading" :data="companyList" :height="500"
                   element-loading-text="拼命加载中" fit ref="tableList">
-          <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-          <el-table-column label="温度℃" align="center" prop="name"></el-table-column>
-          <el-table-column label="温度rh" align="center" prop="address"></el-table-column>
-          <el-table-column label="风速m/s）" align="center" prop="num"></el-table-column>
-          <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-          <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
+          <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
+          <el-table-column label="温度℃" align="center" prop="temperature"></el-table-column>
+          <el-table-column label="风速m/s）" align="center" prop="wind_speed"></el-table-column>
+          <el-table-column label="噪声Hz" align="center" prop="noise"></el-table-column>
+          <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
+          <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
           <el-table-column label="风机状态" align="center" prop="num">
             <template slot-scope="scope">
-              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+<!--              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>-->
+              <i :class="['iconfont','icon-fengji',scope.row.fan == 2 ? 'red01':'green01']"></i>
             </template>
           </el-table-column>
           <el-table-column label="净化器状态" align="center" prop="num">
             <template slot-scope="scope">
-              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+<!--              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>-->
+              <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
             </template>
           </el-table-column>
-          <el-table-column label="监测状态" align="center">
-            <template slot-scope="scope">
-              <span class="clr_yellow">超标</span>
-            </template>
+          <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">
+<!--            <template slot-scope="scope">-->
+<!--              <span class="red01">{{scope.row.super_status  | filtersStatus}}</span>-->
+<!--            </template>-->
           </el-table-column>
         </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                     @pagination="getList" class="text-right"/>
       </div>
     </div>
@@ -229,7 +215,7 @@
 
 <script>
   import echarts from 'echarts'
-  import {homeIndex, } from '@/api/monitor'
+  import {facilityDetail, homeIndex,} from '@/api/monitor'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -241,7 +227,11 @@
   import point04 from '@/assets/image/point04.png' // 引入刚才的map.js 注意路径
   import LineChart from '@/components/Charts/LineChart'
   import map from '@/components/Map/map'
-  import {policeList} from "@/api/police"; // 引入刚才的map.js 注意路径
+  import {dataList, realTime} from "@/api/police";
+  import {homeTrend} from "@/api/chart";
+  import {cityList} from "@/api/jurisdiction";
+  import {companyDetail, companyList} from "@/api/catering";
+  import {dicList} from "@/api/dictionary"; // 引入刚才的map.js 注意路径
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -254,38 +244,48 @@
     },
     data() {
       return {
+        polluteSListLoading:false,
+        polluteSList:[{
+          name:'净化器',
+          val:'',
+        },{
+          name:'风机',
+          val:'',
+        }],
+        polluteListLoading:false,
+        polluteList:[{
+          name:'油烟浓度',
+          val:'',
+          status:''
+        }],
+        companyName:'',
+        companyStatus:"",
+        companyInfo:{},
+        cityList:[],
+        cateringList:[],
+        info:{},
         showSearchDialog:false,
         showCompanyDialog:false,
         total:1,
-        companyList: [{
-          name:'列表1',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        },{
-          name:'列表2',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:2
-        }],
+        companyList: [],
         companyListLoading: false,
         listQuery: {
-          name: '',
-          status: undefined,
-          page: 1,
-          limit: 10
+          start_time:this.$moment().format('YYYY-MM-DD') + ' 00:00:00',
+          end_time:this.$moment().format('YYYY-MM-DD') + ' 23:59:59',
+          super_status:2,
+          super:2,
+          page:1,
+          pageSize:10
         },
         temp:{
-          area:'',
-          name:''
+          street:'',
+          company:''
         },
         zoom:12,
         centerLatitude:'30.20835',//中心纬度
         centerLongitude:'120.21194',//中心经度
         activeId:'',
-        list: null,
+        list: [],
         listLoading: false,
         lineData:{
           title: {},
@@ -338,7 +338,7 @@
               },//去除网格线
             boundaryGap: false, // 不留白，从原点开始
             type: 'category',
-            data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
+            data: []
           },
           yAxis: {
             splitArea : {show :  false }, //保留网格区域
@@ -373,14 +373,6 @@
             color:'#CC3275',
             itemStyle : {
               normal : {
-                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
-                //     offset: 0, color: 'purple' // 0% 处的颜色
-                //   }, {
-                //     offset: 0.5, color: 'green' // 100% 处的颜色
-                //   }, {
-                //     offset: 1, color: 'yellow' // 100% 处的颜色
-                //   }]
-                // ),  //背景渐变色
                 lineStyle:{
                   color:'#CC3275',
                   borderColor:'#CC3275'
@@ -403,7 +395,7 @@
 
               }
             },//区域颜色渐变
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [],
             type: 'line'
           },{
             name:'油烟浓度',
@@ -434,133 +426,274 @@
 
               }
             },//区域颜色渐变
-            data: [520, 232, 501, 634, 790, 930, 320],
+            data: [],
             type: 'line'
           }]
         },
         PieChartLegend:[],
+        normalList:[],
+        offList:[],
+        superList:[],
+        troubleList:[],
+        companyType:[],
+        facilityInfo:{},
+        cookList:[],
+        scaleList:[],
+        realTimeInfo:{
+          // addtime:''
+        },
       }
     },
-
+    filters: {
+      filtersStatus: function (value) {
+        let StatusArr = {1: '正常', 2: '关闭'}
+        return StatusArr[value]
+      },
+      filtersCompanyStatus: function (value) {
+        let StatusArr = {1: '正常', 2: '禁用'}
+        return StatusArr[value]
+      },
+    },
     computed: {
       ...mapState({
         roles: state => state.user.roles,
       }),
     },
     mounted() {
-      this.onLoad()
-      this.getList()
+      this.onLoad();
+      this.getIndex();
+      this.getMonitor();
+      this.getCity();
+      this.getCompanyList();
+      this.getCompanyType();
+      this.getCookType();
+      this.getScaleType();
     },
     methods: {
-      companyShow(){
-
+      // homeTrend
+      getChart(id){
+        homeTrend({facility_id:id}).then(res=>{
+          // this.list = res.data.data;
+          // this.total = res.data.count
+          let a = res.data.map(item=>{return item.x_name})
+          this.lineData.xAxis.data = a;
+          console.log( a)
+          console.log(res.data.map(item=>{ return item.y_tvoc_num}))
+          this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
+          this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
+        });
       },
-      getList(){
-        homeIndex().then(res => {
-          this.list = res.data.data
+      formatStatus(row, column, cellValue, index) {
+        // item.is_trouble == 1 && item.status == 1   正常设备
+        // item.status == 2   离线设备
+        // item.is_trouble == 2    && item.status == 1故障设备
+        // super_status==2 超标设备
+        return row.is_trouble == 1 && cellValue == 1
+          ? "正常"
+          : cellValue == 2
+            ? "离线"
+            : row.is_trouble == 2 && cellValue == 3
+              ? "故障"
+              :  row.super_status == 2
+                ? "超标"
+                : "";
+      },
+      getInfo(id){
+        realTime({facility_id:id}).then(res=>{
+          this.realTimeInfo = res.data;
+          this.polluteSList=[{
+            name:'净化器',
+            status:res.data.cleansing == 1?'正常':'关闭',
+          },{
+            name:'风机',
+            status:res.data.fan == 1?'正常':'关闭',
+          }]
+
+          this.polluteList[0].val = res.data.concentration
+        });
+      },
+      filterType(list,id){
+        console.log(list)
+        console.log(id)
+        list.filter(item=> {
+            if(item.id==id){
+              console.log(item.name)
+              return item.name
+            }
+          })
+      },
+      getScaleType(){
+        dicList({ parent_id: 2,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.scaleList = res.data.data
+        });
+      },
+      getCookType(){
+        dicList({ parent_id: 1,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.cookList = res.data.data
+        });
+      },
+      getCompanyType(){
+        dicList({ parent_id: 16,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.companyType = res.data.data
+        });
+      },
+      getFacilityDetail(id){
+        facilityDetail({id:id}).then(res=>{
+          const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
+          this.facilityInfo = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
+        });
+      },
+      getCity() {
+        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+          this.cityList = res.data.data
+        });
+      },
+      getCompanyList() {
+        companyList({    key_word: '',
+          street: '',
+          scale_type:'',
+          cook_type:'',
+          status:'',
+          page: 1,
+          pageSize: 99999}).then(res => {
+          this.cateringList = res.data.data
+        });
+      },
+      getMonitor(){
+        dataList(this.listQuery).then(res=>{
+          this.companyList = res.data.data;
           this.total = res.data.total
         });
       },
-      handleFilter(){
-
+      getIndex(){
+        homeIndex(this.temp).then(res => {
+          this.list = res.data.list;
+          // let list = res.data.list;
+          // // 正常图标
+          // this.normalList = list.filter(item=>{
+          //   return item.is_trouble == 1
+          // })
+          // // 离线图标
+          // this.offList = list.filter(item=>{
+          //   return item.is_trouble == 2 && item.status == 2
+          // })
+          // // 超标图标
+          // this.superList = list.filter(item=>{
+          //   // item.is_trouble == 1
+          // })
+          // // 故障图标
+          // this.troubleList = list.filter(item=>{
+          //   return item.is_trouble == 2 && item.status == 1
+          // })
+          let superNum = res.data.super;
+          const {normal,off,trouble} = res.data;
+          this.info = {normal,off,trouble,superNum};
+          this.getMarker();
+        });
       },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // 添加地图类型控件
-        // this.addCtrl()
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
+        this.map.setStyle('indigo');
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+      },
+      getMarker(){
         //创建图片对象
-        var icon01 = new T.Icon({
+        let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(66, 59),
           iconAnchor: new T.Point(34, 59)
         });
-        var icon02 = new T.Icon({
+        let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(66, 59),
           iconAnchor: new T.Point(34, 59)
         });
-        var icon03 = new T.Icon({
+        let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(66, 59),
           iconAnchor: new T.Point(34, 59)
         });
-        var icon04 = new T.Icon({
+        let icon04 = new T.Icon({
           iconUrl: point04,
           iconSize: new T.Point(66, 59),
           iconAnchor: new T.Point(34, 59)
         });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div class="f14 baseColor text-center">' +
-          '<p ref="enterpriseName" class="bold">新时器烤肉</p>' +
-          '<p ref="enterpriseName">监测状态：<span class="red01">超标</span></p>' +
-          '</div>';
-        infoWin1.setContent(sContent);
-        // 随机向地图添加25个标注
-        let bounds = this.map.getBounds();
-        let sw = bounds.getSouthWest();
-        let ne = bounds.getNorthEast();
-        let lngSpan = Math.abs(sw.lng - ne.lng);
-        let latSpan = Math.abs(ne.lat - sw.lat);
-        var markers = []
-        for (let i = 0; i < 12; i++) {
-          // var marker
-          if(i < 3){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            console.log(point)
-            markers[i]  = drawTMaker(point, icon01,this);
-            // marker = new T.Marker(point, {icon: icon01});// 创建标注
-            // this.map.addOverLay(marker);
-          }else if(i < 6){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            markers[i]  = drawTMaker(point, icon02,this);
+        for (let i = 0; i < this.list.length; i++) {
+          let markers = []
+          // item.is_trouble == 1 && item.status == 1 正常设备
+          if(this.list[i].is_trouble == 1 && this.list[i].status == 1){
+            let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+            markers.push( drawTMaker(point, icon04,this,i));
+          }else if(this.list[i].status == 2 ){ //离线设备
+            let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+            markers.push(drawTMaker(point, icon03,this,i));
             //  marker = new T.Marker(point, {icon: icon02});// 创建标注
             // this.map.addOverLay(marker);
-          }else if(i < 9){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            markers[i]  = drawTMaker(point, icon03,this);
-            //  marker = new T.Marker(point, {icon: icon03});// 创建标注
-            // this.map.addOverLay(marker);
-          }else {
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            markers[i]  = drawTMaker(point,  icon04,this);
-            //  marker = new T.Marker(point, {icon: icon04});// 创建标注
-            // this.map.addOverLay(marker);
+          } else if(this.list[i].is_trouble == 2 && this.list[i].status == 1){ //故障设备
+              let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+              markers[i]  = drawTMaker(point, icon02,this,i);
+          } else if(this.list[i].super_status && this.list[i].super_status == 2 ) {
+            let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+            markers.push(drawTMaker(point, icon01,this,i));
           }
         }
 
-//往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
-        function drawTMaker(lnglat,icon,that){
-          var marker =  new T.Marker(lnglat, {icon: icon});
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,i){
+          let marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
             console.log(m)
+
+            //创建信息窗口对象
+            // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
+            // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon01});// 创建标注
+            // console.log(marker)
+            // this.map.addOverLay(marker);
+            let infoWin1 = new T.InfoWindow();
+            let status = ''
+            if(that.list[i].is_trouble == 1 && that.list[i].status == 1){
+              status='正常'
+            }else if(that.list[i].status == 2 ){
+              status='离线'
+            }else if(that.list[i].is_trouble == 2 && that.list[i].status == 1){
+              status='故障'
+            }else if(that.list[i].super_status && that.list[i].super_status == 2 ) {
+              status='超标'
+            }
+            let sContent =
+              '<div class="f14 baseColor text-center">' +
+              '<p ref="enterpriseName" class="bold">'+ that.list[i].company +'</p>' +
+              '<p ref="enterpriseName">监测状态：<span class="red01">'+ status +'</span></p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
             that.showSearchDialog = true;
+            that.getCompanyView(that.list[i].company_id);
+            that.companyName = that.list[i].company;
+            that.companyStatus = status;
+            that.getFacilityDetail(that.list[i].facility_id);
+            that.getInfo(that.list[i].facility_id);
+            that.getChart(that.list[i].facility_id);
           });// 将标注添加到地图中
           return marker;
         }
-
-
-
-
-
-        this.map.setStyle('indigo');
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-
+      },
+      getCompanyView(companyId){
+        companyDetail({id:companyId}).then(res=>{
+          const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark} = res.data;
+          this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark};
+        });
       },
       handleTab(val){
         this.activeId = val;
@@ -624,7 +757,7 @@
     z-index: 2000;
     .map_info_tit{
       width: 160px;
-      line-height: 2.5;
+      line-height: 2;
       margin-left: 100px;
       background: rgba(28,47,113,0.8);
       box-shadow: $menuText 0 0 18px inset;

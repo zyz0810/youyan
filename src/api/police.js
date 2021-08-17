@@ -1,67 +1,34 @@
 import request from '@/utils/request'
 import Qs from 'qs'
-/* 字典列表
- * parent_id
+/* 报警列表
  * pageSize
  * page
  */
 export function policeList(data) {
+  return request({
+    url: `api/home/warnList`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 综合概览列表
+ * pageSize
+ * page
+ */
+export function dataList(data) {
   return request({
     url: `api/home/dataList`,
     method: 'post',
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
-/* 保存/修改/删除
- * content 内容
- * isDelete 0有效1无效
- * operatorType 操作类型add新增update编辑delete删除
- * title 标题
+/* 获取实时工况
+ * facility_id 	设备编号
  */
-export function sysSave(data) {
+export function realTime(data) {
   return request({
-    url: `api-user/setting/modifySysSetting`,
+    url: `api/home/realTime`,
     method: 'post',
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
-}
-
-/* 公告新增、编辑、删除
- * content 内容
- * isDelete 0有效1无效
- * operatorType 操作类型add新增update编辑delete删除
- * title 标题
- */
-export function tipUpdate(data) {
-  return request({
-    url: `api-user/warm-remind/update`,
-    method: 'post',
-    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
-  })
-}
-
-
-
-
-/* 查询公告明细
- * id
- */
-export function tipView(query) {
-  return request({
-    url: `api-user/warm-remind/detail`,
-    method: 'get',
-    params: query
-  })
-}
-
-
-
-/* 意见反馈列表
- */
-export function selectFeedBackList(data) {
- return request({
-   url: `api-user/helpCenter/selectFeedBackList`,
-   method: 'post',
-   data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
- })
 }

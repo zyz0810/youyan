@@ -12,13 +12,12 @@
     <div class="filter-container">
       <el-form :inline="true" :model="listQuery" class="search_form">
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择辖区" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
+          <el-select v-model="listQuery.street" placeholder="选择辖区" @change="handleFilter">
+            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.name" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
+        <el-form-item label="" prop="key_word">
+          <el-input v-model.trim="listQuery.key_word" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
         </el-form-item>
         <el-form-item>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
@@ -28,41 +27,38 @@
     <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" :height="tableHeight" class="titleBg_table">
       <el-table-column label="序号" type="index" width="80" align="center" ></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="监测时间" align="center">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="updateUserName"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="updateUserName"></el-table-column>
+      <el-table-column label="监测时间" align="center" prop="addtime"></el-table-column>
+      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
+      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
       <el-table-column label="风机状态" align="center" prop="num">
         <template slot-scope="scope">
           <!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->
-          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+          <i :class="['iconfont','icon-fengji',scope.row.fan == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="净化器" align="center" prop="num">
         <template slot-scope="scope">
-          <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>
+          <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
-      <el-table-column label="监测状态" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.status | filtersStatus}}</span>
-        </template>
+      <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{scope.row.super_status  | filtersStatus}}</span>-->
+<!--        </template>-->
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
 
   </myDialog>
 </template>
 
 <script>
-  import {paraValueList,paraValueSave,paraValueUpdate,paraValueDelete} from '@/api/parameter'
+  import {dataList} from '@/api/police'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
-  import Pagination from "@/components/Pagination/index"; // waves directive
+  import Pagination from "@/components/Pagination/index";
+  import {cityList} from "@/api/jurisdiction"; // waves directive
   export default {
     name: 'parameterView',
     directives: { waves },
@@ -81,41 +77,24 @@
         type: Object,
         default: {
           option: {},
-          id: ""
+          facility_id: ""
         }
       }
     },
     data() {
       return {
         tableHeight:200,
-        paraLoading:false,
         total:0,
-        list: [{
-          name:'列表1',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        },{
-          name:'列表2',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:2
-        }],
+        list: [],
+        cityList:[],
         listLoading: false,
         listQuery:{
-          parameterId:'',
+          street:'',
+          key_word:'',
+          facility_id:'',
           page:1,
-          limit:10
+          pageSize:10
         },
-        dialogFormVisible: false,
-        temp: {
-          name:'',
-          parameterId:undefined,
-          deleted:0
-        },
-        dialogStatus: '',
       }
     },
     computed: {
@@ -130,18 +109,29 @@
     },
     filters:{
       filtersStatus: function(value) {
-        let StatusArr = {0:'禁用', 1:'启用'}
+        let StatusArr = {1: '正常', 2: '关闭'}
         return StatusArr[value]
       }
     },
-    mounted() {
-
-    },
     methods: {
+      formatStatus(row, column, cellValue, index) {
+        // item.is_trouble == 1 && item.status == 1   正常设备
+        // item.status == 2   离线设备
+        // item.is_trouble == 2    && item.status == 1故障设备
+        // super_status==2 超标设备
+        return row.is_trouble == 1 && cellValue == 1
+          ? "正常"
+          : cellValue == 2
+            ? "离线"
+            : row.is_trouble == 2 && cellValue == 3
+              ? "故障"
+              :  row.super_status == 2
+                ? "超标"
+                : "";
+      },
       open(){
-        // this.listQuery.parameterId = this.paraData.id
-        // this.getList();
-        // this.name = this.paraData.option.name
+        this.listQuery.facility_id = this.historyData.facility_id
+        console.log( this.listQuery)
         this.$nextTick(function() {
           // this.$refs.filter-container.offsetHeight
           let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 260;
@@ -161,12 +151,19 @@
             }
           };
         });
+        this.getList();
+        this.getCity();
       },
       close(){},
       getList(){
-        paraValueList(this.listQuery).then(res=>{
+        dataList(this.listQuery).then(res=>{
           this.list = res.data.data;
-          this.total = res.data.count
+          this.total = res.data.total
+        });
+      },
+      getCity() {
+        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+          this.cityList = res.data.data
         });
       },
       handleFilter() {
