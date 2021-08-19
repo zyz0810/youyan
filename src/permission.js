@@ -30,9 +30,13 @@ router.beforeEach(async(to, from, next) => {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       console.log(1111)
       if (hasRoles) {
+        console.log(2222)
+        console.log(store.getters.roles)
         next()
       } else {
         try {
+          console.log(3333)
+          console.log(store.getters.roles)
           const roles = await store.dispatch('user/getInfo')
           console.log(roles)
           const accessRoutes = await store.dispatch(

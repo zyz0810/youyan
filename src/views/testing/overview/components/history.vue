@@ -38,7 +38,7 @@
       </el-table-column>
       <el-table-column label="净化器" align="center" prop="num">
         <template slot-scope="scope">
-          <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
+          <i :class="['iconfont','icon-youyanjinghuaqi',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
       <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">

@@ -50,13 +50,13 @@
              </div>
              <p class="num">{{realTimeInfo?realTimeInfo.temperature:''}}℃</p>
            </li>
-           <li class="flex-item">
-             <div class="bg_blue">
-               <i class="iconfont icon-wenshidu1 f26"></i>
-               <p>湿度</p>
-             </div>
-             <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}rh</p>
-           </li>
+<!--           <li class="flex-item">-->
+<!--             <div class="bg_blue">-->
+<!--               <i class="iconfont icon-wenshidu1 f26"></i>-->
+<!--               <p>湿度</p>-->
+<!--             </div>-->
+<!--             <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}rh</p>-->
+<!--           </li>-->
            <li class="flex-item">
              <div class="bg_green">
                <i class="iconfont icon-fengsu f26"></i>
@@ -194,7 +194,7 @@
           <el-table-column label="净化器状态" align="center" prop="num">
             <template slot-scope="scope">
 <!--              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>-->
-              <i :class="['iconfont','icon-fengji',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
+              <i :class="['iconfont','icon-youyanjinghuaqi',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
             </template>
           </el-table-column>
           <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">
@@ -202,6 +202,7 @@
 <!--              <span class="red01">{{scope.row.super_status  | filtersStatus}}</span>-->
 <!--            </template>-->
           </el-table-column>
+          <el-table-column label="监测时间" align="center" width="140" prop="addtime"></el-table-column>
         </el-table>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                     @pagination="getList" class="text-right"/>
@@ -503,10 +504,10 @@
           this.realTimeInfo = res.data;
           this.polluteSList=[{
             name:'净化器',
-            status:res.data.cleansing == 1?'正常':'关闭',
+            status:res.data.cleansing == 1?'正常':'异常',
           },{
             name:'风机',
-            status:res.data.fan == 1?'正常':'关闭',
+            status:res.data.fan == 1?'开':'关',
           }]
 
           this.polluteList[0].val = res.data.concentration
@@ -888,7 +889,7 @@
     }
   }
   .company_list{
-    width: 800px;
+    width: 950px;
     position: fixed;
     bottom: 45px;
     right: 300px;

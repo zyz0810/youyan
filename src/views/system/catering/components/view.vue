@@ -89,6 +89,7 @@
         </el-form>
         <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px">
           <el-form-item label="详细地址" prop="address">
+            <el-button @click="editMarker">取 消</el-button>
             <el-input v-model.trim="temp.address" placeholder="请输入详细地址" autocomplete="off" clearable/>
             <div id='mapDiv' class="mapDiv mt_10" style="width: 100%;height: 200px"></div>
           </el-form-item>
@@ -148,6 +149,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import {companyDetail,addCompany,editCompany} from '@/api/catering'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
@@ -157,6 +159,7 @@
   import {facilityList} from "@/api/monitor";
   import {dicList} from "@/api/dictionary";
   import {cityList} from "@/api/jurisdiction"; // waves directive
+  let markerTool;
   export default {
     name: 'parameterView',
     directives: { waves },
@@ -303,7 +306,7 @@
         // // 普通标注
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         //创建标注工具对象
-        let markerTool = new T.MarkTool(this.map, {follow: true});
+        markerTool = new T.MarkTool(this.map, {follow: true});
 
         // endeditMarker();
         // markerTool.open();
@@ -315,55 +318,94 @@
         //   console.log('11111111')
         //   alert(e.lnglat.getLng()+","+e.lnglat.getLat());
         // }
+
+        //监听点击地图，获取坐标
+        // var cp = new T.CoordinatePickup(this.map, {callback: this.getLngLat})
+        // cp.addEvent();
         function endeditMarker() {
           let markers = markerTool.getMarkers()
           for (let i = 0; i < markers.length; i++) {
             markers[i].disableDragging();
           }
         }
-        var cp = new T.CoordinatePickup(this.map, {callback: this.getLngLat})
-        cp.addEvent();
-        function editMarker() {
-          let markers = markerTool.getMarkers()
-          console.log(markers)
-          for (let i = 0; i < markers.length; i++) {
-            markers[i].enableDragging();
-          }
-
-        }
-
 
         // endeditMarker();
-        editMarker();
-        markerTool.open();
-
+        // markerTool.open();
+        // this.editMarker();
+        this.positionBtn();
       },
-      getLngLat(lnglat) {
-        this.temp.address  = lnglat.lng.toFixed(6) + "," + lnglat.lat.toFixed(6);
-        this.temp.log = lnglat.lng.toFixed(6)
-        this.temp.lat = lnglat.lat.toFixed(6)
+      positionBtn() {
+    // centerLatitude:'30.20835',//中心纬度
+    //   centerLongitude:'120.21194',//中心经度
+    this.map.clearOverLays();   //清理地图上的覆盖物
+    let marker = new T.Marker(new T.LngLat(120.21194,30.20835)); //e.lnglat，标注点的地理坐标
+        this.map.addOverLay(marker); //addOverLay方法，将覆盖物添加到地图中，一个覆盖物实例只能向地图中添加一次。
+    marker.addEventListener("dragend", overlay_style); //添加事件监听函数。
+    marker.enableDragging(); //开启标注拖拽功能
+        let that = this;
+    function overlay_style(e) {
+      let p = e.target;
+      console.log(e)
+      axios({
+        url:"http://api.tianditu.gov.cn/geocoder",
+        method:'get',
+        params:{
+          tk:"09c212e85ea968b8789e2111963c819a",
+          type:"geocode",
+          postStr:"{'lon':" +p.getLngLat().lng+",'lat':" +p.getLngLat().lat+",'ver':1}"
+        }
+      }).then((data)=>{
+        // var addressdata = eval("("+data+")");
+        //弹出的就是地址信息
+        that.temp.address = data.data.result.addressComponent.address
+        // alert(addressdata.result.formatted_address);
+        // if(addressdata.msg =="ok" && addressdata.status ==0){
+        //   //dosomething
+        // }else{
+        //   //dosomething
+        // }
+      }).catch((err) => {
+        console.log(err)
+        // alert("获取失败");
+      })
+    }
+  },
+      editMarker() {
+        console.log('鞥一直4444')
+        console.log(this.map)
+        let markers = markerTool.getMarkers()
+        console.log(markers)
+        for (let i = 0; i < markers.length; i++) {
+          console.log('鞥一直')
+          markers[i].enableDragging();
+        }
       },
+      // endeditMarker() {
+      //   let markerTool = new T.MarkTool(this.map, {follow: true});
+      //   let markers = markerTool.getMarkers()
+      //   for (let i = 0; i < markers.length; i++) {
+      //     markers[i].disableDragging();
+      //   }
+      // },
+      // getLngLat(lnglat) {
+      //   this.temp.address  = lnglat.lng.toFixed(6) + "," + lnglat.lat.toFixed(6);
+      //   this.temp.log = lnglat.lng.toFixed(6)
+      //   this.temp.lat = lnglat.lat.toFixed(6)
+      // },
       //绘制标注(点)
       drawMarker(){
-        var markerTool = new T.MarkTool(this.map, {follow: true});
+        let markerTool = new T.MarkTool(this.map, {follow: true});
         this.map.clearOverLays();
+        this.endeditMarker();
         markerTool.open();
         //绑定mouseup事件 在用户每完成一次标注时触发事件。
         markerTool.addEventListener("mouseup",this.getPoints1);
+        this.editMarker();
       },
       getPoints1(e){
-        var points = e.currentLnglat;
+        let points = e.currentLnglat;
         //标注点的坐标
         console.log(points);
-      },
-      //使得标注可以拖拽
-      endeditMarker() {
-        let markerTool = new T.MarkTool(map, {follow: true});
-        var markers = markerTool.getMarkers()
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].disableDragging();
-        }
-        markerTool.open();
       },
       hasImgSrc(val) {
         this.temp.images = val;

@@ -41,13 +41,13 @@
             </div>
             <p class="num">{{realTimeInfo.temperature}}℃</p>
           </li>
-          <li class="flex-item">
-            <div class="bg_blue">
-              <i class="iconfont icon-wenshidu1 f26"></i>
-              <p>湿度</p>
-            </div>
-            <p class="num">{{realTimeInfo.wind_speed}}rh</p>
-          </li>
+<!--          <li class="flex-item">-->
+<!--            <div class="bg_blue">-->
+<!--              <i class="iconfont icon-wenshidu1 f26"></i>-->
+<!--              <p>湿度</p>-->
+<!--            </div>-->
+<!--            <p class="num">{{realTimeInfo.wind_speed}}rh</p>-->
+<!--          </li>-->
           <li class="flex-item">
             <div class="bg_green">
               <i class="iconfont icon-fengsu f26"></i>
@@ -420,10 +420,10 @@
           this.realTimeInfo = res.data;
           this.polluteSList=[{
             name:'净化器',
-            status:res.data.cleansing == 1?'正常':'关闭',
+            status:res.data.cleansing == 1?'正常':'异常',
           },{
             name:'风机',
-            status:res.data.fan == 1?'正常':'关闭',
+            status:res.data.fan == 1?'开':'关',
           }]
 
           this.polluteList[0].val = res.data.concentration

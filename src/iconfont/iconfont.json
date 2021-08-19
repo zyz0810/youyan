@@ -1,10 +1,17 @@
 {
   "id": "2653530",
-  "name": "滨江",
+  "name": "youyan",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
-  "description": "智慧城市",
+  "description": "滨江--油烟",
   "glyphs": [
+    {
+      "icon_id": "16326982",
+      "name": "油烟净化器",
+      "font_class": "youyanjinghuaqi",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
     {
       "icon_id": "10460755",
       "name": "手机",
