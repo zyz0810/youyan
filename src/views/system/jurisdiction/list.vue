@@ -6,11 +6,11 @@
           <el-input v-model.trim="listQuery.key_word" placeholder="输入关键词" @change="handleFilter" clearable/>
         </el-form-item>
         <el-form-item>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
         </el-form-item>
       </el-form>
       <div>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleView('create','')">新增信息</el-button>
+        <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleView('create','')">新增信息</el-button>
         <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleExport">导出信息</el-button>
 
       </div>
@@ -43,16 +43,12 @@
 
 <script>
   import {cityList} from '@/api/jurisdiction'
-  import draggable from 'vuedraggable'
-  import waves from '@/directive/waves'
   import { mapState } from 'vuex'
-  import Pagination from "@/components/Pagination/index"; // waves directive
+  import Pagination from "@/components/Pagination/index";
   import paraView from "./components/view";
   export default {
-    name: 'parameterList',
-    directives: {waves},
+    name: 'jurisdictionList',
     components: {
-      draggable,
       Pagination,
       paraView
     },
@@ -69,26 +65,10 @@
           page: 1,
           pageSize: 10
         },
-        dialogFormVisible: false,
-        textMap: {
-          update: '编辑参数信息',
-          create: '新增参数信息',
-          view:'查看'
-        },
-        dialogStatus: '',
         tableHeight:'100'
       }
     },
-    filters: {
-      filtersStatus: function (value) {
-        let StatusArr = {0: '禁用', 1: '启用'}
-        return StatusArr[value]
-      },
-      filtersMode: function (value) {
-        let StatusArr = {0: '下拉框', 1: '复选框', 2: '输入框'}
-        return StatusArr[value]
-      }
-    },
+
     computed: {
       ...mapState({
         roles: state => state.user.roles,
@@ -138,32 +118,6 @@
           id: type == 'create'?'':row.id
         }
       },
-      handleDelete(row, index) {
-
-        this.$confirm('确定删除吗?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.listLoading = true;
-          //NProgress.start();
-          let para = {id: this.rowInfo[0].id};
-          paraDelete(para).then((res) => {
-            this.listLoading = false;
-            if (res.resp_code == 0) {
-              // this.list.splice(index, 1);
-              //NProgress.done();
-              this.getList();
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            }
-          });
-        }).catch(() => {
-
-        });
-      },
-
-
     }
   }
 </script>

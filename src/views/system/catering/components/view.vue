@@ -150,7 +150,8 @@
   import SingleImage from "@/components/Upload/SingleImage.vue";
   import {facilityList} from "@/api/monitor";
   import {dicList} from "@/api/dictionary";
-  import {cityList} from "@/api/jurisdiction"; // waves directive
+  import {cityList} from "@/api/jurisdiction";
+  import {cos} from "@/utils/translate"; // waves directive
   let markerTool;
   export default {
     name: 'cateringView',
@@ -282,43 +283,46 @@
               var divMarker = document.createElement("div");
               //坐标数组，设置最佳比例尺时会用到
               var zoomArr = [];
-              for (var i = 0; i < obj.length; i++) {
+              for (var i = 0; i < 1; i++) {
                 // console.log('收到')
                 //闭包
                 (function (i) {
                   console.log(obj)
                   //名称
-                  var name = obj[i].name;
+                  let name = obj[i].name;
                   //地址
-                  var address = obj[i].address;
+                  let address = obj[i].address;
                   //坐标
-                  var lnglatArr = obj[i].lonlat.split(" ");
-                  var lnglat = new T.LngLat(lnglatArr[0], lnglatArr[1]);
+                  let lnglatArr = obj[i].lonlat.split(" ");
+                  let lnglat = new T.LngLat(lnglatArr[0], lnglatArr[1]);
+                  console.log(lnglat)
+                  that.temp.lat = lnglatArr[0];
+                  that.temp.lng = lnglatArr[1];
 
-                  var winHtml = "名称:" + name + "<br/>地址:" + address;
+                  let winHtml = "名称:" + name + "<br/>地址:" + address;
 
                   //创建标注对象
-                  var marker = new T.Marker(lnglat);
+                  let marker = new T.Marker(lnglat);
                   //地图上添加标注点
                   that.map.addOverLay(marker);
                   //注册标注点的点击事件
-                  var markerInfoWin = new T.InfoWindow(winHtml, {autoPan: true});
+                  let markerInfoWin = new T.InfoWindow(winHtml, {autoPan: true});
                   marker.addEventListener("click", function () {
                     marker.openInfoWindow(markerInfoWin);
                   });
 
                   zoomArr.push(lnglat);
 
-                  // //在页面上显示搜索的列表
-                  // var a = document.createElement("a");
-                  // a.href = "javascript://";
-                  // a.innerHTML = name;
-                  // a.onclick = function () {
-                  //   showPosition(marker, winHtml);
-                  // }
-                  // divMarker.appendChild(document.createTextNode((i + 1) + "."));
-                  // divMarker.appendChild(a);
-                  // divMarker.appendChild(document.createElement("br"));
+                  //在页面上显示搜索的列表
+                  let a = document.createElement("a");
+                  a.href = "javascript://";
+                  a.innerHTML = name;
+                  a.onclick = function () {
+                    showPosition(marker, winHtml);
+                  }
+                  divMarker.appendChild(document.createTextNode((i + 1) + "."));
+                  divMarker.appendChild(a);
+                  divMarker.appendChild(document.createElement("br"));
                 })(i);
               }
               //显示地图的最佳级别
@@ -457,8 +461,8 @@
               lineDataHtml += "<li>" + obj[i].name + "&nbsp;&nbsp;<font style='color:#666666'>共" + obj[i].stationNum + "站</font></li>";
             }
             lineDataHtml += "</ul>";
-            document.getElementById("lineDataDiv").style.display = "block";
-            document.getElementById("lineDataDiv").innerHTML = lineDataHtml;
+            // document.getElementById("lineDataDiv").style.display = "block";
+            // document.getElementById("lineDataDiv").innerHTML = lineDataHtml;
           }
         }
 
@@ -514,8 +518,8 @@
           images:'',
           license:'',
           remark:'',
-          log:'',
-          lat:'',
+          log:'120.21194',
+          lat:'30.20835',
         };
         this.companyList=[];
         this.cookList=[];

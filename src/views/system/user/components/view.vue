@@ -10,7 +10,6 @@
     @open="open"
   >
     <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="width: 400px; margin-left:50px;">
-
       <el-form-item label="所属分组" prop="city_id">
 <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
         <el-select v-model="temp.city_id" multiple  placeholder="选择区" @change="$forceUpdate()">
@@ -34,8 +33,6 @@
       <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()" :loading="paraLoading">确 定</el-button>
       <el-button type="primary" class="btn_gray" @click="showViewDialog = false">取 消</el-button>
     </div>
-
-
   </myDialog>
 </template>
 
@@ -43,14 +40,10 @@
   import {addUser,editUser,userDetail} from '@/api/user'
   import {cityList} from '@/api/jurisdiction'
   import draggable from 'vuedraggable'
-  import waves from '@/directive/waves'
-  import Pagination from "@/components/Pagination/index"; // waves directive
   export default {
-    name: 'parameterView',
-    directives: { waves },
+    name: 'userView',
     components: {
       draggable,
-      Pagination
     },
     props: {
       showDialog: {
@@ -98,6 +91,9 @@
     },
     methods: {
       open(){
+        this.$nextTick(function() {
+          this.$refs.dataForm.clearValidate();
+        })
         this.dialogStatus = this.paraData.operatorType
         if(this.paraData.operatorType != 'create'){
           this.getView();
@@ -113,12 +109,18 @@
           password:'',
           mobile:''
         };
+        this.$nextTick(function() {
+          this.$refs.dataForm.clearValidate();
+        })
       },
       getView(){
         userDetail({id:this.paraData.id}).then(res=>{
-          const { id, name, password,mobile} = res.data
-          let city_id = res.data.city_id.split(',')
-          this.temp = { id, city_id, name, password,mobile}
+          const { id, name, password,mobile} = res.data;
+          let cityId = res.data.city_id.split(',');
+          let city_id = cityId.map(item=>{return Number(item)})
+          console.log(cityId)
+          console.log(city_id)
+          this.temp = { id, city_id, name, password,mobile};
         });
       },
       getCity(){
@@ -126,8 +128,6 @@
           this.cityList = res.data.data;
         });
       },
-
-
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
@@ -176,7 +176,6 @@
           }
         })
       },
-
     }
   }
 </script>

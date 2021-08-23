@@ -6,7 +6,7 @@
               :lg="12">
         <div class="chart-wrapper">
           <div class="header-wrapper flex bold" style="justify-content:space-between">
-            <label class="label f16 baseColor fl">辖区报警次数占比分析</label>
+            <label class="label f16 txtColor fl">辖区报警次数占比分析</label>
             <el-form :inline="true" :model="listQuery3">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
@@ -32,7 +32,7 @@
               :lg="12">
         <div class="chart-wrapper clr_white">
           <div class="header-wrapper flex bold" style="justify-content:space-between">
-            <label class="label f16 baseColor fl">报警次数分析</label>
+            <label class="label f16 txtColor fl">报警次数分析</label>
             <el-form :inline="true" :model="listQuery3" class="fr">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
@@ -59,7 +59,7 @@
     <el-row class="mt_10">
       <el-col :span="24" class="p20 chart-wrapper">
         <div class="flex bold" style="justify-content:space-between">
-          <div class="label f16 baseColor">餐企油烟浓度趋势分析</div>
+          <div class="label f16 txtColor">餐企油烟浓度趋势分析</div>
           <el-form :inline="true" :model="listQuery3" class="">
             <el-form-item label="餐企名称：" prop="name">
               <el-select v-model="listQuery3.name" placeholder="选择餐企">
@@ -211,38 +211,36 @@
             type: 'category',
             boundaryGap: false,
             axisLabel:{color:'#fff'},   // x轴字体颜色
-
-
             axisLine:{
               lineStyle:{color:'#fff'}    // x轴坐标轴颜色
             },
-
-
             axisTick:{
               lineStyle:{color:'#fff'}    // x轴刻度的颜色
+            },
+            // 20,43,103
+            splitArea : {
+              show : false,//去除网格区域
+              lineStyle:{color:'rgb(20,43,103)'}
+            },
+            splitLine:{
+              // show: false//去除网格线
+              lineStyle:{color:'red'}
             },
             data: ['2021-4-01', '2021-4-03', '2021-4-05', '2021-4-07', '2021-4-09', '2021-4-11', '2021-4-13','2021-4-15','2021-4-17','2021-4-19','2021-4-21','2021-4-23','2021-4-25','2021-4-27']
           },
           yAxis: {
             type: 'value',
             axisLabel : {color:'#fff'},    //y轴字体颜色
-
             splitArea : {
-              // show : false//去除网格区域
-              color:'yellow',
-              lineStyle:{color:'yellow'}
+              show : false,//去除网格区域
             },
-
             splitLine:{
             // show: false//去除网格线
-              color:'yellow',
-              lineStyle:{color:'yellow'}
+              lineStyle:{color:'rgb(20,43,103)'}
             },
-
             axisLine:{
               lineStyle:{color:'#fff'}  //y轴坐标轴颜色
             },
-
             axisTick:{
               show:false,
               lineStyle:{color:'#fff' }  //y轴坐标刻度颜色
@@ -251,7 +249,15 @@
           series: [{
             data: [0.5, 0.8, 0.2, 1.5, 1.9, 1.2, 0.8,0.5, 0.8, 0.2, 1.5, 1.9, 1.2, 0.8],
             type: 'line',
-            areaStyle: {}
+            areaStyle: {
+              color:new echarts.graphic.LinearGradient(0,1,0,0,[{
+                offset:0,
+                color:'transparent',
+              },{
+                offset:1,
+                color:'rgb(0,203,181)',
+              }])
+            }
           }]
         },
         listQuery3: {
@@ -278,7 +284,7 @@
     },
     methods: {
       achievementByOrderEchars(){},
-
+      handleFilter(){},
     }
   }
 </script>

@@ -36,7 +36,7 @@
   import waves from '@/directive/waves'
   import Pagination from "@/components/Pagination/index"; // waves directive
   export default {
-    name: 'parameterView',
+    name: 'thresholdView',
     directives: { waves },
     components: {
       draggable,
