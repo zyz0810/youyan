@@ -36,10 +36,10 @@
         <el-input v-model.trim="temp.imei" placeholder="请输入设备IMEI" autocomplete="off" clearable/>
       </el-form-item>
       <el-form-item label="设备序列号" prop="">
-        <el-input v-model.trim="temp.imei" placeholder="请输入设备序列号" autocomplete="off" clearable/>
+        <el-input v-model.trim="temp.serial_no" placeholder="请输入设备序列号" autocomplete="off" clearable/>
       </el-form-item>
       <el-form-item label="设备ICCID" prop="">
-        <el-input v-model.trim="temp.imei" placeholder="请输入设备ICCID" autocomplete="off" clearable/>
+        <el-input v-model.trim="temp.iccid" placeholder="请输入设备ICCID" autocomplete="off" clearable/>
       </el-form-item>
       <el-form-item label="安装日期" prop="start_time">
         <el-date-picker v-model="temp.start_time" type="datetime" placeholder="请选择时间" value-format="yyyy-MM-dd hh:mm:ss"></el-date-picker>
@@ -110,7 +110,9 @@
           imei:'',
           start_time:'',
           images:'',
-          remark:''
+          remark:'',
+          serial_no:'',
+          iccid:'',
         },
         rules: {
           name: [{ required: true, message: '请输入设备名称', trigger: 'change' }],
@@ -160,7 +162,9 @@
           imei:'',
           start_time:'',
           images:'',
-          remark:''
+          remark:'',
+          serial_no:'',
+          iccid:'',
         };
       },
       getCity(){
