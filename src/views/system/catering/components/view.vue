@@ -14,12 +14,12 @@
         <el-form ref="dataForm" :rules="rules" :inline="true" :model="temp" label-width="120px">
           <el-form-item label="设备名称" prop="facility_id">
             <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
-            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()" :disabled="isCanView">
+            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()">
               <el-option v-for="option in facilityList" :label="option.name" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="餐企名称" prop="company" :disabled="isCanView">
-            <el-input v-model.trim="temp.company" placeholder="请输入餐企名称" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.company" placeholder="请输入餐企名称" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="餐企简称" prop="simple_name">
             <el-input v-model.trim="temp.simple_name" placeholder="请输入餐企简称" autocomplete="off" clearable/>
@@ -217,6 +217,8 @@
           log:'',
           lat:'',
         },
+        images:{},
+        license:{},
         companyList:[],
         cookList:[],
         scaleList:[],
@@ -488,7 +490,9 @@
         this.zoom= 14; // 地图的初始化级别，及放大比例
         this. centerLatitude='30.20835';//中心纬度
         this.centerLongitude='120.21194';//中心经度
-        this.paraLoading=false,
+        this.paraLoading=false;
+        this.images={};
+        this.license={};
           this.companyStatus=[{
             id:1,
             name:'正常'
@@ -620,26 +624,33 @@
         }
       },
       hasImgSrc(val) {
-        this.temp.images = val;
+        this.images = val
+        this.temp.images = val.url;
       },
       hasImgSrc1(val) {
-        this.temp.license = val;
+        this.license = val
+        this.temp.license = val.url;
       },
 
       getView(){
         companyDetail({id:this.viewData.id}).then(res=>{
           const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat} = res.data;
+            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
+          // let city_id = res.data.city_id;
+          // console.log(city_id)
+          // console.log('哈哈哈哈')
+          // city_id = city_id.split(',')
           this.temp = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat};
+            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license};
         });
       },
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.paraLoading = true
-
             let temp = JSON.parse(JSON.stringify(this.temp));
+            temp.images = this.images.images;
+            temp.license = this.license.images;
             temp.facility_id = temp.facility_id.join(',');
             addCompany(temp).then((res) => {
               setTimeout(()=>{
@@ -663,7 +674,15 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.paraLoading = true
-            editCompany(this.temp).then((res) => {
+            let temp = JSON.parse(JSON.stringify(this.temp));
+            if(this.images.images){
+              temp.images = this.images.images;
+            }
+            if(this.license.images){
+              temp.license = this.license.images;
+            }
+            temp.facility_id = temp.facility_id.join(',');
+            editCompany(temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
               },1000)
