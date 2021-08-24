@@ -12,12 +12,12 @@
     <el-tabs v-model="activeName" class="catering_tab" @tab-click="handleClick">
       <el-tab-pane label="餐企信息" name="first">
         <el-form ref="dataForm" :rules="rules" :inline="true" :model="temp" label-width="120px">
-          <el-form-item label="设备名称" prop="facility_id">
-            <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
-            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()">
-              <el-option v-for="option in facilityList" :label="option.name" :value="option.id" :key="option.id"></el-option>
-            </el-select>
-          </el-form-item>
+<!--          <el-form-item label="设备名称" prop="facility_id">-->
+<!--            &lt;!&ndash;        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>&ndash;&gt;-->
+<!--            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()">-->
+<!--              <el-option v-for="option in facilityList" :label="option.name" :value="option.id" :key="option.id"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
           <el-form-item label="餐企名称" prop="company" :disabled="isCanView">
             <el-input v-model.trim="temp.company" placeholder="请输入餐企名称" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
@@ -193,7 +193,7 @@
           name:'禁用'
         }],
         temp: {
-          facility_id:'',
+          // facility_id:'',
           company:'',
           simple_name:'',
           organization_code:'',
@@ -501,7 +501,7 @@
             name:'禁用'
           }];
         this.temp= {
-          facility_id:'',
+          // facility_id:'',
           company:'',
           simple_name:'',
           organization_code:'',
@@ -636,10 +636,10 @@
         companyDetail({id:this.viewData.id}).then(res=>{
           const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
-          // let city_id = res.data.city_id;
-          // console.log(city_id)
+          // let facility_id = res.data.facility_id;
+          // console.log(facility_id)
           // console.log('哈哈哈哈')
-          // city_id = city_id.split(',')
+          // facility_id = facility_id.split(',')
           this.temp = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license};
         });
@@ -651,7 +651,7 @@
             let temp = JSON.parse(JSON.stringify(this.temp));
             temp.images = this.images.images;
             temp.license = this.license.images;
-            temp.facility_id = temp.facility_id.join(',');
+            // temp.facility_id = temp.facility_id.join(',');
             addCompany(temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
@@ -681,7 +681,7 @@
             if(this.license.images){
               temp.license = this.license.images;
             }
-            temp.facility_id = temp.facility_id.join(',');
+            // temp.facility_id = temp.facility_id.join(',');
             editCompany(temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
