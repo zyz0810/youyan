@@ -11,71 +11,71 @@
   >
     <el-tabs v-model="activeName" class="catering_tab" @tab-click="handleClick">
       <el-tab-pane label="餐企信息" name="first">
-        <el-form ref="dataForm" :rules="rules" :inline="true" :model="temp" label-width="120px">
-<!--          <el-form-item label="设备名称" prop="facility_id">-->
-<!--            &lt;!&ndash;        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>&ndash;&gt;-->
-<!--            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()">-->
-<!--              <el-option v-for="option in facilityList" :label="option.name" :value="option.id" :key="option.id"></el-option>-->
-<!--            </el-select>-->
-<!--          </el-form-item>-->
+        <el-form ref="firstForm" :rules="rules" :inline="true" :model="temp" label-width="120px">
+          <el-form-item label="设备名称" prop="facility_id">
+            <!--        <el-input v-model.trim="temp.name" placeholder="请输入所属分组" autocomplete="off" clearable/>-->
+            <el-select v-model="temp.facility_id" multiple  placeholder="选择设备" @change="$forceUpdate()" :disabled="isCanView">
+              <el-option v-for="option in facilityList" :label="option.name" :value="option.id" :key="option.id"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="餐企名称" prop="company" :disabled="isCanView">
             <el-input v-model.trim="temp.company" placeholder="请输入餐企名称" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="餐企简称" prop="simple_name">
-            <el-input v-model.trim="temp.simple_name" placeholder="请输入餐企简称" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.simple_name" placeholder="请输入餐企简称" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="信用代码" prop="credit_code">
-            <el-input v-model.trim="temp.credit_code" placeholder="请输入信用代码" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.credit_code" placeholder="请输入信用代码" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="组织机构代码" prop="organization_code">
-            <el-input v-model.trim="temp.organization_code" placeholder="请输入组织机构代码" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.organization_code" placeholder="请输入组织机构代码" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="企业状态" prop="status">
-            <el-select v-model="temp.status">
+            <el-select v-model="temp.status" :disabled="isCanView">
               <el-option v-for="item in companyStatus" :label="item.name" :value="item.id" :key="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="企业编码" prop="company_code">
-            <el-input v-model.trim="temp.company_code" placeholder="请输入企业编码" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.company_code" placeholder="请输入企业编码" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="负责人" prop="principal">
-            <el-input v-model.trim="temp.principal" placeholder="请输入负责人" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.principal" placeholder="请输入负责人" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model.trim="temp.mobile" placeholder="请输入手机号码" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.mobile" placeholder="请输入手机号码" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="餐企电话" prop="tel">
-            <el-input v-model.trim="temp.tel" placeholder="请输入餐企电话" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.tel" placeholder="请输入餐企电话" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
 
 
 
           <el-form-item label="餐企类型" prop="company_type">
-            <el-select v-model="temp.company_type">
+            <el-select v-model="temp.company_type" :disabled="isCanView">
               <el-option v-for="option in companyList" :label="option.name" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="菜系" prop="cook_type">
-            <el-select v-model="temp.cook_type">
+            <el-select v-model="temp.cook_type" :disabled="isCanView">
               <el-option v-for="option in cookList" :label="option.name" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="营业面积" prop="area">
-            <el-input v-model.trim="temp.area" placeholder="请输入营业面积" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.area" placeholder="请输入营业面积" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="灶头数量" prop="kitchen_range_num">
-            <el-input v-model.trim="temp.kitchen_range_num" placeholder="请输入灶头数量" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.kitchen_range_num" placeholder="请输入灶头数量" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="排口数量" prop="outlet_num">
-            <el-input v-model.trim="temp.outlet_num" placeholder="请输入排口数量" autocomplete="off" clearable/>
+            <el-input v-model.trim="temp.outlet_num" placeholder="请输入排口数量" autocomplete="off" clearable :disabled="isCanView"/>
           </el-form-item>
           <el-form-item label="餐企规模" prop="scale_type">
-            <el-select v-model="temp.scale_type">
+            <el-select v-model="temp.scale_type" :disabled="isCanView">
               <el-option v-for="option in scaleList" :label="option.name" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="所属辖区" prop="city_id">
-            <el-select v-model="temp.city_id">
+            <el-select v-model="temp.city_id" :disabled="isCanView">
               <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
@@ -86,19 +86,21 @@
           <!--        </el-select>-->
           <!--      </el-form-item>-->
         </el-form>
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px">
+        <el-form ref="secondForm" :rules="rules" :model="temp" label-width="120px">
           <el-form-item label="详细地址" prop="address">
-            <el-input v-model.trim="temp.address" placeholder="请输入详细地址" autocomplete="off" @input="getAddress" clearable/>
+            <el-input v-model.trim="temp.address" placeholder="请输入详细地址" autocomplete="off" @input="getAddress" clearable :disabled="isCanView"/>
             <div id='mapDiv' class="mapDiv mt_10" style="width: 100%;height: 200px"></div>
           </el-form-item>
           <el-form-item label="门面照片" prop="images">
-            <SingleImage :tempUrl="temp.images" v-on:imgSrc="hasImgSrc"></SingleImage>
+            <img v-if="dialogStatus==='view'" :src="temp.images"/>
+            <SingleImage :tempUrl="temp.images" v-on:imgSrc="hasImgSrc" v-else></SingleImage>
           </el-form-item>
           <el-form-item label="营业执照" prop="license">
-            <SingleImage :tempUrl="temp.license" v-on:imgSrc="hasImgSrc1"></SingleImage>
+            <img v-if="dialogStatus==='view'" :src="temp.license"/>
+            <SingleImage :tempUrl="temp.license" v-on:imgSrc="hasImgSrc1" v-else></SingleImage>
           </el-form-item>
           <el-form-item label="备  注" prop="remark">
-            <el-input type="textarea" v-model.trim="temp.remark" placeholder="备注：1000字以内" clearable></el-input>
+            <el-input type="textarea" v-model.trim="temp.remark" placeholder="备注：1000字以内" clearable :disabled="isCanView"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -135,7 +137,7 @@
 
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()" :loading="paraLoading">确 定</el-button>
+      <el-button type="primary" v-if="dialogStatus!='view'" @click="dialogStatus==='create'?createData():updateData()" :loading="paraLoading">确 定</el-button>
       <el-button @click="showViewDialog = false">取 消</el-button>
     </div>
   </myDialog>
@@ -193,7 +195,7 @@
           name:'禁用'
         }],
         temp: {
-          // facility_id:'',
+          facility_id:'',
           company:'',
           simple_name:'',
           organization_code:'',
@@ -214,8 +216,8 @@
           images:'',
           license:'',
           remark:'',
-          log:'',
-          lat:'',
+          log:'120.21194',
+          lat:'30.20835',
         },
         images:{},
         license:{},
@@ -479,29 +481,34 @@
         this.dialogStatus = this.viewData.operatorType
         if(this.viewData.operatorType != 'create'){
           this.getView();
+        }else{
+          this.$nextTick(function() {
+            // this.$refs.firstForm.clearValidate();
+            // this.$refs.secondForm.clearValidate();
+            console.log('22222222')
+            this.onLoad();
+          })
         }
-        this.$nextTick(function() {
-          this.onLoad();
-        })
       },
       close(){
+        console.log(this.temp)
+        this.showViewDialog = false;
         this.activeName='first';
         this.map= ''; // 对象
         this.zoom= 14; // 地图的初始化级别，及放大比例
-        this. centerLatitude='30.20835';//中心纬度
+        this.centerLatitude='30.20835';//中心纬度
         this.centerLongitude='120.21194';//中心经度
         this.paraLoading=false;
         this.images={};
         this.license={};
-          this.companyStatus=[{
-            id:1,
-            name:'正常'
-          },{
-            id:2,
-            name:'禁用'
-          }];
+        this.companyList=[];
+        this.cookList=[];
+        this.scaleList=[];
+        this.facilityList=[];
+        this.cityList=[];
+        this.dialogStatus= '';
         this.temp= {
-          // facility_id:'',
+          facility_id:'',
           company:'',
           simple_name:'',
           organization_code:'',
@@ -525,12 +532,16 @@
           log:'120.21194',
           lat:'30.20835',
         };
-        this.companyList=[];
-        this.cookList=[];
-        this.scaleList=[];
-        this.facilityList=[];
-        this.cityList=[];
-        this.dialogStatus= '';
+        // debugger
+        // this.$refs.firstForm.clearValidate();
+        // debugger
+        // this.$refs.secondForm.clearValidate();
+        this.$nextTick(function() {
+          this.$refs.firstForm.clearValidate();
+          this.$refs.secondForm.clearValidate();
+        })
+        // debugger
+        console.log(this.temp)
       },
       getCity(){
         cityList({page:1,pageSize:9999,}).then(res=>{
@@ -589,7 +600,9 @@
         // centerLatitude:'30.20835',//中心纬度
         // centerLongitude:'120.21194',//中心经度
         this.map.clearOverLays();   //清理地图上的覆盖物
-        let marker = new T.Marker(new T.LngLat(120.21194,30.20835)); //e.lnglat，标注点的地理坐标
+        console.log('经纬度')
+        console.log(this.temp.log,this.temp.lat)
+        let marker = new T.Marker(new T.LngLat(this.temp.log,this.temp.lat)); //e.lnglat，标注点的地理坐标
         this.map.addOverLay(marker); //addOverLay方法，将覆盖物添加到地图中，一个覆盖物实例只能向地图中添加一次。
         marker.addEventListener("dragend", overlay_style); //添加事件监听函数。
         marker.enableDragging(); //开启标注拖拽功能
@@ -631,74 +644,86 @@
         this.license = val
         this.temp.license = val.url;
       },
-
       getView(){
         companyDetail({id:this.viewData.id}).then(res=>{
           const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
-          // let facility_id = res.data.facility_id;
-          // console.log(facility_id)
-          // console.log('哈哈哈哈')
-          // facility_id = facility_id.split(',')
+            kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
+          let facility_id = [];
+          if(res.data.facility_id){
+            facility_id = res.data.facility_id;
+            facility_id = facility_id.split(',')
+          }
           this.temp = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, address, images, remark,log,lat,credit_code,city_id,license};
+            kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id};
+          this.onLoad();
         });
       },
       createData() {
-        this.$refs['dataForm'].validate((valid) => {
+        this.$refs['firstForm'].validate((valid) => {
           if (valid) {
-            this.paraLoading = true
-            let temp = JSON.parse(JSON.stringify(this.temp));
-            temp.images = this.images.images;
-            temp.license = this.license.images;
-            // temp.facility_id = temp.facility_id.join(',');
-            addCompany(temp).then((res) => {
-              setTimeout(()=>{
-                this.paraLoading = false
-              },1000)
-              if(res.code == 1) {
-                this.$emit('insertList');
-                this.showViewDialog = false;
-                this.$message({
-                  message: res.message,
-                  type: 'success'
+            this.$refs['secondForm'].validate((valid) => {
+              if (valid) {
+                this.paraLoading = true
+                let temp = JSON.parse(JSON.stringify(this.temp));
+                temp.images = this.images.images;
+                temp.license = this.license.images;
+                if(temp.facility_id.length > 0){
+                  temp.facility_id = temp.facility_id.join(',');
+                }
+                addCompany(temp).then((res) => {
+                  setTimeout(()=>{
+                    this.paraLoading = false
+                  },1000)
+                  if(res.code == 1) {
+                    this.$emit('insertList');
+                    this.showViewDialog = false;
+                    this.$message({
+                      message: res.message,
+                      type: 'success'
+                    });
+                  }
+                }).catch(() => {
+                  this.paraLoading = false;
                 });
               }
-            }).catch(() => {
-              this.paraLoading = false;
-            });
-          }
-        })
+            })
+          }})
       },
       updateData() {
-        this.$refs['dataForm'].validate((valid) => {
+        this.$refs['firstForm'].validate((valid) => {
           if (valid) {
-            this.paraLoading = true
-            let temp = JSON.parse(JSON.stringify(this.temp));
-            if(this.images.images){
-              temp.images = this.images.images;
-            }
-            if(this.license.images){
-              temp.license = this.license.images;
-            }
-            // temp.facility_id = temp.facility_id.join(',');
-            editCompany(temp).then((res) => {
-              setTimeout(()=>{
-                this.paraLoading = false
-              },1000)
-              if(res.code == 1) {
-                this.$emit('insertList');
-                this.showViewDialog = false;
-                this.$message({
-                  message: res.message,
-                  type: 'success'
+            this.$refs['secondForm'].validate((valid) => {
+              if (valid) {
+                this.paraLoading = true
+                let temp = JSON.parse(JSON.stringify(this.temp));
+                if(this.images.images){
+                  temp.images = this.images.images;
+                }
+                if(this.license.images){
+                  temp.license = this.license.images;
+                }
+                if(temp.facility_id.length > 0){
+                  temp.facility_id = temp.facility_id.join(',');
+                }
+                editCompany(temp).then((res) => {
+                  setTimeout(()=>{
+                    this.paraLoading = false
+                  },1000)
+                  if(res.code == 1) {
+                    this.$emit('insertList');
+                    this.showViewDialog = false;
+                    this.$message({
+                      message: res.message,
+                      type: 'success'
+                    });
+                  }
+                }).catch(() => {
+                  this.paraLoading = false;
                 });
               }
-            }).catch(() => {
-              this.paraLoading = false;
-            });
-          }
-        })
+            })
+          }})
+
       },
     }
   }

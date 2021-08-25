@@ -2140,6 +2140,9 @@
         if(this.paraData.operatorType != 'create'){
           this.getView();
         }
+        this.$nextTick(function() {
+          this.$refs.dataForm.clearValidate();
+        });
         // this.updateCity();
         // this.updateDistrict();
       },
@@ -2155,6 +2158,7 @@
           mobile:'',
         };
         this.dialogStatus= '';
+        this.$refs.dataForm.clearValidate();
       },
       getView(){
         cityDetail({id:this.paraData.id}).then(res=>{
