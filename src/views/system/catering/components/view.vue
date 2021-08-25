@@ -650,8 +650,7 @@
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
           let facility_id = [];
           if(res.data.facility_id){
-            facility_id = res.data.facility_id;
-            facility_id = facility_id.split(',')
+            facility_id = res.data.facility_id.map(item=>item.facility_id);
           }
           this.temp = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id};
