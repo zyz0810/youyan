@@ -214,12 +214,8 @@
         this.showViewDialog = true
         let status = '';
 
-        if(row.is_trouble == 1 && row.status == 1){
+        if(row.super_status == 1){
           status = '正常'
-        }else  if(row.status == 2){
-          status = '离线'
-        }else  if(row.is_trouble == 2 && row.status == 1){
-          status = '故障'
         }else  if(row.super_status == 2){
           status = '超标'
         }
@@ -230,6 +226,7 @@
           companyName:row.company,
           status:status
         }
+        console.log(this.viewData)
       },
       handleHistory(row){
         this.showHistoryDialog = true

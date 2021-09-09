@@ -28,7 +28,7 @@
        <div class="flex baseColor">
          <el-form style="flex: 3">
            <el-form-item label="餐企名称：">{{companyName}}</el-form-item>
-           <el-form-item label="检测状态："><span class="red01">{{companyStatus}}</span></el-form-item>
+           <el-form-item label="检测状态dd："><span :class="aaclass">{{companyStatus}}</span></el-form-item>
            <el-form-item label="监测时间：">{{realTimeInfo?realTimeInfo.addtime:''}}</el-form-item>
          </el-form>
          <div style="flex: 5">
@@ -260,6 +260,7 @@
           status:''
         }],
         companyName:'',
+        aaclass:'55',
         companyStatus:"",
         companyInfo:{},
         cityList:[],
@@ -518,7 +519,10 @@
             status:res.data.fan == 1?'开':'关',
           }]
 
-          this.polluteList[0].val = res.data.concentration
+          this.polluteList[0].val = res.data.concentration;
+          this.polluteList[0].status = this.companyStatus
+
+
         });
       },
       filterType(list,id){
@@ -635,10 +639,29 @@
           iconSize: new T.Point(66, 59),
           iconAnchor: new T.Point(34, 59)
         });
+        // for (let i = 0; i < this.list.length; i++) {
+        //   let markers = []
+        //   // item.is_trouble == 1 && item.status == 1 正常设备
+        //   if(this.list[i].is_trouble == 1 && this.list[i].status == 1){
+        //     let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+        //     markers.push( drawTMaker(point, icon04,this,i));
+        //   }else if(this.list[i].status == 2 ){ //离线设备
+        //     let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+        //     markers.push(drawTMaker(point, icon03,this,i));
+        //     //  marker = new T.Marker(point, {icon: icon02});// 创建标注
+        //     // this.map.addOverLay(marker);
+        //   } else if(this.list[i].is_trouble == 2 && this.list[i].status == 1){ //故障设备
+        //       let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+        //       markers[i]  = drawTMaker(point, icon02,this,i);
+        //   } else if(this.list[i].super_status && this.list[i].super_status == 2 ) {
+        //     let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+        //     markers.push(drawTMaker(point, icon01,this,i));
+        //   }
+        // }
         for (let i = 0; i < this.list.length; i++) {
           let markers = []
           // item.is_trouble == 1 && item.status == 1 正常设备
-          if(this.list[i].is_trouble == 1 && this.list[i].status == 1){
+          if(this.list[i].status == 1){
             let point = new T.LngLat(this.list[i].log, this.list[i].lat);
             markers.push( drawTMaker(point, icon04,this,i));
           }else if(this.list[i].status == 2 ){ //离线设备
@@ -646,10 +669,10 @@
             markers.push(drawTMaker(point, icon03,this,i));
             //  marker = new T.Marker(point, {icon: icon02});// 创建标注
             // this.map.addOverLay(marker);
-          } else if(this.list[i].is_trouble == 2 && this.list[i].status == 1){ //故障设备
-              let point = new T.LngLat(this.list[i].log, this.list[i].lat);
-              markers[i]  = drawTMaker(point, icon02,this,i);
-          } else if(this.list[i].super_status && this.list[i].super_status == 2 ) {
+          } else if(this.list[i].status == 3){ //故障设备
+            let point = new T.LngLat(this.list[i].log, this.list[i].lat);
+            markers[i]  = drawTMaker(point, icon02,this,i);
+          } else if(this.list[i].status == 4) {
             let point = new T.LngLat(this.list[i].log, this.list[i].lat);
             markers.push(drawTMaker(point, icon01,this,i));
           }
@@ -670,19 +693,34 @@
             let infoWin1 = new T.InfoWindow();
             let status = ''
            if(that.list.length>0){
-             if(that.list[i].is_trouble == 1 && that.list[i].status == 1){
+             // if(that.list[i].is_trouble == 1 && that.list[i].status == 1){
+             //   status='正常'
+             // }else if(that.list[i].status == 2 ){
+             //   status='离线'
+             // }else if(that.list[i].is_trouble == 2 && that.list[i].status == 1){
+             //   status='故障'
+             // }else if(that.list[i].super_status && that.list[i].super_status == 2 ) {
+             //   status='超标'
+             // }
+             if(that.list[i].status == 1){
+               console.log('hfjahfjahjfh')
+               this.aaclass = 'red01'
+               console.log( this.aaclass)
                status='正常'
-             }else if(that.list[i].status == 2 ){
+             }else if(that.list[i].status == 2){
+               this.aaclass = 'red01d'
                status='离线'
-             }else if(that.list[i].is_trouble == 2 && that.list[i].status == 1){
+             }else if(that.list[i].status == 3){
+               this.aaclass = 'red02'
                status='故障'
-             }else if(that.list[i].super_status && that.list[i].super_status == 2 ) {
+             }else if(that.list[i].status == 4){
+               this.aaclass = 'red03'
                status='超标'
              }
              let sContent =
                '<div class="f14 baseColor text-center">' +
                '<p ref="enterpriseName" class="bold">'+ that.list[i].company +'</p>' +
-               '<p ref="enterpriseName">监测状态：<span class="red01">'+ status +'</span></p>' +
+               '<p ref="enterpriseName">监测状态：<span class="">'+ status +'</span></p>' +
                '</div>';
              infoWin1.setContent(sContent);
              marker.openInfoWindow(infoWin1);

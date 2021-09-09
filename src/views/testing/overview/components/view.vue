@@ -19,7 +19,7 @@
       <div class="flex baseColor">
         <el-form style="flex: 3">
           <el-form-item label="餐企名称：">{{viewData.companyName}}</el-form-item>
-          <el-form-item label="检测状态："><span class="red01">{{viewData.status}}</span></el-form-item>
+          <el-form-item label="检测状态："><span class="">{{viewData.status}}</span></el-form-item>
           <el-form-item label="监测时间：">{{realTimeInfo.addtime}}</el-form-item>
         </el-form>
         <div style="flex: 5">
@@ -435,6 +435,7 @@
           }]
 
           this.polluteList[0].val = res.data.concentration
+          this.polluteList[0].status = this.viewData.status
         });
       },
       filterType(list,id){
