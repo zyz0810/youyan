@@ -33,12 +33,12 @@
         </el-form-item>
       </el-form>
       <div>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
+        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="">导出信息</el-button>
 
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
-              element-loading-text="拼命加载中" fit ref="tableList" @row-click="clickRow" @selection-change="handleSelectionChange">
+              element-loading-text="拼命加载中" fit ref="tableList">
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>

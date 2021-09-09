@@ -109,8 +109,8 @@
         <td class="txtColor">{{companyInfo.tel?companyInfo.tel:''}}</td>
       </tr>
       <tr>
-        <td class="baseColor">餐企类型{{companyInfo.company_type}}</td>
-        <td class="txtColor">{{filterType(companyType,companyInfo.company_type?Info.company_type:'')}}</td>
+        <td class="baseColor">餐企类型</td>
+        <td class="txtColor">{{companyInfo.company_type?Info.company_type:''}}</td>
         <td class="baseColor">菜系</td>
         <td class="txtColor">{{filterType(cookList,companyInfo.cook_type?companyInfo.cook_type:'')}}</td>
         <td class="baseColor">营业面积</td>
@@ -391,9 +391,13 @@
     },
     filters:{
       filtersStatus: function(value) {
-        let StatusArr = {0:'禁用', 1:'启用'}
+        let StatusArr = {2:'禁用', 1:'启用'}
         return StatusArr[value]
-      }
+      },
+      filtersCompanyStatus: function(value) {
+        let StatusArr = {2:'禁用', 1:'启用'}
+        return StatusArr[value]
+      },
     },
 
     methods: {
@@ -401,8 +405,9 @@
         companyDetail({id:this.viewData.company_id}).then(res=>{
           console.log(res)
           if(res.code == 1){
-            const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+            const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel,  cook_type, area,
               kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark} = res.data;
+            const company_type = this.filterType(this.companyType,res.data.company_type)
             this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
               kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark};
 

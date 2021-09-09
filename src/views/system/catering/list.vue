@@ -43,7 +43,7 @@
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="餐企简称" align="center" prop="simple_name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="street"></el-table-column>
+      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
 
       <el-table-column label="餐企规模" align="center" prop="scale_type"></el-table-column>
       <el-table-column label="餐企类型" align="center" prop="num">
@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column label="营业状态" align="center" prop="status">
         <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
+          <span>{{scope.row.status |  filtersStatus}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="160">
@@ -142,7 +142,7 @@
     },
     filters: {
       filtersStatus: function (value) {
-        let StatusArr = {0: '禁用', 1: '启用'}
+        let StatusArr = {2: '禁用', 1: '启用'}
         return StatusArr[value]
       },
       filtersMode: function (value) {

@@ -661,29 +661,31 @@
             // this.map.addOverLay(marker);
             let infoWin1 = new T.InfoWindow();
             let status = ''
-            if(that.list[i].is_trouble == 1 && that.list[i].status == 1){
-              status='正常'
-            }else if(that.list[i].status == 2 ){
-              status='离线'
-            }else if(that.list[i].is_trouble == 2 && that.list[i].status == 1){
-              status='故障'
-            }else if(that.list[i].super_status && that.list[i].super_status == 2 ) {
-              status='超标'
-            }
-            let sContent =
-              '<div class="f14 baseColor text-center">' +
-              '<p ref="enterpriseName" class="bold">'+ that.list[i].company +'</p>' +
-              '<p ref="enterpriseName">监测状态：<span class="red01">'+ status +'</span></p>' +
-              '</div>';
-            infoWin1.setContent(sContent);
-            marker.openInfoWindow(infoWin1);
-            that.showSearchDialog = true;
-            that.getCompanyView(that.list[i].company_id);
-            that.companyName = that.list[i].company;
-            that.companyStatus = status;
-            that.getFacilityDetail(that.list[i].facility_id);
-            that.getInfo(that.list[i].facility_id);
-            that.getChart(that.list[i].facility_id);
+           if(that.list.length>0){
+             if(that.list[i].is_trouble == 1 && that.list[i].status == 1){
+               status='正常'
+             }else if(that.list[i].status == 2 ){
+               status='离线'
+             }else if(that.list[i].is_trouble == 2 && that.list[i].status == 1){
+               status='故障'
+             }else if(that.list[i].super_status && that.list[i].super_status == 2 ) {
+               status='超标'
+             }
+             let sContent =
+               '<div class="f14 baseColor text-center">' +
+               '<p ref="enterpriseName" class="bold">'+ that.list[i].company +'</p>' +
+               '<p ref="enterpriseName">监测状态：<span class="red01">'+ status +'</span></p>' +
+               '</div>';
+             infoWin1.setContent(sContent);
+             marker.openInfoWindow(infoWin1);
+             that.showSearchDialog = true;
+             that.getCompanyView(that.list[i].company_id);
+             that.companyName = that.list[i].company;
+             that.companyStatus = status;
+             that.getFacilityDetail(that.list[i].facility_id);
+             that.getInfo(that.list[i].facility_no);
+             that.getChart(that.list[i].facility_no);
+           }
           });// 将标注添加到地图中
           return marker;
         }
