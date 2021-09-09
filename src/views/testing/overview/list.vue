@@ -216,7 +216,8 @@
           status = '超标'
         }
         this.viewData = {
-          facility_id:row.fac_id,
+          fac_id:row.fac_id,
+          facility_id:row.facility_id,
           company_id:row.company_id,
           companyName:row.company,
           status:status

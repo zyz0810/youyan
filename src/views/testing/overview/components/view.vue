@@ -109,7 +109,7 @@
         <td class="txtColor">{{companyInfo.tel?companyInfo.tel:''}}</td>
       </tr>
       <tr>
-        <td class="baseColor">餐企类型</td>
+        <td class="baseColor">餐企类型{{companyInfo.company_type}}</td>
         <td class="txtColor">{{filterType(companyType,companyInfo.company_type?Info.company_type:'')}}</td>
         <td class="baseColor">菜系</td>
         <td class="txtColor">{{filterType(cookList,companyInfo.cook_type?companyInfo.cook_type:'')}}</td>
@@ -194,6 +194,7 @@
           option: {},
           operatorType: "view",
           facility_id: "",
+          fac_id:"",
           company_id:'',
           companyName:'',
           status:''
@@ -216,7 +217,7 @@
         cookList:[],
         scaleList:[],
         realTimeInfo:{},
-        list: null,
+        list: [],
         listLoading: false,
         listQuery:{
           facility_id:'',
@@ -404,6 +405,8 @@
               kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark} = res.data;
             this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
               kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark};
+
+            console.log(this.companyInfo)
           }
         });
       },
@@ -476,12 +479,12 @@
       },
       open(){
         this.listQuery.facility_id = this.viewData.facility_id
-this.getCompanyView();
+        this.getCompanyView();
         this.getChart(this.viewData.facility_id);
         this.getInfo(this.viewData.facility_id);
         this.getScaleType();
         this.getCompanyType();
-        this.getFacilityDetail(this.viewData.facility_id);
+        this.getFacilityDetail(this.viewData.fac_id);
         this.getCity();
       },
       close(){
