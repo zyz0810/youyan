@@ -12,11 +12,11 @@
 <!--  </div>-->
   <el-header>
     <el-row>
-      <el-col :span="6" class="f18">集 据 物 连 </el-col>
-      <el-col :span="12" class="logo text-center">
+      <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"> <span style="color: transparent;">logo</span></el-col>
+      <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="logo text-center">
         <img src="./../../../assets/image/logo.png"/>
       </el-col>
-      <el-col :span="6" class="top_right">
+      <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="top_right">
         <div class="right-menu">
           <!--<template v-if="device!=='mobile'">-->
           <!--<search id="header-search" class="right-menu-item" />-->
@@ -292,7 +292,7 @@ export default {
   }
   .logo{
     img{
-      width: 40%;
+      width: 60%;
       margin-top: 20px;
     }
 
