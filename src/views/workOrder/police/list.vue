@@ -42,7 +42,7 @@
       <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
+<!--      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>-->
       <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
       <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
       <el-table-column label="超标时长" align="center" prop="times"></el-table-column>
