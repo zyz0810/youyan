@@ -92,11 +92,11 @@
             <div id='mapDiv' class="mapDiv mt_10" style="width: 100%;height: 200px"></div>
           </el-form-item>
           <el-form-item label="门面照片" prop="images">
-            <img v-if="dialogStatus==='view'" :src="temp.images"/>
+            <img v-if="dialogStatus==='view'" class="my_img" :src="temp.images"/>
             <SingleImage :tempUrl="temp.images" v-on:imgSrc="hasImgSrc" v-else></SingleImage>
           </el-form-item>
           <el-form-item label="营业执照" prop="license">
-            <img v-if="dialogStatus==='view'" :src="temp.license"/>
+            <img v-if="dialogStatus==='view'" class="my_img" :src="temp.license"/>
             <SingleImage :tempUrl="temp.license" v-on:imgSrc="hasImgSrc1" v-else></SingleImage>
           </el-form-item>
           <el-form-item label="备  注" prop="remark">

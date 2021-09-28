@@ -109,6 +109,7 @@
           serial_no:'',
           iccid:'',
         },
+        images:'',
         rules: {
           name: [{ required: true, message: '请输入设备名称', trigger: 'change' }],
           version: [{ required: true, message: '请输入设备型号', trigger: 'change' }],
@@ -136,8 +137,9 @@
 
     methods: {
       hasImgSrc(val) {
-        this.temp.images = val;
-        console.log( this.temp)
+        console.log(val)
+        this.temp.images = val.url;
+        this.images = val.images;
       },
       open(){
         this.dialogStatus = this.paraData.operatorType
@@ -184,8 +186,9 @@
           if (valid) {
             this.$refs['secondForm'].validate((valid) => {
               if (valid) {
-            this.paraLoading = true
-            console.log( this.temp)
+            this.paraLoading = true;
+            console.log( this.temp);
+                this.temp.images = this.images;
             addFacility(this.temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
@@ -213,6 +216,9 @@
             this.$refs['secondForm'].validate((valid) => {
           if (valid) {
             this.paraLoading = true
+            if(this.images != ''){
+              this.temp.images = this.images;
+            }
             editFacility(this.temp).then((res) => {
               setTimeout(()=>{
                 this.paraLoading = false
