@@ -41,7 +41,7 @@
           <i :class="['iconfont','icon-youyanjinghuaqi',scope.row.cleansing == 2 ? 'red01':'green01']"></i>
         </template>
       </el-table-column>
-      <el-table-column label="监测状态" align="center" prop="trouble" :formatter="formatStatus">
+      <el-table-column label="监测状态" align="center" prop="super_status" :formatter="formatStatus">
 <!--        <template slot-scope="scope">-->
 <!--          <span>{{scope.row.super_status  | filtersStatus}}</span>-->
 <!--        </template>-->
@@ -119,15 +119,20 @@
         // item.status == 2   离线设备
         // item.is_trouble == 2    && item.status == 1故障设备
         // super_status==2 超标设备
-        return row.is_trouble == 1 && cellValue == 1
+        // return row.is_trouble == 1 && cellValue == 1
+        //   ? "正常"
+        //   : cellValue == 2
+        //     ? "离线"
+        //     : row.is_trouble == 2 && cellValue == 3
+        //       ? "故障"
+        //       :  row.super_status == 2
+        //         ? "超标"
+        //         : "";
+        return cellValue == 1
           ? "正常"
           : cellValue == 2
-            ? "离线"
-            : row.is_trouble == 2 && cellValue == 3
-              ? "故障"
-              :  row.super_status == 2
-                ? "超标"
-                : "";
+            ? "异常"
+            : "";
       },
       open(){
         this.listQuery.facility_id = this.historyData.facility_id
