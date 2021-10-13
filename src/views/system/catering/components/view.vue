@@ -79,6 +79,11 @@
               <el-option v-for="option in cityList" :label="option.province+option.city+option.area" :value="option.id" :key="option.id"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="所属来源" prop="depart_id">
+            <el-select v-model="temp.depart_id" :disabled="isCanView">
+              <el-option v-for="item in departList" :label="item.name" :value="item.id" :key="item.id"></el-option>
+            </el-select>
+          </el-form-item>
           <!--      <el-form-item label="所属分组" prop="street">-->
           <!--        <el-select v-model="temp.street">-->
           <!--          <el-option label="启用" value="1"></el-option>-->
@@ -211,6 +216,7 @@
           outlet_num:'',
           scale_type:'',
           city_id:'',
+          depart_id:'',
           // street:'',
           address:'',
           images:'',
@@ -226,6 +232,17 @@
         scaleList:[],
         facilityList:[],
         cityList:[],
+        // 1: '浦沿中队', 2: '长河中队',3: '西兴中队'
+        departList:[{
+          id:1,
+          name:'浦沿中队'
+        },{
+          id:2,
+          name:'长河中队'
+        },{
+          id:3,
+          name:'西兴中队'
+        }],
         dialogStatus: '',
         rules: {
           company: [{ required: true, message: '请输入名称', trigger: 'change' }],
@@ -646,13 +663,13 @@
       },
       getView(){
         companyDetail({id:this.viewData.id}).then(res=>{
-          const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+          const {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
           let facility_id = [];
           if(res.data.facility_id){
             facility_id = res.data.facility_id.map(item=>item.facility_id);
           }
-          this.temp = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+          this.temp = {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id};
           this.onLoad();
         });

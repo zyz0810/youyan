@@ -44,7 +44,11 @@
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="餐企简称" align="center" prop="simple_name"></el-table-column>
       <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>
-
+      <el-table-column label="所属来源" align="center" prop="depart_id">
+        <template slot-scope="scope">
+          <span>{{scope.row.depart_id | filtersDepart}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="餐企规模" align="center" prop="scale_type"></el-table-column>
       <el-table-column label="餐企类型" align="center" prop="num">
         <template slot-scope="scope">
@@ -148,7 +152,11 @@
       filtersMode: function (value) {
         let StatusArr = {0: '下拉框', 1: '复选框', 2: '输入框'}
         return StatusArr[value]
-      }
+      },
+      filtersDepart: function (value) {
+        let StatusArr = {1: '浦沿中队', 2: '长河中队',3: '西兴中队'};
+        return StatusArr[value]
+      },
     },
     computed: {
       ...mapState({

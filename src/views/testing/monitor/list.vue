@@ -166,7 +166,7 @@
       </table>
     </div>
     <ul class="company_leibie f14 baseColor">
-      <li class="clearfix"><img src="./../../../assets/image/monitor_icon01.png" class="fl"/><div class="">超标 <span class="f18 clr_yellow bold">{{info.superNum}}</span></div></li>
+      <li class="clearfix"><img src="./../../../assets/image/monitor_icon01.png" class="fl"/><div class="">报警 <span class="f18 clr_yellow bold">{{info.superNum}}</span></div></li>
       <li class="clearfix"><img src="./../../../assets/image/monitor_icon02.png" class="fl"/><div class="">故障 <span class="f18 clr_yellow bold">{{info.trouble}}</span></div></li>
       <li class="clearfix"><img src="./../../../assets/image/monitor_icon03.png" class="fl"/><div class="">离线 <span class="f18 clr_yellow bold">{{info.off}}</span></div></li>
       <li class="clearfix"><img src="./../../../assets/image/monitor_icon04.png" class="fl"/><div class="">正常 <span class="f18 clr_yellow bold">{{info.normal}}</span></div></li>
@@ -505,7 +505,7 @@
         return cellValue == 1
           ? "正常"
           : cellValue == 2
-            ? "超标"
+            ? "异常"
             : "";
       },
       getInfo(id){
@@ -715,7 +715,7 @@
                status='故障'
              }else if(that.list[i].status == 4){
                this.aaclass = 'red03'
-               status='超标'
+               status='异常'
              }
              let sContent =
                '<div class="f14 baseColor text-center">' +
