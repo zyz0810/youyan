@@ -172,7 +172,8 @@
   import {dicList} from "@/api/dictionary";
   import {facilityDetail} from "@/api/monitor";
   import {cityList} from "@/api/jurisdiction";
-  import {companyDetail} from "@/api/catering"; // waves directive
+  import {companyDetail} from "@/api/catering";
+  import {getCitySelected} from "@/utils/auth"; // waves directive
   export default {
     name: 'parameterView',
     directives: { waves },
@@ -402,7 +403,7 @@
 
     methods: {
       getCompanyView(companyId){
-        companyDetail({id:this.viewData.company_id}).then(res=>{
+        companyDetail({id:this.viewData.company_id, city_id:getCitySelected(),}).then(res=>{
           console.log(res)
           if(res.code == 1){
             const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel,  cook_type, area,
@@ -416,7 +417,7 @@
         });
       },
       getChart(id){
-        homeTrend({facility_id:id}).then(res=>{
+        homeTrend({facility_id:id, city_id:getCitySelected(),}).then(res=>{
           let a = res.data.map(item=>{return item.x_name})
           this.lineData.xAxis.data = a;
           this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
@@ -424,7 +425,7 @@
         });
       },
       getInfo(id){
-        realTime({facility_id:id}).then(res=>{
+        realTime({facility_id:id, city_id:getCitySelected(),}).then(res=>{
           this.realTimeInfo = res.data;
           this.polluteSList=[{
             name:'净化器',
@@ -449,7 +450,7 @@
         })
       },
       getScaleType(){
-        dicList({ parent_id: 2,
+        dicList({ city_id:getCitySelected(), parent_id: 2,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.scaleList = res.data.data
@@ -463,20 +464,20 @@
         });
       },
       getCompanyType(){
-        dicList({ parent_id: 16,
+        dicList({ city_id:getCitySelected(), parent_id: 16,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.companyType = res.data.data
         });
       },
       getFacilityDetail(id){
-        facilityDetail({id:id}).then(res=>{
+        facilityDetail({id:id, city_id:getCitySelected(),}).then(res=>{
           const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
           this.facilityInfo = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
         });
       },
       getCity() {
-        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+        cityList({  city_id:getCitySelected(), key_word:'', page: 1, pageSize: 99999}).then(res => {
           this.cityList = res.data.data
         });
       },

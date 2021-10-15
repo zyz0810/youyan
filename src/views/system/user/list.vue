@@ -41,6 +41,7 @@
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index";
   import paraView from "./components/view";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'parameterList',
     components: {
@@ -56,6 +57,7 @@
         list: [],
         listLoading: false,
         listQuery: {
+          city_id:getCitySelected(),
           key_word: '',
           page: 1,
           pageSize: 10

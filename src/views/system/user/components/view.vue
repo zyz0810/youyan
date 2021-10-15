@@ -40,6 +40,7 @@
   import {addUser,editUser,userDetail} from '@/api/user'
   import {cityList} from '@/api/jurisdiction'
   import draggable from 'vuedraggable'
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'userView',
     components: {
@@ -114,7 +115,7 @@
         })
       },
       getView(){
-        userDetail({id:this.paraData.id}).then(res=>{
+        userDetail({id:this.paraData.id,city_id:getCitySelected(),}).then(res=>{
           const { id, name, password,mobile} = res.data;
           let cityId = res.data.city_id.split(',');
           let city_id = cityId.map(item=>{return Number(item)})
@@ -124,7 +125,7 @@
         });
       },
       getCity(){
-        cityList({page:1,pageSize:9999,}).then(res=>{
+        cityList({page:1,pageSize:9999,city_id:getCitySelected(),}).then(res=>{
           this.cityList = res.data.data;
         });
       },

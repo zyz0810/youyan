@@ -87,6 +87,7 @@
   import {cityList} from '@/api/jurisdiction'
   import {dataList} from '@/api/police'
   import {dicList} from "@/api/dictionary";
+  import { getCitySelected } from '@/utils/auth'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -111,6 +112,7 @@
           cook_type:'',
           super_status:'',
           key_word:'',
+          city_id:getCitySelected(),
           page: 1,
           pageSize: 10
         },
@@ -181,21 +183,21 @@
                 : "";
       },
     getScaleType(){
-      dicList({ parent_id: 2,
+      dicList({city_id:getCitySelected(),parent_id: 2,
         page: 1,
         pageSize: 9999,}).then(res => {
         this.scaleList = res.data.data
       });
     },
       getCookType(){
-        dicList({ parent_id: 1,
+        dicList({city_id:getCitySelected(), parent_id: 1,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.cookList = res.data.data
         });
       },
       getCity() {
-        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+        cityList({ city_id:getCitySelected(), key_word:'', page: 1, pageSize: 99999}).then(res => {
           this.cityList = res.data.data
         });
       },

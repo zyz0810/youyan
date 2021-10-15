@@ -66,7 +66,8 @@
   import Pagination from "@/components/Pagination/index"; // waves directive
   import SingleImage from "@/components/Upload/SingleImage.vue";
   import {cityList} from "@/api/jurisdiction";
-  import {userDetail} from "@/api/user"; // waves directive
+  import {userDetail} from "@/api/user";
+  import {getCitySelected} from "@/utils/auth"; // waves directive
   export default {
     name: 'monitorView',
     directives: { waves },
@@ -169,12 +170,12 @@
         this.$refs.secondForm.clearValidate();
       },
       getCity(){
-        cityList({page:1,pageSize:9999,}).then(res=>{
+        cityList({ city_id:getCitySelected(),page:1,pageSize:9999,}).then(res=>{
           this.cityList = res.data.data;
         });
       },
       getView(){
-        facilityDetail({id:this.paraData.id}).then(res=>{
+        facilityDetail({id:this.paraData.id, city_id:getCitySelected(),}).then(res=>{
           const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
           this.temp = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
         });

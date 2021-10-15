@@ -163,6 +163,7 @@ export default {
     chooseCity(val){
       this.citySelected = val;
       setCitySelected(val);
+      location.reload();
       console.log( getCity())
      console.log( getCitySelected())
     },

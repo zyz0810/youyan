@@ -42,6 +42,7 @@
   import {dataList} from '@/api/police'
   import draggable from 'vuedraggable'
   import Pagination from "@/components/Pagination/index";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'policeView',
     components: {
@@ -70,6 +71,7 @@
         list: [],
         listLoading: false,
         listQuery:{
+          city_id:getCitySelected(),
           facility_id:'',
           page:1,
           pageSize:10

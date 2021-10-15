@@ -158,7 +158,8 @@
   import {facilityList} from "@/api/monitor";
   import {dicList} from "@/api/dictionary";
   import {cityList} from "@/api/jurisdiction";
-  import {cos} from "@/utils/translate"; // waves directive
+  import {cos} from "@/utils/translate";
+  import {getCitySelected} from "@/utils/auth"; // waves directive
   let markerTool;
   export default {
     name: 'cateringView',
@@ -561,31 +562,31 @@
         console.log(this.temp)
       },
       getCity(){
-        cityList({page:1,pageSize:9999,}).then(res=>{
+        cityList({ city_id:getCitySelected(),page:1,pageSize:9999,}).then(res=>{
           this.cityList = res.data.data;
         });
       },
       getFacility(){
-        facilityList({ page: 1, pageSize: 99999}).then(res => {
+        facilityList({ city_id:getCitySelected(), page: 1, pageSize: 99999}).then(res => {
           this.facilityList = res.data.data
         });
       },
       getCompanyType(){
-        dicList({ parent_id: 2,
+        dicList({  city_id:getCitySelected(),parent_id: 2,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.companyList = res.data.data
         });
       },
       getCookType(){
-        dicList({ parent_id: 1,
+        dicList({ city_id:getCitySelected(), parent_id: 1,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.cookList = res.data.data
         });
       },
       getScaleType(){
-        dicList({ parent_id: 3,
+        dicList({ city_id:getCitySelected(), parent_id: 3,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.scaleList = res.data.data
@@ -662,7 +663,7 @@
         this.temp.license = val.url;
       },
       getView(){
-        companyDetail({id:this.viewData.id}).then(res=>{
+        companyDetail({id:this.viewData.id, city_id:getCitySelected(),}).then(res=>{
           const {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
           let facility_id = [];

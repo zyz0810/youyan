@@ -46,6 +46,8 @@
 </template>
 
 <script>
+  import {getCitySelected} from "@/utils/auth";
+
   var arrAll = [
     {name: "选择省份", sub: [{name: "请选择"}], type: 1},
     {
@@ -2161,7 +2163,7 @@
         this.$refs.dataForm.clearValidate();
       },
       getView(){
-        cityDetail({id:this.paraData.id}).then(res=>{
+        cityDetail({id:this.paraData.id, city_id:getCitySelected(),}).then(res=>{
           const { id, province, city, area, principal, mobile,} = res.data;
           this.temp = { id, province, city, area, principal, mobile,}
           this.updateCity();

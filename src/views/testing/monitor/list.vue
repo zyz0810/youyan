@@ -232,7 +232,8 @@
   import {homeTrend} from "@/api/chart";
   import {cityList} from "@/api/jurisdiction";
   import {companyDetail, companyList} from "@/api/catering";
-  import {dicList} from "@/api/dictionary"; // 引入刚才的map.js 注意路径
+  import {dicList} from "@/api/dictionary";
+  import {getCitySelected} from "@/utils/auth"; // 引入刚才的map.js 注意路径
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -272,6 +273,7 @@
         companyList: [],
         companyListLoading: false,
         listQuery: {
+          city_id:getCitySelected(),
           start_time:this.$moment().format('YYYY-MM-DD') + ' 00:00:00',
           end_time:this.$moment().format('YYYY-MM-DD') + ' 23:59:59',
           super_status:2,
@@ -280,6 +282,7 @@
           pageSize:10
         },
         temp:{
+          city_id:getCitySelected(),
           street:'',
           company:''
         },
@@ -536,21 +539,21 @@
           })
       },
       getScaleType(){
-        dicList({ parent_id: 2,
+        dicList({city_id:getCitySelected(), parent_id: 2,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.scaleList = res.data.data
         });
       },
       getCookType(){
-        dicList({ parent_id: 1,
+        dicList({city_id:getCitySelected(), parent_id: 1,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.cookList = res.data.data
         });
       },
       getCompanyType(){
-        dicList({ parent_id: 16,
+        dicList({ city_id:getCitySelected(),parent_id: 16,
           page: 1,
           pageSize: 9999,}).then(res => {
           this.companyType = res.data.data
@@ -563,12 +566,12 @@
         });
       },
       getCity() {
-        cityList({  key_word:'', page: 1, pageSize: 99999}).then(res => {
+        cityList({city_id:getCitySelected(), key_word:'', page: 1, pageSize: 99999}).then(res => {
           this.cityList = res.data.data
         });
       },
       getCompanyList() {
-        companyList({    key_word: '',
+        companyList({city_id:getCitySelected(),key_word: '',
           street: '',
           scale_type:'',
           cook_type:'',
@@ -618,6 +621,7 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
       },
       getMarker(){
+        this.map.clearOverLays();
         //创建图片对象
         let icon01 = new T.Icon({
           iconUrl: point01,

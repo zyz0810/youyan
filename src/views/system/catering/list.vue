@@ -81,6 +81,7 @@
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
   import companyDetail from "./components/view";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'companyList',
     directives: {waves},
@@ -113,6 +114,7 @@
         }],
         listLoading: false,
         listQuery: {
+          city_id:getCitySelected(),
           key_word: '',
           street: '',
           scale_type:'',

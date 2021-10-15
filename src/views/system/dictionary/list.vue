@@ -41,6 +41,7 @@
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -59,6 +60,7 @@
         list: [],
         listLoading: false,
         listQuery: {
+          city_id:getCitySelected(),
           parent_id: '',
           page: 1,
           pageSize: 10
@@ -151,7 +153,7 @@
 
 
       getList() {
-        dicList({parent_id:0,page: 1,
+        dicList({city_id:getCitySelected(),parent_id:0,page: 1,
           pageSize: 99999}).then(res => {
           this.list = res.data.data
           this.activeId = this.list[0].id

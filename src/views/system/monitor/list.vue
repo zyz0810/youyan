@@ -51,6 +51,7 @@
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -72,6 +73,7 @@
           facility_no: '',
           imei: '',
           key_word:'',
+          city_id:getCitySelected(),
           page: 1,
           pageSize: 10
         },
