@@ -10,16 +10,17 @@
             <el-form :inline="true" :model="listQuery3">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
-                  v-model="listQuery3.yearChoose"
+                  v-model="dateTimeOne"
                   clearable
                   type="daterange"
+                  value-format="yyyy-MM-dd"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+                <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getPie">查询</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -36,23 +37,23 @@
             <el-form :inline="true" :model="listQuery3" class="fr">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
-                  v-model="listQuery3.yearChoose"
+                  v-model="dateTimeTwo"
                   clearable
                   type="daterange"
+                  value-format="yyyy-MM-dd"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+                <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getBar">查询</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="body-wrapper body-wrapper2">
             <ColumnChart :name="'myChart'" :echartData='echartData' style="width:100%;height: 340px;"></ColumnChart>
           </div>
-
         </div>
       </el-col>
     </el-row>
@@ -63,22 +64,22 @@
           <el-form :inline="true" :model="listQuery3" class="">
             <el-form-item label="餐企名称：" prop="name">
               <el-select v-model="listQuery3.name" placeholder="选择餐企">
-                <el-option label="启用" value="1"></el-option>
-                <el-option label="禁用" value="0"></el-option>
+                <el-option v-for="item in cateringList" :label="item.company" :value="item.id" :key="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="时 间：" prop="name">
               <el-date-picker
-                v-model="listQuery3.yearChoose"
+                v-model="dateTimeThree"
                 clearable
                 type="daterange"
+                value-format="yyyy-MM-dd"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期">
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+              <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getLine">查询</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -90,13 +91,15 @@
 
 <script>
   import * as echarts from 'echarts';
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
+  import {timesOfWarn, departOfWarn, historyData,} from '@/api/statistics'
   import RingChart from '@/components/Charts/RingChart'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import Pagination from "@/components/Pagination/index"; // waves directive
   import paraView from "./components/view";
+  import {companyList} from "@/api/catering";
+  import {getCitySelected} from "@/utils/auth";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -108,6 +111,18 @@
     },
     data() {
       return {
+        listQueryOne:{
+          start_time:'',
+          end_time:'',
+        },
+        listQueryTwo:{
+          start_time:'',
+          end_time:'',
+        },
+        listQueryThree:{
+          start_time:'',
+          end_time:'',
+        },
         PieChartLegend:[],
         chartDataThree: {
           title:{},
@@ -129,7 +144,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['65%', '90%'],
+              radius: ['45%', '70%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -181,11 +196,7 @@
                   }
                 }
               },
-              data: [
-                {value: 520, name: '浦沿街道'},
-                {value: 205, name: '长河街道'},
-                {value: 205, name: '西兴街道'},
-              ]
+              data: []
             }
           ]
         },
@@ -195,6 +206,7 @@
             left: '20',
             right: '10',
             bottom: '20',
+            top:'10',
             containLabel: true
           },
 
@@ -226,7 +238,7 @@
               // show: false//去除网格线
               lineStyle:{color:'red'}
             },
-            data: ['2021-4-01', '2021-4-03', '2021-4-05', '2021-4-07', '2021-4-09', '2021-4-11', '2021-4-13','2021-4-15','2021-4-17','2021-4-19','2021-4-21','2021-4-23','2021-4-25','2021-4-27']
+            data: []
           },
           yAxis: {
             type: 'value',
@@ -247,7 +259,7 @@
             },
           },
           series: [{
-            data: [0.5, 0.8, 0.2, 1.5, 1.9, 1.2, 0.8,0.5, 0.8, 0.2, 1.5, 1.9, 1.2, 0.8],
+            data: [],
             type: 'line',
             areaStyle: {
               color:new echarts.graphic.LinearGradient(0,1,0,0,[{
@@ -268,9 +280,20 @@
           year: '',
         },
         echartData: {
-          count:[70,60,52,63,82,30],
-          name: ['肉揽锅菜','齐齐鱼锅','魏氏麻辣烫','生态酒店','世纪金源大酒店','香格里拉大酒店'],
+          count:[],
+          name: [],
         },
+        listQuery: {
+          city_id:getCitySelected(),
+          key_word: '',
+          street: '',
+          scale_type:'',
+          cook_type:'',
+          status:'',
+          page: 1,
+          pageSize: 9999
+        },
+        cateringList:[],
       }
     },
 
@@ -278,15 +301,113 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
+      dateTimeOne: {
+        get () {
+          if (this.listQueryOne.start_time && this.listQueryOne.end_time) {
+            return [this.listQueryOne.start_time, this.listQueryOne.end_time];
+          } else {
+            return [];
+          }
+        },
+        set (v) {
+          if (v) {
+            this.listQueryOne.start_time = v[0];
+            this.listQueryOne.end_time = v[1];
+          } else {
+            this.listQueryOne.start_time = "";
+            this.listQueryOne.end_time = "";
+          }
+        },
+      },
+      dateTimeTwo: {
+        get () {
+          if (this.listQueryTwo.start_time && this.listQueryTwo.end_time) {
+            return [this.listQueryTwo.start_time, this.listQueryTwo.end_time];
+          } else {
+            return [];
+          }
+        },
+        set (v) {
+          if (v) {
+            this.listQueryTwo.start_time = v[0];
+            this.listQueryTwo.end_time = v[1];
+          } else {
+            this.listQueryTwo.start_time = "";
+            this.listQueryTwo.end_time = "";
+          }
+        },
+      },
+      dateTimeThree: {
+        get () {
+          if (this.listQueryThree.start_time && this.listQueryThree.end_time) {
+            return [this.listQueryThree.start_time, this.listQueryThree.end_time];
+          } else {
+            return [];
+          }
+        },
+        set (v) {
+          if (v) {
+            this.listQueryThree.start_time = v[0];
+            this.listQueryThree.end_time = v[1];
+          } else {
+            this.listQueryThree.start_time = "";
+            this.listQueryThree.end_time = "";
+          }
+        },
+      },
     },
     mounted() {
-
+    this.getPie();
+    this.getBar();
+    this.getLine();
+    this.getList();
     },
     methods: {
-      achievementByOrderEchars(){},
-      handleFilter(){},
-    }
-  }
+      //获取餐企列表
+      getList() {
+        companyList(this.listQuery).then(res => {
+          this.cateringList = res.data.data
+        });
+      },
+      // 辖区报警次数占比分析
+      getPie(){
+        departOfWarn(this.listQueryOne).then(res => {
+          let pieArr = res.data.map(item=>{
+            return {name:item.x_name,value:item.y_count}
+          });
+          this.chartDataThree.series[0].data = pieArr;
+        });
+      },
+      // 报警次数和平均油烟浓度趋势分析
+      getBar(){
+        timesOfWarn(this.listQueryTwo).then(res => {
+          let barArrName = res.data.map(item=>{
+            return item.x_name;
+          });
+          let barArrData = res.data.map(item=>{
+            return item.y_count;
+          });
+          this.echartData = {
+            name: barArrName,
+            count:barArrData
+          }
+        });
+      },
+      // 报警次数和平均油烟浓度趋势分析
+      getLine(){
+        timesOfWarn(this.listQueryTwo).then(res => {
+          let barArrName = res.data.map(item=>{
+            return item.x_name;
+          });
+          let barArrData = res.data.map(item=>{
+            return item.y_avg;
+          });
+          this.chartData.xAxis.data = barArrName;
+          this.chartData.series[0].data = barArrData;
+        });
+      },
+}
+}
 </script>
 <style lang="scss" scoped>
  .chart-wrapper{

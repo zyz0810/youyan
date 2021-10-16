@@ -99,19 +99,7 @@
         disableBtn: true,
         total: 0,
         parameterValueList: [{name: ''}],
-        list: [{
-          name:'列表1',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        },{
-          name:'列表2',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        }],
+        list: [],
         listLoading: false,
         listQuery: {
           city_id:getCitySelected(),
