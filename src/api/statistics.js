@@ -36,14 +36,14 @@ export function timesOfWarn(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
-// /* 餐企油烟浓度趋势分析
-//  * start_time 	2021-10-16
-//  * end_time 	2021-10-17
-//  */
-// export function timesOfWarn(data) {
-//   return request({
-//     url: `/api/analyse/timesOfWarn`,
-//     method: 'post',
-//     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
-//   })
-// }
+/* 餐企油烟浓度趋势分析
+ * start_time 	2021-10-16
+ * end_time 	2021-10-17
+ */
+export function analyseOfWarn(data) {
+  return request({
+    url: `/api/analyse/analyseOfWarn`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

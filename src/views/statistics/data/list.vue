@@ -39,8 +39,8 @@
       <el-table v-loading="listLoading" :data="list" :height="tableHeight"
                 element-loading-text="拼命加载中" fit ref="tableList">
         <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-        <el-table-column label="餐企名称" align="center" prop="company_name"></el-table-column>
-        <el-table-column label="超标次数" align="center" prop="num"></el-table-column>
+        <el-table-column label="餐企名称" align="center" prop="x_name"></el-table-column>
+        <el-table-column label="超标次数" align="center" prop="y_count"></el-table-column>
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                   @pagination="getList" class="text-right"/>
@@ -49,8 +49,8 @@
       <el-table v-loading="listLoading" :data="list" :height="tableHeight"
                 element-loading-text="拼命加载中" fit ref="tableList">
         <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-        <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-        <el-table-column label="平均油烟浓度(mg/m3)" align="center" prop="num"></el-table-column>
+        <el-table-column label="餐企名称" align="center" prop="x_name"></el-table-column>
+        <el-table-column label="平均油烟浓度(mg/m3)" align="center" prop="y_avg"></el-table-column>
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                   @pagination="getList" class="text-right"/>
@@ -59,8 +59,13 @@
       <el-table v-loading="listLoading" :data="list" :height="tableHeight"
                 element-loading-text="拼命加载中" fit ref="tableList">
         <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-        <el-table-column label="超标时间" align="center" prop="name"></el-table-column>
-        <el-table-column label="油烟浓度(mg/m3)" align="center" prop="num"></el-table-column>
+        <el-table-column label="餐企名称" align="center" prop="company_name"></el-table-column>
+        <el-table-column label="时间" align="center" prop="create_at">
+          <template slot-scope="scope">
+           {{$moment(Number(scope.row.create_at)*1000).format("YYYY-MM-DD HH:mm:ss") }}
+          </template>
+        </el-table-column>
+        <el-table-column label="油烟浓度(mg/m3)" align="center" prop="concentration"></el-table-column>
       </el-table>
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                   @pagination="getList" class="text-right"/>
@@ -70,7 +75,7 @@
 </template>
 
 <script>
-  import {historyData} from '@/api/statistics'
+  import {historyData,timesOfWarn} from '@/api/statistics'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -86,19 +91,7 @@
       return {
         activeIndex:0,
         total: 0,
-        list: [{
-          name:'列表1',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        },{
-          name:'列表2',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        }],
+        list: [],
         listLoading: false,
         listQuery: {
           start_time: '',
@@ -137,7 +130,7 @@
     mounted() {
       this.$nextTick(function() {
         // this.$refs.filter-container.offsetHeight
-        let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 460;
+        let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 510;
         if(height>100){
           this.tableHeight = height
         }else{
@@ -146,7 +139,7 @@
         // 监听窗口大小变化
         const self = this;
         window.onresize = function() {
-          let height = window.innerHeight - self.$refs.tableList.$el.offsetTop - 460;
+          let height = window.innerHeight - self.$refs.tableList.$el.offsetTop - 510;
           if(height>100){
             self.tableHeight = height
           }else{
@@ -154,22 +147,37 @@
           }
         };
       });
-      this.getList();
+      this.getListTwo();
     },
     methods: {
       handleExport(){},
       handleClick(val){
         this.activeIndex = val;
+        if(val == 2){
+          this.getList()
+        }else{
+          this.getListTwo();
+        }
       },
 
       handleFilter() {
-        this.listQuery.page = 1;
-        this.getList()
+        if(this.activeIndex == 2){
+          this.listQuery.page = 1;
+          this.getList()
+        }else{
+          this.getListTwo()
+        }
       },
       getList() {
         historyData(this.listQuery).then(res => {
           this.list = res.data.data
-          this.total = res.data.count
+          this.total = res.data.total
+        });
+      },
+      getListTwo(){
+        timesOfWarn(this.listQuery).then(res => {
+          this.list = res.data
+          // this.total = res.data.total
         });
       },
 

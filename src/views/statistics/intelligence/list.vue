@@ -7,7 +7,7 @@
         <div class="chart-wrapper">
           <div class="header-wrapper flex bold" style="justify-content:space-between">
             <label class="label f16 txtColor fl">辖区报警次数占比分析</label>
-            <el-form :inline="true" :model="listQuery3">
+            <el-form :inline="true" :model="listQueryOne">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
                   v-model="dateTimeOne"
@@ -34,7 +34,7 @@
         <div class="chart-wrapper clr_white">
           <div class="header-wrapper flex bold" style="justify-content:space-between">
             <label class="label f16 txtColor fl">报警次数分析</label>
-            <el-form :inline="true" :model="listQuery3" class="fr">
+            <el-form :inline="true" :model="listQueryTwo" class="fr">
               <el-form-item label="时 间：" prop="name">
                 <el-date-picker
                   v-model="dateTimeTwo"
@@ -61,9 +61,9 @@
       <el-col :span="24" class="p20 chart-wrapper">
         <div class="flex bold" style="justify-content:space-between">
           <div class="label f16 txtColor">餐企油烟浓度趋势分析</div>
-          <el-form :inline="true" :model="listQuery3" class="">
+          <el-form :inline="true" :model="listQueryThree" class="">
             <el-form-item label="餐企名称：" prop="name">
-              <el-select v-model="listQuery3.name" placeholder="选择餐企">
+              <el-select v-model="listQueryThree.company_id" placeholder="选择餐企">
                 <el-option v-for="item in cateringList" :label="item.company" :value="item.id" :key="item.id"></el-option>
               </el-select>
             </el-form-item>
@@ -91,7 +91,7 @@
 
 <script>
   import * as echarts from 'echarts';
-  import {timesOfWarn, departOfWarn, historyData,} from '@/api/statistics'
+  import {timesOfWarn, departOfWarn, analyseOfWarn,} from '@/api/statistics'
   import RingChart from '@/components/Charts/RingChart'
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
@@ -120,6 +120,7 @@
           end_time:'',
         },
         listQueryThree:{
+          company_id:'',
           start_time:'',
           end_time:'',
         },
@@ -144,7 +145,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['45%', '70%'],
+              radius: ['45%', '65%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -272,13 +273,6 @@
             }
           }]
         },
-        listQuery3: {
-          performanceEnum: 'USER',//  DEPT: 对应部门   USER: 对应员工
-          startTime: '',
-          endTime: '',
-          yearChoose: '',
-          year: '',
-        },
         echartData: {
           count:[],
           name: [],
@@ -395,12 +389,12 @@
       },
       // 报警次数和平均油烟浓度趋势分析
       getLine(){
-        timesOfWarn(this.listQueryTwo).then(res => {
+        analyseOfWarn(this.listQueryThree).then(res => {
           let barArrName = res.data.map(item=>{
             return item.x_name;
           });
           let barArrData = res.data.map(item=>{
-            return item.y_avg;
+            return item.y_count;
           });
           this.chartData.xAxis.data = barArrName;
           this.chartData.series[0].data = barArrData;
