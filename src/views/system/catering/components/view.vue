@@ -665,11 +665,15 @@
       getView(){
         companyDetail({id:this.viewData.id, city_id:getCitySelected(),}).then(res=>{
           const {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license} = res.data;
+            kitchen_range_num, outlet_num, scale_type, address, remark,log,lat,credit_code,city_id} = res.data;
           let facility_id = [];
           if(res.data.facility_id){
             facility_id = res.data.facility_id.map(item=>item.facility_id);
           }
+          let images = res.data.images_url;
+          let license = res.data.license_url;
+          this.images = {url:res.data.images_url,images:res.data.images};
+          this.license = {url:res.data.license_url,images:res.data.license};
           this.temp = {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id};
           this.onLoad();
@@ -713,12 +717,14 @@
               if (valid) {
                 this.paraLoading = true
                 let temp = JSON.parse(JSON.stringify(this.temp));
-                if(this.images.images){
-                  temp.images = this.images.images;
-                }
-                if(this.license.images){
-                  temp.license = this.license.images;
-                }
+                // if(this.images.images){
+                //   temp.images = this.images.images;
+                // }
+                // if(this.license.images){
+                //   temp.license = this.license.images;
+                // }
+                temp.images = this.images.images;
+                temp.license = this.license.images;
                 if(temp.facility_id.length > 0){
                   temp.facility_id = temp.facility_id.join(',');
                 }
