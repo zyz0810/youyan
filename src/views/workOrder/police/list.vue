@@ -186,7 +186,8 @@
       handleView(row){
         this.showViewDialog = true
         this.viewData = {
-          facility_id:row.facility_id
+          facility_id:row.facility_id,
+          id:row.id
         }
       },
     }

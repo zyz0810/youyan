@@ -32,3 +32,13 @@ export function realTime(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+
+/* 油烟的报警列表详情
+ */
+export function warnDetail(data) {
+  return request({
+    url: `api/home/warnDetail`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

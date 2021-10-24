@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import {dataList} from '@/api/police'
+  import {dataList,warnDetail} from '@/api/police'
   import draggable from 'vuedraggable'
   import Pagination from "@/components/Pagination/index";
   import {getCitySelected} from "@/utils/auth";
@@ -61,7 +61,8 @@
         default: {
           option: {},
           operatorType: "view",
-          facility_id: ""
+          facility_id: "",
+          id:''
         }
       }
     },
@@ -73,6 +74,7 @@
         listQuery:{
           city_id:getCitySelected(),
           facility_id:'',
+          id:'',
           page:1,
           pageSize:10
         },
@@ -118,7 +120,8 @@
               : "";
         },
       open(){
-        this.listQuery.facility_id = this.viewData.facility_id
+        this.listQuery.facility_id = this.viewData.facility_id;
+        this.listQuery.id = this.viewData.id;
         this.$nextTick(function() {
           // this.$refs.filter-container.offsetHeight
           let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 260;
@@ -153,9 +156,12 @@
         this.tableHeight=200;
       },
       getList(){
-        dataList(this.listQuery).then(res=>{
-          this.list = res.data.data;
-          this.total = res.data.total
+        // dataList(this.listQuery).then(res=>{
+        //   this.list = res.data.data;
+        //   this.total = res.data.total
+        // });
+        warnDetail({id:this.listQuery.id}).then(res=>{
+          this.list = res.data;
         });
       },
     }
