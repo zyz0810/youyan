@@ -150,6 +150,7 @@
         this.listLoading= false;
         this.listQuery={
           facility_id:'',
+          id:'',
           page:1,
           pageSize:10
         };
