@@ -3,31 +3,28 @@
     <div class="filter-container">
       <el-form :inline="true" :model="listQuery" class="search_form">
         <el-form-item label="">
-          <el-select v-model="listQuery.street" placeholder="选择辖区" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
+          <el-select v-model="listQuery.city_id" placeholder="选择辖区" clearable>
+            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.scale_type" placeholder="选择规模" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
+          <el-select v-model="listQuery.scale_type" placeholder="选择规模" clearable>
+            <el-option v-for="option in scaleList" :label="option.name" :value="option.id" :key="option.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.cook_type" placeholder="选择菜系" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
+          <el-select v-model="listQuery.cook_type" placeholder="选择菜系" clearable>
+            <el-option v-for="option in cookList" :label="option.name" :value="option.id" :key="option.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择检测状态" @change="handleFilter">
+          <el-select v-model="listQuery.status" placeholder="选择营业状态" clearable>
             <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
+            <el-option label="禁用" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.key_word" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
+          <el-input v-model.trim="listQuery.key_word" placeholder="输入餐企名称或简称" clearable/>
         </el-form-item>
         <el-form-item>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -76,6 +73,8 @@
 
 <script>
   import {companyList} from '@/api/catering'
+  import {cityList} from '@/api/jurisdiction'
+  import {dicList} from "@/api/dictionary";
   import draggable from 'vuedraggable'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
@@ -102,9 +101,8 @@
         list: [],
         listLoading: false,
         listQuery: {
-          city_id:getCitySelected(),
+          city_id:'',
           key_word: '',
-          street: '',
           scale_type:'',
           cook_type:'',
           status:'',
@@ -131,7 +129,10 @@
         rules: {
           name: [{required: true, message: '请输入名称', trigger: 'change'}],
         },
-        tableHeight:'100'
+        tableHeight:'100',
+        cityList:[],
+        scaleList:[],
+        cookList:[]
       }
     },
     filters: {
@@ -174,8 +175,30 @@
         };
       });
       this.getList();
+      this.getCity();
+      this.getScaleType();
+      this.getCookType();
     },
     methods: {
+      getCookType(){
+        dicList({ city_id:getCitySelected(), parent_id: 1,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.cookList = res.data.data
+        });
+      },
+      getScaleType(){
+        dicList({ city_id:getCitySelected(), parent_id: 3,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.scaleList = res.data.data
+        });
+      },
+      getCity() {
+        cityList({  city_id:getCitySelected(), key_word:'', page: 1, pageSize: 10}).then(res => {
+          this.cityList = res.data.data;
+        });
+      },
       handleValue(val){
         // this.temp.parameterValueList.map(item=>{
         //   if(item.name == val.srcElement.value){

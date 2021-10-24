@@ -5,11 +5,11 @@
         <el-form-item label="">
           <el-input v-model.trim="listQuery.facility_no" placeholder="设备编号" clearable/>
         </el-form-item>
-        <el-form-item label="">
-          <el-input v-model.trim="listQuery.imei" placeholder="设备IMEI" clearable/>
-        </el-form-item>
-        <el-form-item label="" prop="key_word">
-          <el-input v-model.trim="listQuery.key_word" placeholder="输入设备名称或简称" clearable/>
+        <!--<el-form-item label="">-->
+          <!--<el-input v-model.trim="listQuery.imei" placeholder="设备IMEI" clearable/>-->
+        <!--</el-form-item>-->
+        <el-form-item label="" prop="name">
+          <el-input v-model.trim="listQuery.name" placeholder="输入设备名称或简称" clearable/>
         </el-form-item>
         <el-form-item>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
@@ -71,8 +71,7 @@
         listLoading: false,
         listQuery: {
           facility_no: '',
-          imei: '',
-          key_word:'',
+          name:'',
           city_id:getCitySelected(),
           page: 1,
           pageSize: 10

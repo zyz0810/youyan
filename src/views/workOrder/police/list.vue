@@ -43,9 +43,24 @@
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
 <!--      <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>-->
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
-      <el-table-column label="超标时长" align="center" prop="times"></el-table-column>
+      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration">
+        <!--浓烟浓度=浓烟浓度字段/times-->
+        <template slot-scope="scope">
+         {{(Number(scope.row.concentration)/Number(scope.row.times)).toFixed(2)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc">
+        <!--tvoc=tvoc/times-->
+        <template slot-scope="scope">
+          {{(Number(scope.row.tvoc)/Number(scope.row.times)).toFixed(2)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="超标时长" align="center" prop="times">
+        <!--超标时长= （times-1）*5-->
+        <template slot-scope="scope">
+          {{((Number(scope.row.times)-1)/5).toFixed(2)}}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button class="filter-item" type="primary" @click="handleView(scope.row)">详情</el-button>
