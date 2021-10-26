@@ -55,10 +55,10 @@
           {{(Number(scope.row.tvoc)/Number(scope.row.times)).toFixed(2)}}
         </template>
       </el-table-column>
-      <el-table-column label="超标时长" align="center" prop="times">
+      <el-table-column label="超标时长（分）" align="center" prop="times">
         <!--超标时长= （times-1）*5-->
         <template slot-scope="scope">
-          {{((Number(scope.row.times)-1)/5).toFixed(2)}}
+          {{((Number(scope.row.times)-1)*5).toFixed(2)}}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
