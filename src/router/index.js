@@ -249,45 +249,45 @@ export const asyncRoutes = [
           roles: ['admin',]
         }
       },
-      {
-        path: 'jurisdiction',
-        component: () => import('@/views/system/jurisdiction/list'),
-        name: 'jurisdictionList',
-        meta: { title: '辖区管理', roles: ['admin', 'menu:list'] }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/system/user/list'),
-        name: 'userList',
-        meta: {
-          title: '用户管理',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-      {
-        path: 'threshold',
-        component: () => import('@/views/system/threshold/list'),
-        name: 'thresholdList',
-        meta: {
-          title: '阈值设置',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-      {
-        path: 'dictionary',
-        component: () => import('@/views/system/dictionary/list'),
-        name: 'dictionaryList',
-        meta: {
-          title: '数据字典',
-          roles: [
-            'admin',
-          ]
-        }
-      }
+      // {
+      //   path: 'jurisdiction',
+      //   component: () => import('@/views/system/jurisdiction/list'),
+      //   name: 'jurisdictionList',
+      //   meta: { title: '辖区管理', roles: ['admin', 'menu:list'] }
+      // },
+      // {
+      //   path: 'user',
+      //   component: () => import('@/views/system/user/list'),
+      //   name: 'userList',
+      //   meta: {
+      //     title: '用户管理',
+      //     roles: [
+      //       'admin',
+      //     ]
+      //   }
+      // },
+      // {
+      //   path: 'threshold',
+      //   component: () => import('@/views/system/threshold/list'),
+      //   name: 'thresholdList',
+      //   meta: {
+      //     title: '阈值设置',
+      //     roles: [
+      //       'admin',
+      //     ]
+      //   }
+      // },
+      // {
+      //   path: 'dictionary',
+      //   component: () => import('@/views/system/dictionary/list'),
+      //   name: 'dictionaryList',
+      //   meta: {
+      //     title: '数据字典',
+      //     roles: [
+      //       'admin',
+      //     ]
+      //   }
+      // }
     ]
   }
 ]
