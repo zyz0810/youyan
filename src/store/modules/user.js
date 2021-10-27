@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login,loginAuth, logout, getInfo } from '@/api/user'
 import { findMenuByRole } from '@/api/menu'
 import { getToken, setToken, removeToken,getId,setId,removeId,getName,setName,removeName,getMobile,setMobile,removeMobile,setCity,removeCity,setCitySelected,removeCitySelected} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
@@ -71,7 +71,30 @@ const actions = {
       })
     })
   },
+  // 自动登录
+  loginAuth({ commit }) {
+    return new Promise((resolve, reject) => {
+      loginAuth().then(response => {
+        const { data } = response;
+        // token_type  access_token
+        commit('SET_TOKEN', data.access_token);
+        // commit('SET_ID', response.data.id);
+        console.log(response.data.city_list);
+        commit('SET_CITY', response.data.city_list);
+        commit('SET_CITYSELECTED', response.data.city_list[0].id);
 
+        setCity(response.data.city_list);
+        setCitySelected(response.data.city_list[0].id);
+        // setId(response.data.id);
+        // setName(response.data.name);
+        setToken(data.access_token);
+        sessionStorage.setItem("Admin-Token", JSON.stringify(data.access_token));
+        resolve(true)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

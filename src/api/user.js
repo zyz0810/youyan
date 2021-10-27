@@ -9,7 +9,14 @@ export function login(data) {
     data: Qs.stringify(data)
   })
 }
-
+export function loginAuth(data) {
+  return request({
+    url: 'api/login/login',
+    method: 'post',
+    // data
+    data: Qs.stringify(data)
+  })
+}
 /*移除token
  * access_token
  */

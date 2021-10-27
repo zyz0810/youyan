@@ -19,6 +19,7 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   // const hasToken = getToken()
+
   const hasToken = sessionStorage.getItem('Admin-Token')
   // const hasToken = 'token=Admin-Token'
   if (hasToken) {
@@ -57,14 +58,29 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
+    console.log('档期')
+    console.log(from)
+    console.log('档期2222')
+    console.log(to)
     if (whiteList.indexOf(to.path) !== -1) {
+      console.log('没可调节4545')
       // in the free login whitelist, go directly
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       // next(`/login?redirect=${to.path}`)
-      next(`/login?redirect=/testing/monitor`)
+      console.log('没可调节')
+      if(to.query.type == 'auth'){
+        console.log('登录自动自动')
+        store.dispatch('user/loginAuth',)
+          .then(() => {
+            next(`/testing/monitor`)
+          })
+          .catch((e) => {})
+      }else{
+        next(`/login?redirect=/testing/monitor`)
+      }
+
       NProgress.done()
     }
   }
