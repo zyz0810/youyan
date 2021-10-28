@@ -61,8 +61,7 @@
 
 
           <!--<div class="m_r30 ml_20" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>-->
-          <a class="f16 bold ml_20" href="">回首页<i class="el-icon-s-promotion" style="margin-left: 5px"></i></a>
-<!--          <div class="f16 bold ml_20" @click="logout">退 出<i class="el-icon-switch-button bold" style="margin-left: 5px"></i></div>-->
+          <div class="f16 bold ml_20" @click="logout">退 出<i class="el-icon-switch-button bold" style="margin-left: 5px"></i></div>
         </div>
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
           <ul class="street">
