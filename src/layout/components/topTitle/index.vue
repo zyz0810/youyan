@@ -248,6 +248,7 @@ export default {
       await this.$store.dispatch('user/logout')
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
       this.$router.push(`/login?redirect=/dashboard`)
+      location.href = 'http://erp-web.susongzhijia.com/jsc/index.html#/login?redirect=/dashboard';
     },
     // addDate() {
     //   let nowDate = new Date();
