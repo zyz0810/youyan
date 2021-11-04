@@ -37,7 +37,11 @@
     </div>
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
               element-loading-text="拼命加载中" fit ref="tableList">
-      <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
+      <el-table-column label="序号" width="80" align="center">
+        <template slot-scope="scope">
+          {{(listQuery.page - 1) * listQuery.pageSize + scope.$index + 1}}
+        </template>
+      </el-table-column>
       <el-table-column label="餐企名称" align="center" prop="company"></el-table-column>
       <el-table-column label="餐企简称" align="center" prop="simple_name"></el-table-column>
       <el-table-column label="所属辖区" align="center" prop="city_name"></el-table-column>

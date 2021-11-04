@@ -25,7 +25,11 @@
       </el-form>
     </div>
     <el-table v-loading="listLoading" :data="list" element-loading-text="拼命加载中" fit ref="tableList" :height="tableHeight" class="titleBg_table">
-      <el-table-column label="序号" type="index" width="80" align="center" ></el-table-column>
+      <el-table-column label="序号" width="80" align="center">
+        <template slot-scope="scope">
+          {{(listQuery.page - 1) * listQuery.pageSize + scope.$index + 1}}
+        </template>
+      </el-table-column>
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
       <el-table-column label="监测时间" align="center" prop="addtime"></el-table-column>
       <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
