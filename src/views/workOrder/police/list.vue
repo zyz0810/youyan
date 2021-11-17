@@ -53,12 +53,12 @@
          {{(Number(scope.row.concentration)/Number(scope.row.times)).toFixed(2)}}
         </template>
       </el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc">
-        <!--tvoc=tvoc/times-->
-        <template slot-scope="scope">
-          {{(Number(scope.row.tvoc)/Number(scope.row.times)).toFixed(2)}}
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc">-->
+<!--        &lt;!&ndash;tvoc=tvoc/times&ndash;&gt;-->
+<!--        <template slot-scope="scope">-->
+<!--          {{(Number(scope.row.tvoc)/Number(scope.row.times)).toFixed(2)}}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="超标时长（分）" align="center" prop="times">
         <!--超标时长= （times-1）*5-->
         <template slot-scope="scope">

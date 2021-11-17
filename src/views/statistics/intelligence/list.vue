@@ -146,7 +146,7 @@
               name: '访问来源',
               type: 'pie',
               radius: ['45%', '65%'],
-              avoidLabelOverlap: false,
+              avoidLabelOverlap: true,
               // label: {
               //   show: false,
               //   position: 'center',

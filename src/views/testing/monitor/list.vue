@@ -184,7 +184,7 @@
           <el-table-column label="风速m/s）" align="center" prop="wind_speed"></el-table-column>
           <el-table-column label="噪声Hz" align="center" prop="noise"></el-table-column>
           <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
-          <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
+<!--          <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>-->
           <el-table-column label="风机状态" align="center" prop="num">
             <template slot-scope="scope">
 <!--              <i :class="['iconfont','icon-fengji',scope.row.status == 1 ? 'red01':'green01']"></i>-->
@@ -313,7 +313,8 @@
               fontSize:15,
               color: '#5EF4F9'
             },
-            data:['TVOC','油烟浓度']
+            // data:['TVOC','油烟浓度']
+            data:['油烟浓度']
           },
           xAxis: {
             splitArea : {show :  false }, //保留网格区域
@@ -371,38 +372,40 @@
             },
             type: 'value'
           },
-          series: [{
-            name:'TVOC',
-            symbol:'circle',
-            symbolSize:8,
-            color:'#CC3275',
-            itemStyle : {
-              normal : {
-                lineStyle:{
-                  color:'#CC3275',
-                  borderColor:'#CC3275'
-                }
-              }
-            },
-            areaStyle:{
-              normal:{
-                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(204,50,117,0.5)'
-                }, {
-                  offset: .2,
-                  color: 'rgba(204,50,117,0.5)'
-                },{
-                  offset: 1,
-                  color: 'rgba(204,50,117,0)'
-                }])
-
-              }
-            },//区域颜色渐变
-            data: [],
-            type: 'line'
-          },{
+          series: [
+          //   {
+          //   name:'TVOC',
+          //   symbol:'circle',
+          //   symbolSize:8,
+          //   color:'#CC3275',
+          //   itemStyle : {
+          //     normal : {
+          //       lineStyle:{
+          //         color:'#CC3275',
+          //         borderColor:'#CC3275'
+          //       }
+          //     }
+          //   },
+          //   areaStyle:{
+          //     normal:{
+          //       //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+          //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          //         offset: 0,
+          //         color: 'rgba(204,50,117,0.5)'
+          //       }, {
+          //         offset: .2,
+          //         color: 'rgba(204,50,117,0.5)'
+          //       },{
+          //         offset: 1,
+          //         color: 'rgba(204,50,117,0)'
+          //       }])
+          //
+          //     }
+          //   },//区域颜色渐变
+          //   data: [],
+          //   type: 'line'
+          // },
+            {
             name:'油烟浓度',
             symbol:'circle',
             symbolSize:8,
@@ -484,8 +487,9 @@
           this.lineData.xAxis.data = a;
           console.log( a)
           console.log(res.data.map(item=>{ return item.y_tvoc_num}))
-          this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
-          this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
+          // this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
+          // this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
+          this.lineData.series[0].data = res.data.map(item=>{return item.y_fume_num})
         });
       },
       formatStatus(row, column, cellValue, index) {
