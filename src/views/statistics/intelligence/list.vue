@@ -135,7 +135,7 @@
           },
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{b}: {c} ({d}%)'
           },
           legend: {
             show:false
@@ -145,7 +145,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['45%', '65%'],
+              radius: ['45%', '63%'],
               avoidLabelOverlap: true,
               // label: {
               //   show: false,
@@ -155,7 +155,7 @@
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: '30',
+                  fontSize: '16',
                   fontWeight: 'bold'
                 }
               },
@@ -178,17 +178,18 @@
                 }
               },
               label :{
-                formatter: [
-                  '{c}',
-                  '{b}',
-                ].join('\n'),
+                // formatter: [
+                //   '{c}',
+                //   '{b}',
+                // ].join('\n'),
+                formatter: '{b}：{c}',
                 verticalAlign :'bottom',
                 position:'outside',
                 textShadowOffsetY :10,
                 align :'right',
                 color:'white',
-                height :60,
-                lineHeight:30,
+                // height :60,
+                // lineHeight:30,
                 fontSize:'16',
                 rich: {
                   a: {

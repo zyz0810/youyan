@@ -28,7 +28,7 @@
        <div class="flex baseColor">
          <el-form style="flex: 3">
            <el-form-item label="餐企名称：">{{companyName}}</el-form-item>
-           <el-form-item label="检测状态dd："><span :class="aaclass">{{companyStatus}}</span></el-form-item>
+           <el-form-item label="检测状态："><span :class="aaclass">{{companyStatus}}</span></el-form-item>
            <el-form-item label="监测时间：">{{realTimeInfo?realTimeInfo.addtime:''}}</el-form-item>
          </el-form>
          <div style="flex: 5">
@@ -84,8 +84,8 @@
      </div>
       <div v-if="activeId == 1">
         <div class="f16 txtColor text-center">
-          <span class="m_r30">餐企名称：新石器烤肉</span>
-          <span>设备名称：新石器烤肉</span>
+          <span class="m_r30">餐企名称：{{companyInfo.company}}</span>
+          <span>设备名称：{{facilityInfo.name}}</span>
         </div>
         <div class="bg_shadow mt_20 p20 line_chart">
           <p class="f14 txtColor text-center mt_10 mb_10">最近24小时污染物排放情况</p>
