@@ -84,6 +84,12 @@
               <el-option v-for="item in departList" :label="item.name" :value="item.id" :key="item.id"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="中队负责人" prop="zd_people">
+            <el-input v-model.trim="temp.zd_people" placeholder="请输入中队负责人" autocomplete="off" clearable :disabled="isCanView"/>
+          </el-form-item>
+          <el-form-item label="负责人电话" prop="zd_mobile">
+            <el-input v-model.trim="temp.zd_mobile" placeholder="请输入负责人电话" autocomplete="off" clearable :disabled="isCanView"/>
+          </el-form-item>
           <!--      <el-form-item label="所属分组" prop="street">-->
           <!--        <el-select v-model="temp.street">-->
           <!--          <el-option label="启用" value="1"></el-option>-->
@@ -91,7 +97,7 @@
           <!--        </el-select>-->
           <!--      </el-form-item>-->
         </el-form>
-        <el-form ref="secondForm" :rules="rules" :model="temp" label-width="120px">
+        <el-form ref="secondForm" :rules="rules" :model="temp" label-width="120px" class="m_r30">
           <el-form-item label="详细地址" prop="address">
             <el-input v-model.trim="temp.address" placeholder="请输入详细地址" autocomplete="off" @input="getAddress" clearable :disabled="isCanView"/>
             <div id='mapDiv' class="mapDiv mt_10" style="width: 100%;height: 200px"></div>
@@ -225,6 +231,8 @@
           remark:'',
           log:'120.21194',
           lat:'30.20835',
+          zd_mobile:'',
+          zd_people:'',
         },
         images:{},
         license:{},
@@ -664,8 +672,9 @@
       },
       getView(){
         companyDetail({id:this.viewData.id, city_id:getCitySelected(),}).then(res=>{
+          // zd_mobile、zd_people
           const {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, address, remark,log,lat,credit_code,city_id} = res.data;
+            kitchen_range_num, outlet_num, scale_type, address, remark,log,lat,credit_code,city_id,zd_mobile,zd_people} = res.data;
           let facility_id = [];
           if(res.data.facility_id){
             facility_id = res.data.facility_id.map(item=>item.facility_id);
@@ -675,7 +684,7 @@
           this.images = {url:res.data.images_url,images:res.data.images};
           this.license = {url:res.data.license_url,images:res.data.license};
           this.temp = {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id};
+            kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id,zd_mobile,zd_people};
           this.onLoad();
         });
       },
