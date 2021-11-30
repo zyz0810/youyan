@@ -73,7 +73,7 @@
            </li>
          </ul>
          <div style="flex: 5">
-           <div class="table_title text-center">污染物排放情况（mg/m3）</div>
+           <div class="table_title text-center">设备情况</div>
            <el-table v-loading="polluteSListLoading" :data="polluteSList" element-loading-text="拼命加载中" fit border ref="tableList">
              <el-table-column label="设备类型" align="center" prop="name"></el-table-column>
              <el-table-column label="状态" align="center" prop="status"></el-table-column>
