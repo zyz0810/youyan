@@ -98,7 +98,8 @@
           end_time: '',
           company_id:'',
           page: 1,
-          pageSize: 10
+          pageSize: 10,
+          type:'allList'
         },
         tableHeight:'100'
       }
@@ -169,13 +170,17 @@
         }
       },
       getList() {
-        historyData(this.listQuery).then(res => {
+        historyData({
+          start_time:this.listQuery.start_time,end_time:this.listQuery.end_time,company_id:this.listQuery.company_id,page:this.listQuery.page,pageSize:this.listQuery.pageSize,
+        }).then(res => {
           this.list = res.data.data
           this.total = res.data.total
         });
       },
       getListTwo(){
-        timesOfWarn(this.listQuery).then(res => {
+        timesOfWarn({
+          start_time:this.listQuery.start_time,end_time:this.listQuery.end_time,company_id:this.listQuery.company_id,type:this.listQuery.type,
+        }).then(res => {
           this.list = res.data
           // this.total = res.data.total
         });

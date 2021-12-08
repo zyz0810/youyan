@@ -119,9 +119,11 @@
         </tr>
         <tr>
           <td class="baseColor">餐企类型</td>
-          <td class="txtColor">{{filterType(companyType,companyInfo.company_type)}}</td>
+<!--          <td class="txtColor">{{ filterType(companyType,companyInfo.company_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.company_type_name}}</td>
           <td class="baseColor">菜系</td>
-          <td class="txtColor">{{filterType(cookList,companyInfo.cook_type)}}</td>
+<!--          <td class="txtColor">{{filterType(cookList,companyInfo.cook_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.cook_type_name}}</td>
           <td class="baseColor">营业面积</td>
           <td class="txtColor">{{companyInfo.area}}</td>
         </tr>
@@ -131,13 +133,23 @@
           <td class="baseColor">排口数量</td>
           <td class="txtColor">{{companyInfo.outlet_num}}</td>
           <td class="baseColor">餐企规模</td>
-          <td class="txtColor">{{filterType(scaleList,companyInfo.scale_type)}}</td>
+<!--          <td class="txtColor">{{filterType(scaleList,companyInfo.scale_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.scale_type_name}}</td>
         </tr>
         <tr>
           <td class="baseColor">所属辖区</td>
-          <td class="txtColor">{{filterType(cityList,companyInfo.city_id)}}</td>
+<!--          <td class="txtColor">{{filterType(cityList,companyInfo.city_id)}}</td>-->
+          <td class="txtColor">{{companyInfo.city_id_name}}</td>
           <td class="baseColor">所属分组</td>
           <td class="txtColor" colspan="3"></td>
+        </tr>
+        <tr>
+          <td class="baseColor">所属来源</td>
+          <td class="txtColor">{{companyInfo.depart_id | filtersCompanySource}}</td>
+          <td class="baseColor">中队负责人</td>
+          <td class="txtColor">{{companyInfo.zd_people}}</td>
+          <td class="baseColor">负责人电话</td>
+          <td class="txtColor">{{companyInfo.zd_mobile}}</td>
         </tr>
         <tr>
           <td class="baseColor">详细地址</td>
@@ -450,6 +462,16 @@
         realTimeInfo:{
           // addtime:''
         },
+        departList:[{
+          id:1,
+          name:'浦沿中队'
+        },{
+          id:2,
+          name:'长河中队'
+        },{
+          id:3,
+          name:'西兴中队'
+        }],
       }
     },
     filters: {
@@ -459,6 +481,10 @@
       },
       filtersCompanyStatus: function (value) {
         let StatusArr = {1: '正常', 2: '禁用'}
+        return StatusArr[value]
+      },
+      filtersCompanySource: function (value) {
+        let StatusArr = {1: '浦沿中队', 2: '长河中队', 3: '西兴中队'}
         return StatusArr[value]
       },
     },
@@ -476,6 +502,7 @@
       this.getCompanyType();
       this.getCookType();
       this.getScaleType();
+
     },
     methods: {
       // homeTrend
@@ -532,15 +559,25 @@
 
         });
       },
+
       filterType(list,id){
+        console.log('获取到结果')
         console.log(list)
         console.log(id)
-        list.filter(item=> {
-            if(item.id==id){
-              console.log(item.name)
-              return item.name
-            }
-          })
+        // list.filter(item=> {
+        //     if(item.id==id){
+        //       console.log('结果结果：'+item.name)
+        //       return item.name
+        //     }
+        //   })
+        list.forEach(function(item, index) {
+          //item 就是当日按循环到的对象
+          //index是循环的索引，从0开始
+              if(item.id==id){
+                console.log('结果结果11：'+item.name)
+                return item.name
+              }
+        })
       },
       getScaleType(){
         dicList({city_id:getCitySelected(), parent_id: 2,
@@ -747,9 +784,9 @@
       getCompanyView(companyId){
         companyDetail({id:companyId}).then(res=>{
           const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark} = res.data;
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name} = res.data;
           this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
-            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark};
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name};
         });
       },
       handleTab(val){

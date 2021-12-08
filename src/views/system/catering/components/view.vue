@@ -159,7 +159,6 @@
   import {companyDetail,addCompany,editCompany} from '@/api/catering'
   import draggable from 'vuedraggable'
   import Pagination from "@/components/Pagination/index"; // waves directive
-  import map from '@/components/Map/map' // 引入刚才的map.js 注意路径
   import SingleImage from "@/components/Upload/SingleImage.vue";
   import {facilityList} from "@/api/monitor";
   import {dicList} from "@/api/dictionary";
@@ -169,7 +168,6 @@
   let markerTool;
   export default {
     name: 'cateringView',
-    mixins: [map],
     components: {
       draggable,
       Pagination,
@@ -499,6 +497,7 @@
         localsearch.search(val);
       },
       open(){
+
         this.getCity();
         this.getCompanyType();
         this.getCookType();
@@ -511,16 +510,16 @@
           this.$nextTick(function() {
             // this.$refs.firstForm.clearValidate();
             // this.$refs.secondForm.clearValidate();
-            console.log('22222222')
-            this.onLoad();
+            if(this.map == ''){
+              this.onLoad();
+            }
           })
         }
       },
       close(){
-        console.log(this.temp)
         this.showViewDialog = false;
         this.activeName='first';
-        this.map= ''; // 对象
+        // this.map= ''; // 对象
         this.zoom= 14; // 地图的初始化级别，及放大比例
         this.centerLatitude='30.20835';//中心纬度
         this.centerLongitude='120.21194';//中心经度
@@ -550,6 +549,7 @@
           outlet_num:'',
           scale_type:'',
           city_id:'',
+          depart_id:'',
           // street:'',
           address:'',
           images:'',
@@ -557,15 +557,15 @@
           remark:'',
           log:'120.21194',
           lat:'30.20835',
+          zd_mobile:'',
+          zd_people:'',
         };
         // debugger
         // this.$refs.firstForm.clearValidate();
         // debugger
         // this.$refs.secondForm.clearValidate();
-        this.$nextTick(function() {
-          this.$refs.firstForm.clearValidate();
-          this.$refs.secondForm.clearValidate();
-        })
+        this.$refs.firstForm.clearValidate();
+        this.$refs.secondForm.clearValidate();
         // debugger
         console.log(this.temp)
       },
@@ -604,11 +604,18 @@
         console.log(tab, event);
       },
       onLoad() {
-        let T = window.T
-        this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // // 普通标注
+        let T = window.T;
+        this.map = new T.Map('mapDiv');
+        this.centerMap();
+      },
+      centerMap(){
+        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom); // 设置显示地图的中心点和级别
+        console.log('地图所属');
+        console.log(this.map);
+        console.log(document.getElementsByClassName("tdt-control-copyright tdt-control"))
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+        console.log('少时诵诗书')
+        console.log(document.getElementsByClassName("tdt-control-copyright tdt-control"))
         //创建标注工具对象
         markerTool = new T.MarkTool(this.map, {follow: true});
         // this.map.addEventListener("click",MapClick);
@@ -626,8 +633,6 @@
         // centerLatitude:'30.20835',//中心纬度
         // centerLongitude:'120.21194',//中心经度
         this.map.clearOverLays();   //清理地图上的覆盖物
-        console.log('经纬度')
-        console.log(this.temp.log,this.temp.lat)
         let marker = new T.Marker(new T.LngLat(this.temp.log,this.temp.lat)); //e.lnglat，标注点的地理坐标
         this.map.addOverLay(marker); //addOverLay方法，将覆盖物添加到地图中，一个覆盖物实例只能向地图中添加一次。
         marker.addEventListener("dragend", overlay_style); //添加事件监听函数。
@@ -685,7 +690,13 @@
           this.license = {url:res.data.license_url,images:res.data.license};
           this.temp = {id,company, simple_name, organization_code, status,depart_id, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, address, images, remark,log,lat,credit_code,city_id,license,facility_id,zd_mobile,zd_people};
-          this.onLoad();
+          this.centerLongitude = log;
+          this.centerLatitude = lat;
+          if(this.map == ''){
+            this.onLoad();
+          }else{
+            this.centerMap();
+          }
         });
       },
       createData() {
