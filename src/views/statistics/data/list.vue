@@ -70,7 +70,7 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                   @pagination="getList" class="text-right"/>
     </div>
-
+    <a v-show="false" :href="downLoadUrl" id="fileDownload"></a>
   </div>
 </template>
 
@@ -101,7 +101,9 @@
           pageSize: 10,
           type:'allList'
         },
-        tableHeight:'100'
+        tableHeight:'100',
+        downLoadUrl:this.global.domainName + 'api/Export/timesOfWarn',
+        // downLoadUrl:this.global.domainName + 'api/Export/historyData',
       }
     },
 
@@ -151,7 +153,16 @@
       this.getListTwo();
     },
     methods: {
-      handleExport(){},
+      handleExport(){
+        // if(this.activeIndex == 2){
+        //   this.downLoadUrl=this.global.domainName + 'api/Export/historyData?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        // }else{
+        //   this.downLoadUrl=this.global.domainName + 'api/Export/timesOfWarn?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        // }
+
+        console.log(this.downLoadUrl)
+        document.getElementById("fileDownload").click();
+      },
       handleClick(val){
         this.activeIndex = val;
         if(val == 2){

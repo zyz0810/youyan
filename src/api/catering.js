@@ -51,3 +51,14 @@ export function editCompany(data) {
     data: Qs.stringify(data)
   })
 }
+
+/* 导出餐饮企业
+ */
+export function companyListExport(query) {
+  return request({
+    url: `/api/Export/companyList`,
+    method: "get",
+    params: query,
+    responseType: "blob"
+  });
+}

@@ -44,7 +44,7 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
                 @pagination="getList" class="text-right"/>
     <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertList="getList"></paraView>
-
+    <a v-show="false" :href="downLoadUrl" id="fileDownload"></a>
   </div>
 </template>
 
@@ -81,8 +81,8 @@
           pageSize: 10
         },
         dialogFormVisible: false,
-
-        tableHeight:'100'
+        tableHeight:'100',
+        downLoadUrl:this.global.domainName + 'api/Export/facilityList',
       }
     },
     filters: {
@@ -149,7 +149,11 @@
         }
       },
 
-      handleExport(){},
+      handleExport(){
+        this.downLoadUrl=this.global.domainName + 'api/Export/facilityList?facility_no='+this.listQuery.facility_no+'&name='+this.listQuery.name+'city_id='+this.listQuery.city_id;
+        console.log(this.downLoadUrl)
+        document.getElementById("fileDownload").click();
+      },
 
     }
   }

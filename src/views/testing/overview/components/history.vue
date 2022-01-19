@@ -33,7 +33,7 @@
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
       <el-table-column label="监测时间" align="center" prop="addtime"></el-table-column>
       <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
+<!--      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>-->
       <el-table-column label="风机状态" align="center" prop="num">
         <template slot-scope="scope">
           <!--          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>-->

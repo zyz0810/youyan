@@ -14,7 +14,7 @@
       <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
       <el-table-column label="监测时间" align="center" prop="addtime"></el-table-column>
       <el-table-column label="油烟浓度（mg/m3）" align="center" prop="concentration"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>
+<!--      <el-table-column label="TVOC（mg/m3）" align="center" prop="tvoc"></el-table-column>-->
       <el-table-column label="风机状态" align="center">
         <template slot-scope="scope">
 <!--          <i :class="['iconfont','icon-fengji', { red01: scope.row.fan == 2, green01: scope.row.status==1 }]"></i>-->

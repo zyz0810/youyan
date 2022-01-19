@@ -32,7 +32,7 @@
       </el-form>
       <div>
         <el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleView('create',{})">新增信息</el-button>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
+        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleExport">导出信息</el-button>
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" :height="tableHeight"
@@ -71,12 +71,12 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList" class="text-right"/>
     <companyDetail :showDialog.sync="showViewDialog" :viewData="viewData" @insertList="getList"></companyDetail>
-
+    <a v-show="false" :href="downLoadUrl" id="fileDownload"></a>
   </div>
 </template>
 
 <script>
-  import {companyList} from '@/api/catering'
+  import {companyList,companyListExport} from '@/api/catering'
   import {cityList} from '@/api/jurisdiction'
   import {dicList} from "@/api/dictionary";
   import draggable from 'vuedraggable'
@@ -136,7 +136,8 @@
         tableHeight:'100',
         cityList:[],
         scaleList:[],
-        cookList:[]
+        cookList:[],
+        downLoadUrl:this.global.domainName + 'api/Export/companyList',
       }
     },
     filters: {
@@ -269,267 +270,291 @@
           option:{}
         }
       },
-      handleCreate() {
-        this.resetTemp();
-        this.parameterValueList = [{name: ''}];
-        this.dialogStatus = 'create';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            if(this.temp.operatingMode != 2){
-              let parameterValueList = this.parameterValueList.filter(item=>item.name!='')
-              console.log(parameterValueList)
-              if(parameterValueList.length<1){
-                this.$confirm('请输入参数值', "提示", {
-                  type: "warning",
-                  showCancelButton: false
-                })
-                  .then(() => {
+      handleExport(){
+        document.getElementById("fileDownload").click();
 
-                  })
-                  .catch(() => {});
-              }else{
-                this.paraLoading = true
-                this.temp.parameterValueList = parameterValueList
-                paraSave(this.temp).then((res) => {
-                  setTimeout(()=>{
-                    this.paraLoading = false
-                  },1000)
-                  if(res.resp_code == 0){
-                    this.list.unshift(res.data);
-                    this.dialogFormVisible = false;
-                    this.getList();
-                    this.$message({
-                      message: '增加成功',
-                      type: 'success'
-                    });
-                  }
-                }).catch(() => {
-                  this.paraLoading = false;
-                });
-              }
-            }else{
-              this.paraLoading = true
-              paraSave(this.temp).then((res) => {
-                setTimeout(()=>{
-                  this.paraLoading = false
-                },1000)
-                if(res.resp_code == 0){
-                  this.list.unshift(res.data);
-                  this.dialogFormVisible = false;
-                  this.getList();
-                  this.$message({
-                    message: '增加成功',
-                    type: 'success'
-                  });
-                }
-              }).catch(() => {
-                this.paraLoading = false;
-              });
-            }
-          }
-        })
-      },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, this.rowInfo[0]); // copy obj
+        // companyListExport(this.listQuery).then(res => {
+        //   // const blob = new Blob([res]);
+        //   // let myDate = new Date();
+        //   // let timename = myDate
+        //   //   .toLocaleDateString()
+        //   //   .split("/")
+        //   //   .join("-");
+        //   // const str = "结算单明细";
+        //   // const fileName = str + timename + ".xls";
+        //   // const linkNode = document.createElement("a");
+        //   // linkNode.download = fileName; //a标签的download属性规定下载文件的名称
+        //   // linkNode.style.display = "none";
+        //   // linkNode.href = URL.createObjectURL(blob); //生成一个Blob URL
+        //   // document.body.appendChild(linkNode);
+        //   // linkNode.click(); //模拟在按钮上的一次鼠标单击
+        //   // URL.revokeObjectURL(linkNode.href); // 释放URL 对象
+        //   // document.body.removeChild(linkNode);
+        // });
 
-        if (this.temp.parameterValueList) {
-          this.parameterValueList = this.temp.parameterValueList
-        } else {
-          this.parameterValueList = [{name: ''}]
-        }
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            const tempData = Object.assign({}, this.temp);
-            this.$delete(tempData, 'updateTime')
-            this.$delete(tempData, 'updateUser')
-            this.$delete(tempData, 'createTime')
-            this.$delete(tempData, 'createUser')
-            this.$delete(tempData, 'remarks')
-            this.$delete(tempData, 'status')
-            if(tempData.operatingMode != 2){
-              tempData.parameterValueList = this.parameterValueList
-              let arr = tempData.parameterValueList.filter(item=>item.name!='')
-              if(arr.length<1){
-                this.$confirm('请输入参数值', "提示", {
-                  type: "warning",
-                  showCancelButton: false
-                })
-                  .then(() => {
-
-                  })
-                  .catch(() => {});
-              }else{
-                arr = arr.map(item=>{
-                  let json={}
-                  json.id=item.id;
-                  json.name=item.name;
-                  json.parameterId=item.parameterId;
-                  return json
-                })
-                tempData.parameterValueList = arr
-                this.paraLoading = true
-                paraUpdate(tempData).then((res) => {
-                  // const index = this.list.findIndex(v => v.id === this.temp.id);
-                  // this.list.splice(index, 1, res.data);
-                  setTimeout(()=>{
-                    this.paraLoading = false
-                  },1000)
-                  if (res.resp_code == 0) {
-                    this.getList();
-                    this.dialogFormVisible = false;
-                    this.$message({
-                      message: '修改成功',
-                      type: 'success'
-                    });
-                  }
-                }).catch(() => {
-                  this.paraLoading = false;
-                });
-              }
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-              this.paraLoading = true
-              paraUpdate(tempData).then((res) => {
-                setTimeout(()=>{
-                  this.paraLoading = false
-                },1000)
-                  // const index = this.list.findIndex(v => v.id === this.temp.id);
-                  // this.list.splice(index, 1, res.data);
-                if (res.resp_code == 0) {
-                  this.getList();
-                  this.dialogFormVisible = false;
-                  this.$message({
-                    message: '修改成功',
-                    type: 'success'
-                  });
-                }
-              }).catch(() => {
-                this.paraLoading = false;
-              });
-            }
-          }
-        })
-      },
-      handleState(val) {
-        console.log(this.rowInfo[0].id)
-        if (val == 0) {
-          this.$confirm('确定禁用此参数吗?', '提示', {
-            type: 'warning'
-          }).then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let tempData = Object.assign({}, this.rowInfo[0]);
-            tempData.status = 0;
-            let para = {id:this.rowInfo[0].id,status:0}
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            this.$delete(tempData,'createUser')
-            this.$delete(tempData,'updateUser')
-            if(tempData.operatingMode != 2){
-              tempData.parameterValueList = tempData.parameterValueList.map(item=>{
-                let obj = {}
-                obj.id = item.id
-                obj.name = item.name
-                return obj
-              })
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-            }
-            paraUpdate(tempData).then((res) => {
-              this.listLoading = false;
-              if (res.resp_code == 0) {
-                // this.list.splice(index, 1);
-                //NProgress.done();
-                this.getList();
-                this.$message({
-                  message: '禁用成功',
-                  type: 'success'
-                });
-              }
-            });
-          }).catch(() => {
-
-          });
-        } else {
-          this.$confirm('确定启用此参数吗?', '提示', {
-            type: 'warning'
-          }).then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let tempData = Object.assign({}, this.rowInfo[0]);
-            tempData.status = 1;
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            this.$delete(tempData,'createUser')
-            this.$delete(tempData,'updateUser')
-            if(tempData.operatingMode != 2){
-              if(tempData.parameterValueList){
-                tempData.parameterValueList = tempData.parameterValueList.map(item=>{
-                  let obj = {}
-                  obj.id = item.id
-                  obj.name = item.name
-                  return obj
-                })
-              }
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-            }
-            // let para = {id:this.rowInfo[0].id,status:1}
-            paraUpdate(tempData).then((res) => {
-              this.listLoading = false;
-              if (res.resp_code == 0) {
-                // this.list.splice(index, 1);
-                //NProgress.done();
-                this.getList();
-                this.$message({
-                  message: '启用成功',
-                  type: 'success'
-                });
-              }
-            });
-          }).catch(() => {
-
-          });
-        }
 
       },
-      handleDelete(row, index) {
-        console.log(this.rowInfo[0].id)
-        this.$confirm('确定删除此记录吗?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.listLoading = true;
-          //NProgress.start();
-          let para = {id: this.rowInfo[0].id};
-          paraDelete(para).then((res) => {
-            this.listLoading = false;
-            if (res.resp_code == 0) {
-              // this.list.splice(index, 1);
-              //NProgress.done();
-              this.getList();
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            }
-          });
-        }).catch(() => {
-
-        });
-      },
+      // handleCreate() {
+      //   this.resetTemp();
+      //   this.parameterValueList = [{name: ''}];
+      //   this.dialogStatus = 'create';
+      //   this.dialogFormVisible = true;
+      //   this.$nextTick(() => {
+      //     this.$refs['dataForm'].clearValidate()
+      //   })
+      // },
+      // createData() {
+      //   this.$refs['dataForm'].validate((valid) => {
+      //     if (valid) {
+      //       if(this.temp.operatingMode != 2){
+      //         let parameterValueList = this.parameterValueList.filter(item=>item.name!='')
+      //         console.log(parameterValueList)
+      //         if(parameterValueList.length<1){
+      //           this.$confirm('请输入参数值', "提示", {
+      //             type: "warning",
+      //             showCancelButton: false
+      //           })
+      //             .then(() => {
+      //
+      //             })
+      //             .catch(() => {});
+      //         }else{
+      //           this.paraLoading = true
+      //           this.temp.parameterValueList = parameterValueList
+      //           paraSave(this.temp).then((res) => {
+      //             setTimeout(()=>{
+      //               this.paraLoading = false
+      //             },1000)
+      //             if(res.resp_code == 0){
+      //               this.list.unshift(res.data);
+      //               this.dialogFormVisible = false;
+      //               this.getList();
+      //               this.$message({
+      //                 message: '增加成功',
+      //                 type: 'success'
+      //               });
+      //             }
+      //           }).catch(() => {
+      //             this.paraLoading = false;
+      //           });
+      //         }
+      //       }else{
+      //         this.paraLoading = true
+      //         paraSave(this.temp).then((res) => {
+      //           setTimeout(()=>{
+      //             this.paraLoading = false
+      //           },1000)
+      //           if(res.resp_code == 0){
+      //             this.list.unshift(res.data);
+      //             this.dialogFormVisible = false;
+      //             this.getList();
+      //             this.$message({
+      //               message: '增加成功',
+      //               type: 'success'
+      //             });
+      //           }
+      //         }).catch(() => {
+      //           this.paraLoading = false;
+      //         });
+      //       }
+      //     }
+      //   })
+      // },
+      // handleUpdate(row) {
+      //   this.temp = Object.assign({}, this.rowInfo[0]); // copy obj
+      //
+      //   if (this.temp.parameterValueList) {
+      //     this.parameterValueList = this.temp.parameterValueList
+      //   } else {
+      //     this.parameterValueList = [{name: ''}]
+      //   }
+      //   this.dialogStatus = 'update';
+      //   this.dialogFormVisible = true;
+      //   this.$nextTick(() => {
+      //     this.$refs['dataForm'].clearValidate()
+      //   })
+      // },
+      // updateData() {
+      //   this.$refs['dataForm'].validate((valid) => {
+      //     if (valid) {
+      //       const tempData = Object.assign({}, this.temp);
+      //       this.$delete(tempData, 'updateTime')
+      //       this.$delete(tempData, 'updateUser')
+      //       this.$delete(tempData, 'createTime')
+      //       this.$delete(tempData, 'createUser')
+      //       this.$delete(tempData, 'remarks')
+      //       this.$delete(tempData, 'status')
+      //       if(tempData.operatingMode != 2){
+      //         tempData.parameterValueList = this.parameterValueList
+      //         let arr = tempData.parameterValueList.filter(item=>item.name!='')
+      //         if(arr.length<1){
+      //           this.$confirm('请输入参数值', "提示", {
+      //             type: "warning",
+      //             showCancelButton: false
+      //           })
+      //             .then(() => {
+      //
+      //             })
+      //             .catch(() => {});
+      //         }else{
+      //           arr = arr.map(item=>{
+      //             let json={}
+      //             json.id=item.id;
+      //             json.name=item.name;
+      //             json.parameterId=item.parameterId;
+      //             return json
+      //           })
+      //           tempData.parameterValueList = arr
+      //           this.paraLoading = true
+      //           paraUpdate(tempData).then((res) => {
+      //             // const index = this.list.findIndex(v => v.id === this.temp.id);
+      //             // this.list.splice(index, 1, res.data);
+      //             setTimeout(()=>{
+      //               this.paraLoading = false
+      //             },1000)
+      //             if (res.resp_code == 0) {
+      //               this.getList();
+      //               this.dialogFormVisible = false;
+      //               this.$message({
+      //                 message: '修改成功',
+      //                 type: 'success'
+      //               });
+      //             }
+      //           }).catch(() => {
+      //             this.paraLoading = false;
+      //           });
+      //         }
+      //       }else{
+      //         this.$delete(tempData, 'parameterValueList')
+      //         this.paraLoading = true
+      //         paraUpdate(tempData).then((res) => {
+      //           setTimeout(()=>{
+      //             this.paraLoading = false
+      //           },1000)
+      //             // const index = this.list.findIndex(v => v.id === this.temp.id);
+      //             // this.list.splice(index, 1, res.data);
+      //           if (res.resp_code == 0) {
+      //             this.getList();
+      //             this.dialogFormVisible = false;
+      //             this.$message({
+      //               message: '修改成功',
+      //               type: 'success'
+      //             });
+      //           }
+      //         }).catch(() => {
+      //           this.paraLoading = false;
+      //         });
+      //       }
+      //     }
+      //   })
+      // },
+      // handleState(val) {
+      //   console.log(this.rowInfo[0].id)
+      //   if (val == 0) {
+      //     this.$confirm('确定禁用此参数吗?', '提示', {
+      //       type: 'warning'
+      //     }).then(() => {
+      //       this.listLoading = true;
+      //       //NProgress.start();
+      //       let tempData = Object.assign({}, this.rowInfo[0]);
+      //       tempData.status = 0;
+      //       let para = {id:this.rowInfo[0].id,status:0}
+      //       this.$delete(tempData,'createTime')
+      //       this.$delete(tempData,'updateTime')
+      //       this.$delete(tempData,'createUser')
+      //       this.$delete(tempData,'updateUser')
+      //       if(tempData.operatingMode != 2){
+      //         tempData.parameterValueList = tempData.parameterValueList.map(item=>{
+      //           let obj = {}
+      //           obj.id = item.id
+      //           obj.name = item.name
+      //           return obj
+      //         })
+      //       }else{
+      //         this.$delete(tempData, 'parameterValueList')
+      //       }
+      //       paraUpdate(tempData).then((res) => {
+      //         this.listLoading = false;
+      //         if (res.resp_code == 0) {
+      //           // this.list.splice(index, 1);
+      //           //NProgress.done();
+      //           this.getList();
+      //           this.$message({
+      //             message: '禁用成功',
+      //             type: 'success'
+      //           });
+      //         }
+      //       });
+      //     }).catch(() => {
+      //
+      //     });
+      //   } else {
+      //     this.$confirm('确定启用此参数吗?', '提示', {
+      //       type: 'warning'
+      //     }).then(() => {
+      //       this.listLoading = true;
+      //       //NProgress.start();
+      //       let tempData = Object.assign({}, this.rowInfo[0]);
+      //       tempData.status = 1;
+      //       this.$delete(tempData,'createTime')
+      //       this.$delete(tempData,'updateTime')
+      //       this.$delete(tempData,'createUser')
+      //       this.$delete(tempData,'updateUser')
+      //       if(tempData.operatingMode != 2){
+      //         if(tempData.parameterValueList){
+      //           tempData.parameterValueList = tempData.parameterValueList.map(item=>{
+      //             let obj = {}
+      //             obj.id = item.id
+      //             obj.name = item.name
+      //             return obj
+      //           })
+      //         }
+      //       }else{
+      //         this.$delete(tempData, 'parameterValueList')
+      //       }
+      //       // let para = {id:this.rowInfo[0].id,status:1}
+      //       paraUpdate(tempData).then((res) => {
+      //         this.listLoading = false;
+      //         if (res.resp_code == 0) {
+      //           // this.list.splice(index, 1);
+      //           //NProgress.done();
+      //           this.getList();
+      //           this.$message({
+      //             message: '启用成功',
+      //             type: 'success'
+      //           });
+      //         }
+      //       });
+      //     }).catch(() => {
+      //
+      //     });
+      //   }
+      //
+      // },
+      // handleDelete(row, index) {
+      //   console.log(this.rowInfo[0].id)
+      //   this.$confirm('确定删除此记录吗?', '提示', {
+      //     type: 'warning'
+      //   }).then(() => {
+      //     this.listLoading = true;
+      //     //NProgress.start();
+      //     let para = {id: this.rowInfo[0].id};
+      //     paraDelete(para).then((res) => {
+      //       this.listLoading = false;
+      //       if (res.resp_code == 0) {
+      //         // this.list.splice(index, 1);
+      //         //NProgress.done();
+      //         this.getList();
+      //         this.$message({
+      //           message: '删除成功',
+      //           type: 'success'
+      //         });
+      //       }
+      //     });
+      //   }).catch(() => {
+      //
+      //   });
+      // },
 
 
     }
