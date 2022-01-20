@@ -34,7 +34,7 @@
       </el-form>
       <div>
         <!--<el-button class="filter-item btn_purple" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>-->
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="">导出信息</el-button>
+        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleExport">导出信息</el-button>
 
       </div>
     </div>
@@ -78,6 +78,7 @@
                 @pagination="getList" class="text-right"/>
     <paraView :showDialog.sync="showViewDialog" :viewData="viewData" @insertProduct="getList"></paraView>
     <history :showDialog.sync="showHistoryDialog" :historyData="historyData"></history>
+    <a v-show="false" :href="downLoadUrl" id="fileDownload"></a>
   </div>
 </template>
 
@@ -124,6 +125,7 @@
         cityList:[],
         scaleList:[],
         cookList:[],
+        downLoadUrl:this.global.domainName + 'api/Export/dataList',
       }
     },
     filters: {
@@ -240,6 +242,22 @@
           facility_id:row.facility_id
         }
       },
+      // handleExport(){
+      //   this.downLoadUrl=this.global.domainName + 'api/Export/dataList?street='+this.listQuery.street+'&scale_type='+this.listQuery.scale_type+'&cook_type='+this.listQuery.cook_type
+      //     +'&super_status='+this.listQuery.super_status + '&key_word='+this.listQuery.key_word + '&city_id='+this.listQuery.city_id;
+      //   console.log(this.downLoadUrl)
+      //   document.getElementById("fileDownload").click();
+      // },
+
+      getUrl(){
+        this.downLoadUrl=this.global.domainName + 'api/Export/dataList?street='+this.listQuery.street+'&scale_type='+this.listQuery.scale_type+'&cook_type='+this.listQuery.cook_type
+          +'&super_status='+this.listQuery.super_status + '&key_word='+this.listQuery.key_word + '&city_id='+this.listQuery.city_id;
+        },
+      async handleExport(){
+        await this.getUrl();
+        document.getElementById("fileDownload").click();
+      },
+
     }
   }
 </script>

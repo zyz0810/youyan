@@ -149,12 +149,19 @@
         }
       },
 
-      handleExport(){
-        this.downLoadUrl=this.global.domainName + 'api/Export/facilityList?facility_no='+this.listQuery.facility_no+'&name='+this.listQuery.name+'city_id='+this.listQuery.city_id;
-        console.log(this.downLoadUrl)
+      // handleExport(){
+      //   this.downLoadUrl=this.global.domainName + 'api/Export/facilityList?facility_no='+this.listQuery.facility_no+'&name='+this.listQuery.name+'&city_id='+this.listQuery.city_id;
+      //   console.log(this.downLoadUrl)
+      //   document.getElementById("fileDownload").click();
+      // },
+
+      getUrl(){
+        this.downLoadUrl=this.global.domainName + 'api/Export/facilityList?facility_no='+this.listQuery.facility_no+'&name='+this.listQuery.name+'&city_id='+this.listQuery.city_id;
+      },
+      async handleExport(){
+        await this.getUrl();
         document.getElementById("fileDownload").click();
       },
-
     }
   }
 </script>

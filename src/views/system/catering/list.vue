@@ -270,30 +270,40 @@
           option:{}
         }
       },
-      handleExport(){
-        document.getElementById("fileDownload").click();
 
-        // companyListExport(this.listQuery).then(res => {
-        //   // const blob = new Blob([res]);
-        //   // let myDate = new Date();
-        //   // let timename = myDate
-        //   //   .toLocaleDateString()
-        //   //   .split("/")
-        //   //   .join("-");
-        //   // const str = "结算单明细";
-        //   // const fileName = str + timename + ".xls";
-        //   // const linkNode = document.createElement("a");
-        //   // linkNode.download = fileName; //a标签的download属性规定下载文件的名称
-        //   // linkNode.style.display = "none";
-        //   // linkNode.href = URL.createObjectURL(blob); //生成一个Blob URL
-        //   // document.body.appendChild(linkNode);
-        //   // linkNode.click(); //模拟在按钮上的一次鼠标单击
-        //   // URL.revokeObjectURL(linkNode.href); // 释放URL 对象
-        //   // document.body.removeChild(linkNode);
-        // });
-
-
+      getUrl(){
+        this.downLoadUrl=this.global.domainName + 'api/Export/companyList?city_id='+this.listQuery.city_id+'&key_word='+this.listQuery.key_word+'&scale_type='+this.listQuery.scale_type
+          +'&cook_type='+this.listQuery.cook_type + '&status='+this.listQuery.status;
       },
+      async handleExport(){
+        await this.getUrl();
+        document.getElementById("fileDownload").click();
+      },
+
+      // handleExport(){
+      //   document.getElementById("fileDownload").click();
+      //
+      //   // companyListExport(this.listQuery).then(res => {
+      //   //   // const blob = new Blob([res]);
+      //   //   // let myDate = new Date();
+      //   //   // let timename = myDate
+      //   //   //   .toLocaleDateString()
+      //   //   //   .split("/")
+      //   //   //   .join("-");
+      //   //   // const str = "结算单明细";
+      //   //   // const fileName = str + timename + ".xls";
+      //   //   // const linkNode = document.createElement("a");
+      //   //   // linkNode.download = fileName; //a标签的download属性规定下载文件的名称
+      //   //   // linkNode.style.display = "none";
+      //   //   // linkNode.href = URL.createObjectURL(blob); //生成一个Blob URL
+      //   //   // document.body.appendChild(linkNode);
+      //   //   // linkNode.click(); //模拟在按钮上的一次鼠标单击
+      //   //   // URL.revokeObjectURL(linkNode.href); // 释放URL 对象
+      //   //   // document.body.removeChild(linkNode);
+      //   // });
+      //
+      //
+      // },
       // handleCreate() {
       //   this.resetTemp();
       //   this.parameterValueList = [{name: ''}];
