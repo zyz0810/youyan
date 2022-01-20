@@ -153,15 +153,23 @@
       this.getListTwo();
     },
     methods: {
-      handleExport(){
+      getUrl(){
+        if(this.activeIndex == 2){
+          this.downLoadUrl=this.global.domainName + 'api/Export/historyData?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        }else{
+          this.downLoadUrl=this.global.domainName + 'api/Export/timesOfWarn?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        }
+      },
+      async handleExport(){
+        await this.getUrl();
+        document.getElementById("fileDownload").click();
         // if(this.activeIndex == 2){
         //   this.downLoadUrl=this.global.domainName + 'api/Export/historyData?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        //   await document.getElementById("fileDownload").click();
         // }else{
         //   this.downLoadUrl=this.global.domainName + 'api/Export/timesOfWarn?start_time='+this.listQuery.start_time+'&end_time='+this.listQuery.end_time+'company_id='+this.listQuery.company_id+'type=allList';
+        //   document.getElementById("fileDownload").click();
         // }
-
-        console.log(this.downLoadUrl)
-        document.getElementById("fileDownload").click();
       },
       handleClick(val){
         this.activeIndex = val;
