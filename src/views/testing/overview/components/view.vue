@@ -304,46 +304,48 @@
             },
             type: 'value'
           },
-          series: [{
-            name:'TVOC',
-            symbol:'circle',
-            symbolSize:8,
-            color:'#CC3275',
-            itemStyle : {
-              normal : {
-                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
-                //     offset: 0, color: 'purple' // 0% 处的颜色
-                //   }, {
-                //     offset: 0.5, color: 'green' // 100% 处的颜色
-                //   }, {
-                //     offset: 1, color: 'yellow' // 100% 处的颜色
-                //   }]
-                // ),  //背景渐变色
-                lineStyle:{
-                  color:'#CC3275',
-                  borderColor:'#CC3275'
-                }
-              }
-            },
-            areaStyle:{
-              normal:{
-                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(204,50,117,0.5)'
-                }, {
-                  offset: .2,
-                  color: 'rgba(204,50,117,0.5)'
-                },{
-                  offset: 1,
-                  color: 'rgba(204,50,117,0)'
-                }])
-
-              }
-            },//区域颜色渐变
-            data: [],
-            type: 'line'
-          },{
+          series: [
+          //   {
+          //   name:'TVOC',
+          //   symbol:'circle',
+          //   symbolSize:8,
+          //   color:'#CC3275',
+          //   itemStyle : {
+          //     normal : {
+          //       // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+          //       //     offset: 0, color: 'purple' // 0% 处的颜色
+          //       //   }, {
+          //       //     offset: 0.5, color: 'green' // 100% 处的颜色
+          //       //   }, {
+          //       //     offset: 1, color: 'yellow' // 100% 处的颜色
+          //       //   }]
+          //       // ),  //背景渐变色
+          //       lineStyle:{
+          //         color:'#CC3275',
+          //         borderColor:'#CC3275'
+          //       }
+          //     }
+          //   },
+          //   areaStyle:{
+          //     normal:{
+          //       //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+          //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          //         offset: 0,
+          //         color: 'rgba(204,50,117,0.5)'
+          //       }, {
+          //         offset: .2,
+          //         color: 'rgba(204,50,117,0.5)'
+          //       },{
+          //         offset: 1,
+          //         color: 'rgba(204,50,117,0)'
+          //       }])
+          //
+          //     }
+          //   },//区域颜色渐变
+          //   data: [],
+          //   type: 'line'
+          // },
+            {
             name:'油烟浓度',
             symbol:'circle',
             symbolSize:8,
@@ -420,7 +422,7 @@
         homeTrend({facility_id:id, city_id:getCitySelected(),}).then(res=>{
           let a = res.data.map(item=>{return item.x_name})
           this.lineData.xAxis.data = a;
-          this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
+          // this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
           this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
         });
       },

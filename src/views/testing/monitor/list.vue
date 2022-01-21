@@ -4,11 +4,11 @@
     <div class="map_info">
       <div class="clr_white f18 map_info_tit text-center p20">信息查询</div>
       <el-form :model="temp" label-width="40px">
-        <el-form-item label="区域">
-          <el-select v-model="temp.street" placeholder="选择区域" @change="getIndex">
-            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="区域">-->
+<!--          <el-select v-model="temp.street" placeholder="选择区域" @change="getIndex">-->
+<!--            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="餐企">
           <el-select v-model="temp.company" placeholder="选择餐企" @change="getIndex">
             <el-option v-for="item in cateringList" :key="item.id" :label="item.company" :value="item.id"></el-option>

@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-form :inline="true" :model="listQuery" class="search_form">
-        <el-form-item label="">
-          <el-select v-model="listQuery.street" placeholder="选择辖区">
-            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="">-->
+<!--          <el-select v-model="listQuery.street" placeholder="选择辖区">-->
+<!--            <el-option v-for="item in cityList" :key="item.id" :label="item.province + item.city +item.area" :value="item.id"></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="">
           <el-select v-model="listQuery.scale_type" placeholder="选择规模">
             <!--            scaleList-->
