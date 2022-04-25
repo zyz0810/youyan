@@ -194,8 +194,8 @@
         activeName:'first',
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.20835',//中心纬度
-        centerLongitude:'120.21194',//中心经度
+        centerLatitude:'24.512905',//厦门湖里中心纬度
+        centerLongitude:'118.146769',//厦门湖里中心经度
         paraLoading:false,
         companyStatus:[{
           id:1,
