@@ -87,7 +87,20 @@
         this.temp.parent_id = this.paraData.parent_id;
         this.temp.type = this.paraData.operatorType;
       },
-      close(){},
+      close(){
+        this.paraLoading=false;
+        this.dialogFormVisible= false;
+        this.temp= {
+          name:'',
+          sort:'',
+          type:'',
+          parent_id:''
+        };
+        this.dialogStatus= '';
+        this.$nextTick(() => {
+          this.$refs["dataForm"].clearValidate();
+        });
+      },
 
       createData() {
         this.$refs['dataForm'].validate((valid) => {

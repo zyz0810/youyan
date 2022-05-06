@@ -240,16 +240,8 @@
         facilityList:[],
         cityList:[],
         // 1: '浦沿中队', 2: '长河中队',3: '西兴中队'
-        departList:[{
-          id:1,
-          name:'浦沿中队'
-        },{
-          id:2,
-          name:'长河中队'
-        },{
-          id:3,
-          name:'西兴中队'
-        }],
+        // 1:湖里中队 2:殿前中队 3:禾山中队 4:江头中队 5:金山中队 6:机动中队
+        departList:[],
         dialogStatus: '',
         rules: {
           company: [{ required: true, message: '请输入名称', trigger: 'change' }],
@@ -497,7 +489,7 @@
         localsearch.search(val);
       },
       open(){
-
+        this.getDepartList();
         this.getCity();
         this.getCompanyType();
         this.getCookType();
@@ -531,6 +523,7 @@
         this.scaleList=[];
         this.facilityList=[];
         this.cityList=[];
+        this.departList=[];
         this.dialogStatus= '';
         this.temp= {
           facility_id:'',
@@ -598,6 +591,13 @@
           page: 1,
           pageSize: 9999,}).then(res => {
           this.scaleList = res.data.data
+        });
+      },
+      getDepartList(){
+        dicList({ city_id:getCitySelected(), parent_id: 28,
+          page: 1,
+          pageSize: 9999,}).then(res => {
+          this.departList = res.data.data
         });
       },
       handleClick(tab, event) {
