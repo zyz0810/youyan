@@ -385,9 +385,13 @@
           let barArrData = res.data.map(item=>{
             return item.y_count;
           });
+          // this.echartData = {
+          //   name: barArrName,
+          //   count:barArrData
+          // }
           this.echartData = {
-            name: barArrName,
-            count:barArrData
+            name: ['a','b'],
+            count:[123,156]
           }
         });
       },
