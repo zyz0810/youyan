@@ -119,6 +119,7 @@
           start_time:this.$moment().format('YYYY-MM-DD'),
           end_time:this.$moment().format('YYYY-MM-DD'),
         },
+
         listQueryThree:{
           company_id:'',
           // start_time:this.$moment().format('YYYY-MM-DD'),
