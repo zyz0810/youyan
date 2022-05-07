@@ -112,8 +112,8 @@
     data() {
       return {
         listQueryOne:{
-          start_time:'',
-          end_time:'',
+          start_time:this.$moment().format('YYYY-MM-DD'),
+          end_time:this.$moment().format('YYYY-MM-DD'),
         },
         listQueryTwo:{
           start_time:'',
@@ -122,7 +122,8 @@
         listQueryThree:{
           company_id:'',
           start_time:this.$moment().format('YYYY-MM-DD'),
-          end_time:this.$moment().format('YYYY-MM-DD'),
+          // end_time:this.$moment().format('YYYY-MM-DD'),
+          end_time:this.$moment(new Date().getTime() - 24 * 7 * 60 * 60 * 1000).format('YYYY-MM-DD'),
         },
         PieChartLegend:[],
         chartDataThree: {

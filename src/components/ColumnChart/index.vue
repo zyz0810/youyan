@@ -51,7 +51,10 @@ export default {
           bottom: '1%',
           containLabel: true
         },
-
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}: {c} ({d}%)'
+        },
         legend: this.legend,
         color: this.color,
         xAxis: {

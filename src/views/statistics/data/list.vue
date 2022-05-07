@@ -94,8 +94,8 @@
         list: [],
         listLoading: false,
         listQuery: {
-          start_time: '',
-          end_time: '',
+          start_time: this.$moment().format('YYYY-MM-DD'),
+          end_time: this.$moment().format('YYYY-MM-DD'),
           company_id:'',
           page: 1,
           pageSize: 10,

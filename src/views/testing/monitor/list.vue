@@ -11,6 +11,7 @@
 <!--        </el-form-item>-->
         <el-form-item label="餐企">
           <el-select v-model="temp.company" placeholder="选择餐企" @change="getIndex">
+            <el-option label="全部" value=""></el-option>
             <el-option v-for="item in cateringList" :key="item.id" :label="item.company" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -32,7 +33,7 @@
            <el-form-item label="监测时间：">{{realTimeInfo?realTimeInfo.addtime:''}}</el-form-item>
          </el-form>
          <div style="flex: 5">
-           <div class="table_title text-center">污染物排放情况（mg/m3）</div>
+           <div class="table_title text-center">污染物排放情况（国标最高排放浓度为：2.0mg/m3）</div>
            <el-table v-loading="polluteListLoading" :data="polluteList" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg">
              <el-table-column label="污染物类型" align="center" prop="name"></el-table-column>
              <el-table-column label="实测值" align="center" prop="val"></el-table-column>
@@ -217,7 +218,7 @@
           <el-table-column label="监测时间" align="center" width="140" prop="addtime"></el-table-column>
         </el-table>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize"
-                    @pagination="getList" class="text-right"/>
+                    @pagination="getMonitor" class="text-right"/>
       </div>
     </div>
     <div class="bottom_arrow text-center" @click="showCompanyDialog = true">
@@ -760,7 +761,7 @@
                status='故障'
              }else if(that.list[i].status == 4){
                this.aaclass = 'red03'
-               status='异常'
+               status='超标'
              }
              let sContent =
                '<div class="f14 baseColor text-center">' +
