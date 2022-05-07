@@ -1,5 +1,7 @@
 <template>
-  <div :id="name" class="myChart" style="height: 200px;"></div>
+  <div :id="name"
+       class="myChart"
+       style="height: 200px;"></div>
 </template>
 <script>
 import echarts from "echarts";
@@ -53,9 +55,9 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
-          formatter: '{b}: {c}'
+          // formatter: '{b}: {c}'
         },
-        legend: this.legend,
+        // legend: this.legend,
         color: this.color,
         xAxis: {
           boundaryGap: true,
@@ -66,10 +68,10 @@ export default {
             rotate: 25,
             textStyle: {
               color: '#fff',
-              fontSize:26
+              fontSize: 26
             },
-            axisLine:{
-              lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+            axisLine: {
+              lineStyle: { color: '#1A407A' }  //y轴坐标轴颜色
             },
           },
         },
@@ -91,13 +93,13 @@ export default {
       // 绘制图表
       this.charts.setOption({
         grid: {
-          top:'10',
+          top: '10',
           left: '0',
           right: '0',
           bottom: '0',
           containLabel: true
         },
-        color:  ["#00B1FD"],
+        color: ["#00B1FD"],
         xAxis: {
           boundaryGap: true,
           type: "category",
@@ -107,31 +109,35 @@ export default {
             rotate: 25,
             textStyle: {
               color: '#fff',
-              fontSize:15
+              fontSize: 15
             },
           },
-          axisLine:{
-            lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+          axisLine: {
+            lineStyle: { color: '#1A407A' }  //y轴坐标轴颜色
           },
-          axisTick:{
-            lineStyle:{color:'#1A407A' }  //y轴坐标刻度颜色
+          axisTick: {
+            lineStyle: { color: '#1A407A' }  //y轴坐标刻度颜色
           },
+        },
+        tooltip: {
+          trigger: 'axis',
+          // formatter: '{b}: {c}'
         },
         yAxis: [{
           type: "value",
-          axisLabel : {
-            color:'#fff',
+          axisLabel: {
+            color: '#fff',
             textStyle: {
-              color:'#fff'  //这里用参数代替了
+              color: '#fff'  //这里用参数代替了
             }
           },    //y轴字体颜色
-          splitArea : {show : false},  //去除网格区域
-          splitLine:{show: false},   //去除网格线
-          axisLine:{
-            lineStyle:{color:'#1A407A'}  //y轴坐标轴颜色
+          splitArea: { show: false },  //去除网格区域
+          splitLine: { show: false },   //去除网格线
+          axisLine: {
+            lineStyle: { color: '#1A407A' }  //y轴坐标轴颜色
           },
-          axisTick:{
-            lineStyle:{color:'#1A407A' }  //y轴坐标刻度颜色
+          axisTick: {
+            lineStyle: { color: '#1A407A' }  //y轴坐标刻度颜色
           },
         }],
         series: [
@@ -160,9 +166,9 @@ export default {
 };
 </script>
 <style scoped lang='scss'>
-  .myChart{
-    height: 220px !important;
-  }
+.myChart {
+  height: 220px !important;
+}
 /deep/.myChart {
   height: 200px !important;
   div {
