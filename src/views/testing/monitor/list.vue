@@ -448,8 +448,28 @@
               }
             },//区域颜色渐变
             data: [],
-            type: 'line'
-          }]
+            type: 'line',
+
+              markLine: {
+                silent: true,
+                symbol:"none", //去掉警戒线最后面的箭头
+                lineStyle: {
+                  normal: {
+                    color: 'red'                  // 这儿设置安全基线颜色
+                  }
+                },
+                data: [{
+                  yAxis: 2     //这儿定义基准线的数值为多少
+                }],
+                label: {
+                  normal: {
+                    formatter: '超标\n基线'           // 这儿设置安全基线
+                  }
+                }
+
+              },
+
+          },]
         },
         PieChartLegend:[],
         normalList:[],
@@ -540,7 +560,7 @@
         return cellValue == 1
           ? "正常"
           : cellValue == 2
-            ? "异常"
+            ? "超标"
             : "";
       },
       getInfo(id){

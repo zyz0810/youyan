@@ -116,7 +116,7 @@
           return cellValue == 1
             ? "正常"
             : cellValue == 2
-              ? "异常"
+              ? "超标"
               : "";
         },
       open(){

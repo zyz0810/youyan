@@ -375,7 +375,25 @@
               }
             },//区域颜色渐变
             data: [],
-            type: 'line'
+            type: 'line',
+              markLine: {
+                silent: true,
+                symbol:"none", //去掉警戒线最后面的箭头
+                lineStyle: {
+                  normal: {
+                    color: 'red'                  // 这儿设置安全基线颜色
+                  }
+                },
+                data: [{
+                  yAxis: 2     //这儿定义基准线的数值为多少
+                }],
+                label: {
+                  normal: {
+                    formatter: '超标\n基线'           // 这儿设置安全基线
+                  }
+                }
+
+              },
           }]
         },
         PieChartLegend:[],
@@ -597,77 +615,97 @@
             },
             type: 'value'
           },
-          series: [{
-            name:'TVOC',
-            symbol:'circle',
-            symbolSize:8,
-            color:'#CC3275',
-            itemStyle : {
-              normal : {
-                // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
-                //     offset: 0, color: 'purple' // 0% 处的颜色
-                //   }, {
-                //     offset: 0.5, color: 'green' // 100% 处的颜色
-                //   }, {
-                //     offset: 1, color: 'yellow' // 100% 处的颜色
-                //   }]
-                // ),  //背景渐变色
-                lineStyle:{
-                  color:'#CC3275',
-                  borderColor:'#CC3275'
+          series: [
+            //   {
+            //   name:'TVOC',
+            //   symbol:'circle',
+            //   symbolSize:8,
+            //   color:'#CC3275',
+            //   itemStyle : {
+            //     normal : {
+            //       // color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+            //       //     offset: 0, color: 'purple' // 0% 处的颜色
+            //       //   }, {
+            //       //     offset: 0.5, color: 'green' // 100% 处的颜色
+            //       //   }, {
+            //       //     offset: 1, color: 'yellow' // 100% 处的颜色
+            //       //   }]
+            //       // ),  //背景渐变色
+            //       lineStyle:{
+            //         color:'#CC3275',
+            //         borderColor:'#CC3275'
+            //       }
+            //     }
+            //   },
+            //   areaStyle:{
+            //     normal:{
+            //       //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+            //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            //         offset: 0,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       }, {
+            //         offset: .2,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       },{
+            //         offset: 1,
+            //         color: 'rgba(204,50,117,0)'
+            //       }])
+            //
+            //     }
+            //   },//区域颜色渐变
+            //   data: [],
+            //   type: 'line'
+            // },
+            {
+              name:'油烟浓度',
+              symbol:'circle',
+              symbolSize:8,
+              color:'#E39915',
+              itemStyle : {
+                normal : {
+                  lineStyle:{
+                    color:'#E39915',
+                    borderColor:'#E39915'
+                  }
                 }
-              }
-            },
-            areaStyle:{
-              normal:{
-                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(204,50,117,0.5)'
-                }, {
-                  offset: .2,
-                  color: 'rgba(204,50,117,0.5)'
-                },{
-                  offset: 1,
-                  color: 'rgba(204,50,117,0)'
-                }])
+              },
+              areaStyle:{
+                normal:{
+                  //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(227,153,21,0.5)'
+                  }, {
+                    offset: .2,
+                    color: 'rgba(227,153,21,0.5)'
+                  },{
+                    offset: 1,
+                    color: 'rgba(227,153,21,0)'
+                  }])
 
-              }
-            },//区域颜色渐变
-            data: [],
-            type: 'line'
-          },{
-            name:'油烟浓度',
-            symbol:'circle',
-            symbolSize:8,
-            color:'#E39915',
-            itemStyle : {
-              normal : {
-                lineStyle:{
-                  color:'#E39915',
-                  borderColor:'#E39915'
                 }
-              }
-            },
-            areaStyle:{
-              normal:{
-                //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(227,153,21,0.5)'
-                }, {
-                  offset: .2,
-                  color: 'rgba(227,153,21,0.5)'
-                },{
-                  offset: 1,
-                  color: 'rgba(227,153,21,0)'
-                }])
+              },//区域颜色渐变
+              data: [],
+              type: 'line',
+              markLine: {
+                silent: true,
+                symbol:"none", //去掉警戒线最后面的箭头
+                lineStyle: {
+                  normal: {
+                    color: 'red'                  // 这儿设置安全基线颜色
+                  }
+                },
+                data: [{
+                  yAxis: 2     //这儿定义基准线的数值为多少
+                }],
+                label: {
+                  normal: {
+                    formatter: '超标\n基线'           // 这儿设置安全基线
+                  }
+                }
 
-              }
-            },//区域颜色渐变
-            data: [],
-            type: 'line'
-          }]
+              },
+            }]
         };
         this.PieChartLegend=[];
         this.companyInfo={};

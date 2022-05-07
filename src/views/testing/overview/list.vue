@@ -22,7 +22,7 @@
         <el-form-item label="">
           <el-select v-model="listQuery.super_status" placeholder="选择监测状态">
             <el-option label="正常" value="1"></el-option>
-            <el-option label="异常" value="2"></el-option>
+            <el-option label="超标" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="" prop="key_word">
@@ -185,7 +185,7 @@
         return cellValue == 1
           ? "正常"
           : cellValue == 2
-            ? "异常"
+            ? "超标"
                 : "";
       },
     getScaleType(){
@@ -225,7 +225,7 @@
         if(row.super_status == 1){
           status = '正常'
         }else  if(row.super_status == 2){
-          status = '异常'
+          status = '超标'
         }
         this.viewData = {
           fac_id:row.fac_id,
