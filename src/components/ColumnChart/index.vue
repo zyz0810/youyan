@@ -52,8 +52,8 @@ export default {
           containLabel: true
         },
         tooltip: {
-          trigger: 'item',
-          formatter: '{b}: {c} ({d}%)'
+          trigger: 'axis',
+          formatter: '{b}: {c}'
         },
         legend: this.legend,
         color: this.color,
