@@ -56,7 +56,7 @@
                   @pagination="getList" class="text-right"/>
     </div>
     <div v-show="activeIndex == 2">
-      <el-table v-loading="listLoading" :data="list" :height="tableHeight"
+      <el-table v-loading="listTwoLoading" :data="listTwo" :height="tableHeight"
                 element-loading-text="拼命加载中" fit ref="tableList">
         <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
         <el-table-column label="餐企名称" align="center" prop="company_name"></el-table-column>
@@ -92,6 +92,8 @@
         activeIndex:0,
         total: 0,
         list: [],
+        listTwo:[],
+        listTwoLoading:false,
         listLoading: false,
         listQuery: {
           start_time: this.$moment().format('YYYY-MM-DD'),
@@ -192,7 +194,7 @@
         historyData({
           start_time:this.listQuery.start_time,end_time:this.listQuery.end_time,company_id:this.listQuery.company_id,page:this.listQuery.page,pageSize:this.listQuery.pageSize,
         }).then(res => {
-          this.list = res.data.data
+          this.listTwo = res.data.data
           this.total = res.data.total
         });
       },
