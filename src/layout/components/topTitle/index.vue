@@ -36,7 +36,7 @@
             <!--<i class="el-icon-caret-bottom" />-->
           <!--</div>-->
           <el-select v-model="citySelected" placeholder="请选择" @change="chooseCity">
-            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id">
+            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id" :key="item.id">
             </el-option>
             <!--<el-option v-for="item in cityList" :label="item.mobile" :value="item.id" :key="item.id">-->
             <!--</el-option>-->

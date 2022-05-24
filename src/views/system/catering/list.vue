@@ -4,7 +4,7 @@
       <el-form :inline="true" :model="listQuery" class="search_form">
         <el-form-item label="">
           <el-select v-model="listQuery.city_id" placeholder="选择辖区" clearable>
-            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id"></el-option>
+            <el-option v-for="item in cityList" :label="item.province+item.city+item.area" :value="item.id" :key="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
